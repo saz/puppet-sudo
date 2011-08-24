@@ -4,6 +4,7 @@ class sudo::config {
         group   => root,
         mode    => 440,
         require => Class['sudo::install'],
+        source  => 'puppet:///modules/sudo/sudoers',
     }
 
     file { $sudo::params::conf_dir:
