@@ -8,6 +8,7 @@ class sudo::config {
     }
 
     file { $sudo::params::conf_dir:
+        ensure  => directory,
         owner   => root,
         group   => root,
         mode    => 640,
