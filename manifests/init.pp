@@ -98,7 +98,7 @@ class sudo(
     ensure  => $dir_ensure,
     owner   => 'root',
     group   => 'root',
-    mode    => '0440',
+    mode    => '0550',
     recurse => true,
     purge   => true,
     require => Package[$package],
