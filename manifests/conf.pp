@@ -9,5 +9,6 @@ define sudo::conf($priority = 10, $content = undef, $source = undef) {
         mode    => 0440,
         source  => $source,
         content => $content,
+        require => Class['sudo::config'],
     }
 }
