@@ -1,9 +1,13 @@
 class sudo::params {
-    case $::operatingsystem {
-        /(Ubuntu|Debian)/: {
-            $package_name = 'sudo'
-            $sudoers = '/etc/sudoers'
-            $conf_dir = '/etc/sudoers.d/'
-        }
+  case $::operatingsystem {
+    ubuntu, debian: {
+      $package = 'sudo'
+      $sudoers = '/etc/sudoers'
+      $config_dir = '/etc/sudoers.d/'
+      $source = 'puppet:///modules/sudo/sudoers'
     }
+    default: {
+      fail("Unsupported platform: ${::operatingsystem}")
+    }
+  }
 }
