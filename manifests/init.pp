@@ -3,10 +3,6 @@
 # This module manages sudo
 #
 # Parameters:
-#   [*locales*]
-#     Name of locales to generate
-#     Default: [ 'en_US.UTF-8 UTF-8', 'de_DE.UTF-8 UTF-8', ]
-#
 #   [*ensure*]
 #     Ensure if present or absent.
 #     Default: present
