@@ -21,7 +21,8 @@
 #
 #   [*sudo_config_dir*]
 #     Where to place configuration snippets.
-#     Only set this, if your platform is not supported or you know, what you're doing.
+#     Only set this, if your platform is not supported or
+#     you know, what you're doing.
 #     Default: auto-set, platform specific
 #
 # Actions:
@@ -47,8 +48,8 @@ define sudo::conf(
     Class['sudo'] -> Sudo::Conf[$name]
 
     file { "${priority}_${name}":
-        path    => "${sudo_config_dir}${priority}_${name}",
         ensure  => $ensure,
+        path    => "${sudo_config_dir}${priority}_${name}",
         owner   => 'root',
         group   => 'root',
         mode    => '0440',
