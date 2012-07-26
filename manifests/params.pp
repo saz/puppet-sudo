@@ -6,7 +6,7 @@ class sudo::params {
       $config_dir = '/etc/sudoers.d/'
       $source = 'puppet:///modules/sudo/sudoers.deb'
     }
-    redhat, centos, fedora: {
+    redhat, centos, fedora, opensuse: {
       $package = 'sudo'
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
