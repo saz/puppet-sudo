@@ -1,25 +1,36 @@
 class sudo::params {
-  case $::operatingsystem {
+  case $::osfamily {
+    'Debian': {
     ubuntu, debian, gentoo: {
       $package = 'sudo'
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
       $source = 'puppet:///modules/sudo/sudoers.deb'
     }
-    redhat, centos, fedora: {
+    'RedHat': {
       $package = 'sudo'
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
       $source = 'puppet:///modules/sudo/sudoers.rhel'
     }
-    'OpenSuSE', 'SLES', 'SLED', 'SuSE':  {
+    'Suse': {
       $package = 'sudo'
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
       $source = 'puppet:///modules/sudo/sudoers.suse'
     }
     default: {
-      fail("Unsupported platform: ${::operatingsystem}")
+      case $::operatingsystem {
+        'gentoo': {
+          $package = 'sudo'
+          $config_file = '/etc/sudoers'
+          $config_dir = '/etc/sudoers.d/'
+          $source = 'puppet:///modules/sudo/sudoers.deb'
+        }
+        default: {
+          fail("Unsupported platform: ${::osfamily} or ${::operatingsystem}")
+        }
+      }
     }
   }
 }
