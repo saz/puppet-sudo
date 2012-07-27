@@ -19,7 +19,7 @@ Manage sudo configuration via Puppet
     }
     sudo::conf { 'admins':
       priority => 10,
-      content  => '%admins ALL=(ALL) NOPASSWD: ALL',
+      content  => "%admins ALL=(ALL) NOPASSWD: ALL\n",
     }
     sudo::conf { 'joe':
       priority => 60,
@@ -30,6 +30,7 @@ Manage sudo configuration via Puppet
 ### sudo::conf notes
 * You can pass template() through content parameter.
 * One of content or source must be set.
+* content values must include a \n and be enclosed in double quotes
 
 ## Additional class parameters
 * ensure: present or absent, default: present
