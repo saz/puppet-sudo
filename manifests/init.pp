@@ -63,7 +63,6 @@ class sudo(
   $config_file_replace = true,
   $config_dir = $sudo::params::config_dir,
   $source = $sudo::params::source
-
 ) inherits sudo::params {
 
   case $ensure {
