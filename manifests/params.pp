@@ -1,7 +1,6 @@
 class sudo::params {
   case $::osfamily {
     'Debian': {
-    ubuntu, debian, gentoo: {
       $package = 'sudo'
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
