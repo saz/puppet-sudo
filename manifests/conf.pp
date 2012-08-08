@@ -54,6 +54,6 @@ define sudo::conf(
         group   => 'root',
         mode    => '0440',
         source  => $source,
-        content => $content,
+        content => "$content\n",
     }
 }
