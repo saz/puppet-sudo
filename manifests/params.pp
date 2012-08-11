@@ -26,7 +26,7 @@ class sudo::params {
     }
     default: {
       case $::operatingsystem {
-        'gentoo': {
+        'gentoo','archlinux': {
           $package = 'sudo'
           $config_file = '/etc/sudoers'
           $config_dir = '/etc/sudoers.d/'
