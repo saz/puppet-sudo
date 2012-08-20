@@ -45,15 +45,21 @@ define sudo::conf(
   $sudo_config_dir = $sudo::params::config_dir
 ) {
 
-    Class['sudo'] -> Sudo::Conf[$name]
+  Class['sudo'] -> Sudo::Conf[$name]
 
-    file { "${priority}_${name}":
-        ensure  => $ensure,
-        path    => "${sudo_config_dir}${priority}_${name}",
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0440',
-        source  => $source,
-        content => "$content\n",
-    }
+  if $content != undef {
+    $content_real = "${content}\n"
+  } else {
+    $content_real = undef
+  }
+
+  file { "${priority}_${name}":
+    ensure  => $ensure,
+    path    => "${sudo_config_dir}${priority}_${name}",
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0440',
+    source  => $source,
+    content => $content_real,
+  }
 }
