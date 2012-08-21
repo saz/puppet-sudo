@@ -89,7 +89,7 @@ class sudo(
     source  => $source,
     require => Package[$package],
   }
-  
+
   file { $config_dir:
     ensure  => $dir_ensure,
     owner   => 'root',
