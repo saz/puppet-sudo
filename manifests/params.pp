@@ -1,39 +1,47 @@
 class sudo::params {
+  $source_base = "puppet:///modules/${module_name}/"
+
   case $::osfamily {
-    'Debian': {
+    debian: {
       $package = 'sudo'
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
-      $source = 'puppet:///modules/sudo/sudoers.deb'
+      $source = "${source_base}sudoers.deb"
     }
-    'RedHat': {
+    redhat: {
       $package = 'sudo'
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
-      $source = 'puppet:///modules/sudo/sudoers.rhel'
+      $source = "${source_base}sudoers.rhel"
     }
-    'Suse': {
+    suse: {
       $package = 'sudo'
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
-      $source = 'puppet:///modules/sudo/sudoers.suse'
+      $source = "${source_base}sudoers.suse"
     }
-    'Solaris': {
+    solaris: {
       $package = 'SFWsudo'
       $config_file = '/opt/sfw/etc/sudoers'
       $config_dir = '/opt/sfw/etc/sudoers.d/'
-      $source = 'puppet:///modules/sudo/sudoers.solaris'
+      $source = "${source_base}sudoers.solaris"
+    }
+    freebsd: {
+      $package = 'security/sudo'
+      $config_file = '/usr/local/etc/sudoers'
+      $config_dir = '/usr/local/etc/sudoers.d'
+      $source = "${source_base}sudoers.freebsd"
     }
     default: {
       case $::operatingsystem {
-        'gentoo','archlinux': {
+        gentoo, archlinux: {
           $package = 'sudo'
           $config_file = '/etc/sudoers'
           $config_dir = '/etc/sudoers.d/'
-          $source = 'puppet:///modules/sudo/sudoers.deb'
+          $source = "${source_base}sudoers.deb"
         }
         default: {
-          fail("Unsupported platform: ${::osfamily} or ${::operatingsystem}")
+          fail("Unsupported platform: ${::osfamily}/${::operatingsystem}")
         }
       }
     }
