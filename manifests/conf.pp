@@ -57,7 +57,7 @@ define sudo::conf(
     ensure  => $ensure,
     path    => "${sudo_config_dir}${priority}_${name}",
     owner   => 'root',
-    group   => 'root',
+    group   => $sudo::params::config_file_group,
     mode    => '0440',
     source  => $source,
     content => $content_real,

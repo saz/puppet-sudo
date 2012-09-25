@@ -90,7 +90,7 @@ class sudo(
   file { $config_file:
     ensure  => $ensure,
     owner   => 'root',
-    group   => 'root',
+    group   => $sudo::params::config_file_group,
     mode    => '0440',
     replace => $config_file_replace,
     source  => $source,
@@ -100,7 +100,7 @@ class sudo(
   file { $config_dir:
     ensure  => $dir_ensure,
     owner   => 'root',
-    group   => 'root',
+    group   => $sudo::params::config_file_group,
     mode    => '0550',
     recurse => true,
     purge   => true,
