@@ -17,6 +17,10 @@
 #     what you're doing.
 #     Default: auto-set, platform specific
 #
+#   [*purge*]
+#     Whether or not to purge sudoers.d directory
+#     Default: true
+#
 #   [*config_file*]
 #     Main configuration file.
 #     Only set this, if your platform is not supported or you know,
@@ -59,6 +63,7 @@ class sudo(
   $ensure = 'present',
   $autoupgrade = false,
   $package = $sudo::params::package,
+  $purge = true,
   $config_file = $sudo::params::config_file,
   $config_file_replace = true,
   $config_dir = $sudo::params::config_dir,
@@ -103,7 +108,7 @@ class sudo(
     group   => $sudo::params::config_file_group,
     mode    => '0550',
     recurse => true,
-    purge   => true,
+    purge   => $purge,
     require => Package[$package],
   }
 }
