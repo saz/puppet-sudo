@@ -39,11 +39,18 @@ class sudo::params {
     }
     default: {
       case $::operatingsystem {
-        gentoo, archlinux: {
+        gentoo: {
           $package = 'sudo'
           $config_file = '/etc/sudoers'
           $config_dir = '/etc/sudoers.d/'
           $source = "${source_base}sudoers.deb"
+          $config_file_group = 'root'
+        }
+        archlinux: {
+          $package = 'sudo'
+          $config_file = '/etc/sudoers'
+          $config_dir = '/etc/sudoers.d/'
+          $source = "${source_base}sudoers.archlinux"
           $config_file_group = 'root'
         }
         default: {
