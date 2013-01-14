@@ -50,13 +50,7 @@
 #   Nothing
 #
 # Sample Usage:
-#   class { 'locales':
-#     locales => [
-#       'en_US.UTF-8 UTF-8',
-#       'de_DE.UTF-8 UTF-8',
-#       'en_GB.UTF-8 UTF-8',
-#     ],
-#   }
+#   class { 'sudo': }
 #
 # [Remember: No empty lines between comments and class definition]
 class sudo(
