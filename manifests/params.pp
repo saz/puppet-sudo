@@ -33,7 +33,7 @@ class sudo::params {
     freebsd: {
       $package = 'security/sudo'
       $config_file = '/usr/local/etc/sudoers'
-      $config_dir = '/usr/local/etc/sudoers.d'
+      $config_dir = '/usr/local/etc/sudoers.d/'
       $source = "${source_base}sudoers.freebsd"
       $config_file_group = 'wheel'
     }
