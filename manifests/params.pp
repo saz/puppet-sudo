@@ -3,10 +3,17 @@ class sudo::params {
 
   case $::osfamily {
     debian: {
+      case $::operatingsystemrelease {
+        '7.0': {
+          $source = "${source_base}sudoers.wheezy"
+        }
+        default: {
+          $source = "${source_base}sudoers.deb"          
+        }
+      }
       $package = 'sudo'
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
-      $source = "${source_base}sudoers.deb"
       $config_file_group = 'root'
     }
     redhat: {
