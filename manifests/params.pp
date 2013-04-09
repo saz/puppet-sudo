@@ -3,12 +3,19 @@ class sudo::params {
 
   case $::osfamily {
     debian: {
-      case $::operatingsystemrelease {
-        '7.0': {
-          $source = "${source_base}sudoers.wheezy"
+      case $::operatingsystem {
+        'Ubuntu': {
+          $source = "${source_base}sudoers.ubuntu"
         }
         default: {
-          $source = "${source_base}sudoers.deb"          
+          case $::operatingsystemrelease {
+            '7.0': {
+              $source = "${source_base}sudoers.wheezy"
+            }
+            default: {
+              $source = "${source_base}sudoers.deb"
+            }
+          }
         }
       }
       $package = 'sudo'
