@@ -42,10 +42,19 @@ define sudo::conf(
   $priority = 10,
   $content = undef,
   $source = undef,
-  $sudo_config_dir = $sudo::params::config_dir
+  $sudo_config_dir = undef
 ) {
 
   include sudo
+
+  # Hack to allow the user to set the config_dir from the
+  # sudo::confg parameter, but default to $sudo::params::config_dir
+  # if it is not provided. $sudo::params isn't included before
+  # the parameters are loaded in.
+  $sudo_config_dir_real = $sudo_config_dir ? {
+    undef            => $sudo::params::config_dir,
+    $sudo_config_dir => $sudo_config_dir
+  }
 
   Class['sudo'] -> Sudo::Conf[$name]
 
@@ -57,7 +66,7 @@ define sudo::conf(
 
   file { "${priority}_${name}":
     ensure  => $ensure,
-    path    => "${sudo_config_dir}${priority}_${name}",
+    path    => "${sudo_config_dir_real}${priority}_${name}",
     owner   => 'root',
     group   => $sudo::params::config_file_group,
     mode    => '0440',
