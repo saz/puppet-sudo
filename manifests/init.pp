@@ -57,9 +57,9 @@ class sudo(
   $ensure = 'present',
   $autoupgrade = false,
   $package = $sudo::params::package,
-  $purge = true,
+  $purge = false,
   $config_file = $sudo::params::config_file,
-  $config_file_replace = true,
+  $config_file_replace = false,
   $config_dir = $sudo::params::config_dir,
   $source = $sudo::params::source
 ) inherits sudo::params {
