@@ -3,8 +3,8 @@ class sudo::params {
 
   case $::osfamily {
     debian: {
-      case $::operatingsystemrelease {
-        '7.0': {
+      case $::lsbdistcodename {
+        'wheezy': {
           $source = "${source_base}sudoers.wheezy"
         }
         default: {
