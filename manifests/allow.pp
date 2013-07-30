@@ -62,12 +62,12 @@ class sudo::allow(
   if $replace_users != undef {
     $users = $replace_users
   } else {
-    $users = hiera_array("${module_name}::${class_name}::add_users", $add_users)
+    $users = hiera_array("${module_name}::allow::add_users", $add_users)
   }
   if $replace_groups != undef {
     $groups = $replace_groups
   } else {
-    $groups = hiera_array("${module_name}::${class_name}::add_groups", $add_groups)
+    $groups = hiera_array("${module_name}::allow::add_groups", $add_groups)
   }
 
   sudo::conf { 'sudo_users_groups':
