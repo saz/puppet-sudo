@@ -19,7 +19,7 @@
 #
 #   [*purge*]
 #     Whether or not to purge sudoers.d directory
-#     Default: true
+#     Default: false
 #
 #   [*config_file*]
 #     Main configuration file.
@@ -29,7 +29,7 @@
 #
 #   [*config_file_replace*]
 #     Replace configuration file with that one delivered with this module
-#     Default: true
+#     Default: false
 #
 #   [*config_dir*]
 #     Main configuration directory
