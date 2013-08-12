@@ -44,7 +44,7 @@
 #     Default: auto-set, platform specific
 #
 # Actions:
-#   Installs locales package and generates specified locales
+#   Installs sudo package and checks the state of sudoers file and sudoers.d directory.
 #
 # Requires:
 #   Nothing
