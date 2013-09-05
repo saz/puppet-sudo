@@ -8,6 +8,7 @@ class sudo::params {
           $source = "${source_base}sudoers.ubuntu"
         }
         default: {
+
           case $::lsbdistcodename {
             'wheezy': {
               $source = "${source_base}sudoers.wheezy"
@@ -79,6 +80,14 @@ class sudo::params {
       $config_dir = '/usr/local/etc/sudoers.d/'
       $source = "${source_base}sudoers.freebsd"
       $config_file_group = 'wheel'
+    }
+    aix: {
+      $package = 'sudo'
+      $package_source = 'http://www.oss4aix.org/compatible/aix53/sudo-1.8.7-1.aix5.1.ppc.rpm'
+      $config_file = '/etc/sudoers'
+      $config_dir = '/etc/sudoers.d/'
+      $source = "${source_base}sudoers.aix"
+      $config_file_group = 'system'
     }
     default: {
       case $::operatingsystem {
