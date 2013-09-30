@@ -1,6 +1,6 @@
 # Define: sudo::conf
 #
-# This module manages sudoa configurations
+# This module manages sudo configurations
 #
 # Parameters:
 #   [*ensure*]
