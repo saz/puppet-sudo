@@ -31,7 +31,7 @@ class sudo::params {
       $config_file_group = 'root'
     }
     solaris: {
-      case $::operatingsystemrelease {
+      case $::kernelrelease {
         '5.11': {
           $package = 'pkg://solaris/security/sudo'
           $config_file = '/etc/sudoers'
