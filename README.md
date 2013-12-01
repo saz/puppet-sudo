@@ -2,6 +2,9 @@
 
 Manage sudo configuration via Puppet
 
+## Show some love
+If you find this module useful, send some bitcoins to 1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9
+
 ## Usage
 
 ### Install sudo with default sudoers
@@ -46,6 +49,3 @@ Manage sudo configuration via Puppet
 * content: string, default: undef
 * source: string, default: undef
 * sudo_config_dir: string, default: OS specific. Set sudo_config_dir, if platform is not supported.
-
-# Show some love
-If you find this module useful, send some bitcoins to 1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9
