@@ -23,7 +23,7 @@ class sudo::params {
       $source = $::operatingsystemrelease ? {
         /^5/    => "${source_base}sudoers.rhel5",
         /^6/    => "${source_base}sudoers.rhel6",
-        default => fail("Unsupported redhat release ${::operatingsystemrelease}")
+        default => "${source_base}sudoers.rhel6",
         }
       $config_file_group = 'root'
     }
