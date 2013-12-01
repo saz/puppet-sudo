@@ -20,7 +20,11 @@ class sudo::params {
       $package = 'sudo'
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
-      $source = "${source_base}sudoers.rhel"
+      $source = $::operatingsystemrelease ? {
+        /^5/    => "${source_base}sudoers.rhel5",
+        /^6/    => "${source_base}sudoers.rhel6",
+        default => fail("Unsupported redhat release ${::operatingsystemrelease}")
+        }
       $config_file_group = 'root'
     }
     suse: {
