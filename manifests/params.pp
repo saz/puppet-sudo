@@ -35,20 +35,34 @@ class sudo::params {
       $config_file_group = 'root'
     }
     solaris: {
-      case $::kernelrelease {
-        '5.11': {
-          $package = 'pkg://solaris/security/sudo'
+      case $::operatingsystem {
+        'OmniOS': {
+          $package = 'sudo'
           $config_file = '/etc/sudoers'
           $config_dir = '/etc/sudoers.d/'
-          $source = "${source_base}sudoers.solaris"
+          $source = "${source_base}sudoers.omnios"
           $config_file_group = 'root'
         }
-        '5.10': {
-          $package = 'SFWsudo'
-          $config_file = '/opt/sfw/etc/sudoers'
-          $config_dir = '/opt/sfw/etc/sudoers.d/'
-          $source = "${source_base}sudoers.solaris"
-          $config_file_group = 'root'
+        default: {
+          case $::kernelrelease {
+            '5.11': {
+              $package = 'pkg://solaris/security/sudo'
+              $config_file = '/etc/sudoers'
+              $config_dir = '/etc/sudoers.d/'
+              $source = "${source_base}sudoers.solaris"
+              $config_file_group = 'root'
+            }
+            '5.10': {
+              $package = 'SFWsudo'
+              $config_file = '/opt/sfw/etc/sudoers'
+              $config_dir = '/opt/sfw/etc/sudoers.d/'
+              $source = "${source_base}sudoers.solaris"
+              $config_file_group = 'root'
+            }
+            default: {
+              fail("Unsupported platform: ${::osfamily}/${::operatingsystem}/${kernelrelease}")
+            }
+          }
         }
       }
     }
