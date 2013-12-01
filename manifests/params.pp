@@ -3,12 +3,19 @@ class sudo::params {
 
   case $::osfamily {
     debian: {
-      case $::lsbdistcodename {
-        'wheezy': {
-          $source = "${source_base}sudoers.wheezy"
+      case $::operatingsystem {
+        'Ubuntu': {
+          $source = "${source_base}sudoers.ubuntu"
         }
         default: {
-          $source = "${source_base}sudoers.deb"
+          case $::lsbdistcodename {
+            'wheezy': {
+              $source = "${source_base}sudoers.wheezy"
+            }
+            default: {
+              $source = "${source_base}sudoers.deb"
+            }
+          }
         }
       }
       $package = 'sudo'
