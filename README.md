@@ -1,4 +1,4 @@
-# puppet-sudo
+# puppet-sudo [![Build Status](https://secure.travis-ci.org/saz/puppet-sudo.png)](http://travis-ci.org/saz/puppet-sudo)
 
 Manage sudo configuration via Puppet
 
@@ -19,7 +19,7 @@ Manage sudo configuration via Puppet
     }
     sudo::conf { 'admins':
       priority => 10,
-      content  => "%admins ALL=(ALL) NOPASSWD: ALL\n",
+      content  => "%admins ALL=(ALL) NOPASSWD: ALL",
     }
     sudo::conf { 'joe':
       priority => 60,
@@ -46,3 +46,6 @@ Manage sudo configuration via Puppet
 * content: string, default: undef
 * source: string, default: undef
 * sudo_config_dir: string, default: OS specific. Set sudo_config_dir, if platform is not supported.
+
+# Show some love
+If you find this module useful, send some bitcoins to 1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9
