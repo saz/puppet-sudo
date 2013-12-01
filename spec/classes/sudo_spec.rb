@@ -65,7 +65,7 @@ describe 'sudo' do
                 'owner'   => 'root',
                 'group'   => 'root',
                 'mode'    => '0440',
-                'replace' => param_hash[:config_file_replace],
+                'replace' => param_hash[:config_file_replace]
               )
             end
           }
@@ -78,7 +78,7 @@ describe 'sudo' do
                 'group'   => 'root',
                 'mode'    => '0550',
                 'recurse' => param_hash[:purge],
-                'purge'   => param_hash[:purge],
+                'purge'   => param_hash[:purge]
               )
             end
           }
