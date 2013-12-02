@@ -17,6 +17,12 @@
 #     what you're doing.
 #     Default: auto-set, platform specific
 #
+#   [*package_source*]
+#     Where to find the package.
+#     Only set this on AIX (required) or if your platform is not supported or you know,
+#     what you're doing.
+#     Default: auto-set
+#
 #   [*purge*]
 #     Whether or not to purge sudoers.d directory
 #     Default: false
@@ -57,6 +63,7 @@ class sudo(
   $ensure = 'present',
   $autoupgrade = false,
   $package = $sudo::params::package,
+  $package_source = $sudo::params::package_source,
   $purge = false,
   $config_file = $sudo::params::config_file,
   $config_file_replace = false,
@@ -82,8 +89,10 @@ class sudo(
     }
   }
 
-  package { $package:
-    ensure => $package_ensure,
+  class { 'sudo::package':
+    package        => $package,
+    package_ensure => $package_ensure,
+    package_source => $package_source,
   }
 
   file { $config_file:
