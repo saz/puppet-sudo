@@ -72,5 +72,15 @@ define sudo::conf(
     mode    => '0440',
     source  => $source,
     content => $content_real,
+    notify => $ensure ? {
+      'present' => Exec["sudo-syntax-check for file ${sudo_config_dir}${priority}_${name}"],
+      default   => undef,
+    },
   }
+
+  exec {"sudo-syntax-check for file ${name}":
+    command     => "visudo -c -f '/etc/${sudo_config_dir}${priority}_${name}' || ( rm -f '${sudo_config_dir}${priority}_${name}' && exit 1)",
+    refreshonly => true,
+  }
+
 }
