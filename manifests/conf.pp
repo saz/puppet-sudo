@@ -64,6 +64,10 @@ define sudo::conf(
     $content_real = undef
   }
 
+	Exec {
+		path => [ '/bin', '/sbin', '/usr/bin', '/usr/sbin', '/usr/local/bin', '/usr/local/sbin' ]
+	}
+
   file { "${priority}_${name}":
     ensure  => $ensure,
     path    => "${sudo_config_dir_real}${priority}_${name}",
@@ -73,12 +77,12 @@ define sudo::conf(
     source  => $source,
     content => $content_real,
     notify => $ensure ? {
-      'present' => Exec["sudo-syntax-check for file ${sudo_config_dir}${priority}_${name}"],
+      'present' => Exec["sudo-syntax-check for file ${sudo_config_dir_real}${priority}_${name}"],
       default   => undef,
     },
   }
 
-  exec {"sudo-syntax-check for file ${sudo_config_dir}${priority}_${name}":
+  exec {"sudo-syntax-check for file ${sudo_config_dir_real}${priority}_${name}":
     command     => "visudo -c -f '${sudo_config_dir_real}${priority}_${name}' || ( rm -f '${sudo_config_dir_real}${priority}_${name}' && exit 1)",
     refreshonly => true,
   }
