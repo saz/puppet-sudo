@@ -64,22 +64,25 @@ define sudo::conf(
     $content_real = undef
   }
 
-  file { "${priority}_${name}":
+  # sudo skip file name that contain a "."
+  $dname = regsubst($name, '\.', '-', 'G')
+
+  file { "${priority}_${dname}":
     ensure  => $ensure,
-    path    => "${sudo_config_dir_real}${priority}_${name}",
+    path    => "${sudo_config_dir_real}${priority}_${dname}",
     owner   => 'root',
     group   => $sudo::params::config_file_group,
     mode    => '0440',
     source  => $source,
     content => $content_real,
     notify => $ensure ? {
-      'present' => Exec["sudo-syntax-check for file ${sudo_config_dir}${priority}_${name}"],
+      'present' => Exec["sudo-syntax-check for file ${sudo_config_dir}${priority}_${dname}"],
       default   => undef,
     },
   }
 
-  exec {"sudo-syntax-check for file ${sudo_config_dir}${priority}_${name}":
-    command     => "visudo -c -f '${sudo_config_dir_real}${priority}_${name}' || ( rm -f '${sudo_config_dir_real}${priority}_${name}' && exit 1)",
+  exec {"sudo-syntax-check for file ${sudo_config_dir}${priority}_${dname}":
+    command     => "visudo -c -f '${sudo_config_dir_real}${priority}_${dname}' || ( rm -f '${sudo_config_dir_real}${priority}_${dname}' && exit 1)",
     refreshonly => true,
   }
 
