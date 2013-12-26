@@ -35,9 +35,9 @@ If you find this module useful, send some bitcoins to 1Na3YFUmdxKxJLiuRXQYJU2kiN
 * One of content or source must be set.
 
 ## Additional class parameters
-* ensure: present or absent, default: present
-* autoupgrade: true or false, default: false
+* enable: true, false. Set this to remove or purge all sudoers configs
 * package: string, default: OS specific. Set package name, if platform is not supported.
+* package_ensure: string, latest, absent, or a specific version of the package you need.
 * config_file: string, default: OS specific. Set config_file, if platform is not supported.
 * config_file_replace: true or false, default: true. Replace config file with module config file.
 * config_dir: string, default: OS specific. Set config_dir, if platform is not supported.

@@ -7,15 +7,15 @@
 #     Ensure if present or absent.
 #     Default: present
 #
-#   [*autoupgrade*]
-#     Upgrade package automatically, if there is a newer version.
-#     Default: false
-#
 #   [*package*]
 #     Name of the package.
 #     Only set this, if your platform is not supported or you know,
 #     what you're doing.
 #     Default: auto-set, platform specific
+#
+#   [*package_ensure*]
+#     Allows you to ensure a particular version of a package
+#     Default: present
 #
 #   [*package_source*]
 #     Where to find the package.
@@ -60,9 +60,9 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class sudo(
-  $ensure = 'present',
-  $autoupgrade = false,
+  $enable = true,
   $package = $sudo::params::package,
+  $package_ensure = present,
   $package_source = $sudo::params::package_source,
   $purge = false,
   $config_file = $sudo::params::config_file,
@@ -71,21 +71,16 @@ class sudo(
   $source = $sudo::params::source
 ) inherits sudo::params {
 
-  case $ensure {
-    /(present)/: {
+
+  validate_bool($enable)
+  case $enable {
+    true: {
       $dir_ensure = 'directory'
-      if $autoupgrade == true {
-        $package_ensure = 'latest'
-      } else {
-        $package_ensure = 'present'
-      }
+      $file_ensure = 'present'
     }
-    /(absent)/: {
-      $package_ensure = 'absent'
+    false: {
       $dir_ensure = 'absent'
-    }
-    default: {
-      fail('ensure parameter must be present or absent')
+      $file_ensure = 'absent'
     }
   }
 
@@ -96,7 +91,7 @@ class sudo(
   }
 
   file { $config_file:
-    ensure  => $ensure,
+    ensure  => $file_ensure,
     owner   => 'root',
     group   => $sudo::params::config_file_group,
     mode    => '0440',

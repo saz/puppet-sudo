@@ -3,8 +3,8 @@ describe 'sudo' do
 
   let :default_params do
     {
-      :ensure              => 'present',
-      :autoupgrade         => false,
+      :enable              => true,
+      :package_ensure      => 'present',
       :purge               => false,
       :config_file_replace => false,
     }
@@ -12,14 +12,12 @@ describe 'sudo' do
 
   [ {},
     {
-      :ensure              => 'present',
-      :autoupgrade         => false,
+      :package_ensure      => 'present',
       :purge               => true,
       :config_file_replace => false,
     },
     {
-      :ensure              => 'present',
-      :autoupgrade         => true,
+      :package_ensure      => 'latest',
       :purge               => false,
       :config_file_replace => true,
     }
@@ -46,20 +44,8 @@ describe 'sudo' do
 
           it { should contain_class('sudo::params') }
 
-          it { 
-            if not param_hash[:autoupgrade]
-              should contain_package('sudo').with_ensure('present')
-            end
-          }
-
           it {
-            if param_hash[:autoupgrade]
-              should contain_package('sudo').with_ensure('latest')
-            end
-          }
-
-          it {
-            if param_hash[:ensure] == 'present'
+            if param_hash[:enable] == 'true'
               should contain_file('/etc/sudoers').with(
                 'ensure'  => 'present',
                 'owner'   => 'root',
@@ -67,11 +53,6 @@ describe 'sudo' do
                 'mode'    => '0440',
                 'replace' => param_hash[:config_file_replace]
               )
-            end
-          }
-
-          it {
-            if param_hash[:ensure] == 'present'
               should contain_file('/etc/sudoers.d/').with(
                 'ensure'  => 'directory',
                 'owner'   => 'root',
@@ -82,6 +63,7 @@ describe 'sudo' do
               )
             end
           }
+
         end
       end
     end
