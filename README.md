@@ -7,10 +7,25 @@ If you find this module useful, send some bitcoins to 1Na3YFUmdxKxJLiuRXQYJU2kiN
 
 ## Usage
 
+### WARNING
+**This module will purge your current sudo config**
+
+If this is not what you're expecting, set `purge` and `config_file_replace` to **false**
+This might lead to problems, if the current sudoers file isn't including sudoers.d directory!
+
 ### Install sudo with default sudoers
 
+#### Purge current sudo config
 ```
     class { 'sudo': }
+```
+
+#### Leave current sudo config as it is (expect problems!)
+```
+    class { 'sudo':
+      purge               => false,
+      config_file_replace => false,
+    }
 ```
 
 ### Adding sudoers configuration snippet
@@ -35,9 +50,11 @@ If you find this module useful, send some bitcoins to 1Na3YFUmdxKxJLiuRXQYJU2kiN
 * One of content or source must be set.
 
 ## Additional class parameters
-* enable: true, false. Set this to remove or purge all sudoers configs
+* enable: true or false. Set this to remove or purge all sudoers configs
 * package: string, default: OS specific. Set package name, if platform is not supported.
 * package_ensure: string, latest, absent, or a specific version of the package you need.
+* package_source: string, default: OS specific. Set package source, if platform is not supported.
+* purge: true or false, default: true. Purge unmanaged files from config_dir.
 * config_file: string, default: OS specific. Set config_file, if platform is not supported.
 * config_file_replace: true or false, default: true. Replace config file with module config file.
 * config_dir: string, default: OS specific. Set config_dir, if platform is not supported.

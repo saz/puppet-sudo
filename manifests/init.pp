@@ -64,9 +64,9 @@ class sudo(
   $package = $sudo::params::package,
   $package_ensure = present,
   $package_source = $sudo::params::package_source,
-  $purge = false,
+  $purge = true,
   $config_file = $sudo::params::config_file,
-  $config_file_replace = false,
+  $config_file_replace = true,
   $config_dir = $sudo::params::config_dir,
   $source = $sudo::params::source
 ) inherits sudo::params {

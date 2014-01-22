@@ -5,21 +5,21 @@ describe 'sudo' do
     {
       :enable              => true,
       :package_ensure      => 'present',
-      :purge               => false,
-      :config_file_replace => false,
+      :purge               => true,
+      :config_file_replace => true,
     }
   end
 
   [ {},
     {
       :package_ensure      => 'present',
-      :purge               => true,
+      :purge               => false,
       :config_file_replace => false,
     },
     {
       :package_ensure      => 'latest',
-      :purge               => false,
-      :config_file_replace => true,
+      :purge               => true,
+      :config_file_replace => false,
     }
   ].each do |param_set|
     describe "when #{param_set == {} ? "using default" : "specifying"} class parameters" do
