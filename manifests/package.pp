@@ -30,7 +30,7 @@
 # Copyright 2013 Toni Schmidbauer
 #
 class sudo::package(
-  $package,
+  $package = 'sudo',
   $package_ensure = 'present',
   $package_source = '',
   ) {
@@ -38,7 +38,7 @@ class sudo::package(
     case $::osfamily {
       aix: {
         class { 'sudo::package::aix':
-          package => $package,
+          package        => $package,
           package_source => $package_source,
           package_ensure => $package_ensure,
         }
