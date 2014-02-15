@@ -25,7 +25,7 @@
 #
 #   [*purge*]
 #     Whether or not to purge sudoers.d directory
-#     Default: false
+#     Default: true
 #
 #   [*config_file*]
 #     Main configuration file.
