@@ -31,14 +31,14 @@
 #
 class sudo::package(
   $package,
-  $package_ensure = 'present',
+  $package_ensure = present,
   $package_source = '',
   ) {
 
     case $::osfamily {
       aix: {
         class { 'sudo::package::aix':
-          package => $package,
+          package        => $package,
           package_source => $package_source,
           package_ensure => $package_ensure,
         }
