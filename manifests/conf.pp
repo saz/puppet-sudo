@@ -75,7 +75,7 @@ define sudo::conf(
     mode    => '0440',
     source  => $source,
     content => $content_real,
-    notify => $ensure ? {
+    notify  => $ensure ? {
       'present' => Exec["sudo-syntax-check for file ${sudo_config_dir_real}${priority}_${dname}"],
       default   => undef,
     },

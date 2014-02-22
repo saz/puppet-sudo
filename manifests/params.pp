@@ -68,7 +68,7 @@ class sudo::params {
               $config_file_group = 'root'
             }
             default: {
-              fail("Unsupported platform: ${::osfamily}/${::operatingsystem}/${kernelrelease}")
+              fail("Unsupported platform: ${::osfamily}/${::operatingsystem}/${::kernelrelease}")
             }
           }
         }
@@ -106,15 +106,15 @@ class sudo::params {
           $config_file_group = 'root'
         }
         amazon: {
-           $package = 'sudo'
-           $config_file = '/etc/sudoers'
-           $config_dir = '/etc/sudoers.d/'
-           $source = $::operatingsystemrelease ? {
-             /^5/    => "${source_base}sudoers.rhel5",
-             /^6/    => "${source_base}sudoers.rhel6",
-             default => "${source_base}sudoers.rhel6",
-           }
-           $config_file_group = 'root'
+          $package = 'sudo'
+          $config_file = '/etc/sudoers'
+          $config_dir = '/etc/sudoers.d/'
+          $source = $::operatingsystemrelease ? {
+            /^5/    => "${source_base}sudoers.rhel5",
+            /^6/    => "${source_base}sudoers.rhel6",
+            default => "${source_base}sudoers.rhel6",
+          }
+          $config_file_group = 'root'
         }
         default: {
           fail("Unsupported platform: ${::osfamily}/${::operatingsystem}")

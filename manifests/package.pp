@@ -38,7 +38,7 @@ class sudo::package(
     case $::osfamily {
       aix: {
         class { 'sudo::package::aix':
-          package => $package,
+          package        => $package,
           package_source => $package_source,
           package_ensure => $package_ensure,
         }

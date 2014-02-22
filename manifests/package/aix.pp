@@ -40,8 +40,8 @@ class sudo::package::aix (
     require ldap
 
     package { $package:
-      ensure => $package_ensure,
-      source => $package_source,
+      ensure   => $package_ensure,
+      source   => $package_source,
       provider => rpm,
     }
 }
