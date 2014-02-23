@@ -2,5 +2,5 @@ fixtures:
   symlinks:
     "sudo": "#{source_dir}"
   repositories:
-    stdlib: "git://github.com/puppetlabs/puppetlabs-stdlib.git"
-
+    stdlib: "http://github.com/puppetlabs/puppetlabs-stdlib.git"
+    ldap: "http://github.com/tosmi/puppet-ldap.git"

@@ -31,7 +31,7 @@
 #
 class sudo::package(
   $package,
-  $package_ensure = 'present',
+  $package_ensure = present,
   $package_source = '',
   ) {
 
