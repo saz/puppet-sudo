@@ -18,10 +18,23 @@
 #     Default: present
 #
 #   [*package_source*]
-#     Where to find the package.
-#     Only set this on AIX (required) or if your platform is not supported or you know,
-#     what you're doing.
-#     Default: auto-set
+#     Where to find the package.  Only set this on AIX (required) and
+#     Solaris (required) or if your platform is not supported or you
+#     know, what you're doing.
+#
+#     The default for aix is the perzl sudo package. For solaris 10 we
+#     use the official www.sudo.ws binary package.
+#
+#     Default: AIX: perzl.org
+#              Solaris: www.sudo.ws
+#
+#   [*package_admin_file*]
+#     Where to find a Solaris 10 package admin file for
+#     an unattended installation. We do not supply a default file, so
+#     this has to be staged separately
+#
+#     Only set this on Solaris 10 (required)
+#     Default: /var/sadm/install/admin/puppet
 #
 #   [*purge*]
 #     Whether or not to purge sudoers.d directory
@@ -60,34 +73,36 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class sudo(
-  $enable = true,
-  $package = $sudo::params::package,
-  $package_ensure = present,
-  $package_source = $sudo::params::package_source,
-  $purge = true,
-  $config_file = $sudo::params::config_file,
+  $enable              = true,
+  $package             = $sudo::params::package,
+  $package_ensure      = present,
+  $package_source      = $sudo::params::package_source,
+  $package_admin_file  = $sudo::params::package_admin_file,
+  $purge               = true,
+  $config_file         = $sudo::params::config_file,
   $config_file_replace = true,
-  $config_dir = $sudo::params::config_dir,
-  $source = $sudo::params::source
+  $config_dir          = $sudo::params::config_dir,
+  $source              = $sudo::params::source
 ) inherits sudo::params {
 
 
   validate_bool($enable)
   case $enable {
     true: {
-      $dir_ensure = 'directory'
+      $dir_ensure  = 'directory'
       $file_ensure = 'present'
     }
     false: {
-      $dir_ensure = 'absent'
+      $dir_ensure  = 'absent'
       $file_ensure = 'absent'
     }
   }
 
   class { 'sudo::package':
-    package        => $package,
-    package_ensure => $package_ensure,
-    package_source => $package_source,
+    package            => $package,
+    package_ensure     => $package_ensure,
+    package_source     => $package_source,
+    package_admin_file => $package_admin_file,
   }
 
   file { $config_file:
