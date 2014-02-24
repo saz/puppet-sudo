@@ -61,9 +61,11 @@ class sudo::params {
               $config_file_group = 'root'
             }
             '5.10': {
-              $package = 'SFWsudo'
-              $config_file = '/opt/sfw/etc/sudoers'
-              $config_dir = '/opt/sfw/etc/sudoers.d/'
+              $package = 'TCMsudo'
+              $package_source = 'http://www.sudo.ws/sudo/dist/packages/Solaris/10/TCMsudo-1.8.9p5-i386.pkg.gz'
+              $package_admin_file = '/var/sadm/install/admin/puppet'
+              $config_file = '/etc/sudoers'
+              $config_dir = '/etc/sudoers.d/'
               $source = "${source_base}sudoers.solaris"
               $config_file_group = 'root'
             }
