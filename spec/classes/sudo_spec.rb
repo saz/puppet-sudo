@@ -44,8 +44,7 @@ describe 'sudo' do
 
           it { should contain_class('sudo::params') }
 
-          it {
-            if param_hash[:enable] == 'true'
+          it do
               should contain_file('/etc/sudoers').with(
                 'ensure'  => 'present',
                 'owner'   => 'root',
@@ -53,33 +52,9 @@ describe 'sudo' do
                 'mode'    => '0440',
                 'replace' => param_hash[:config_file_replace]
               )
-              should contain_file('/etc/sudoers.d/').with(
-                'ensure'  => 'directory',
-                'owner'   => 'root',
-                'group'   => 'root',
-                'mode'    => '0550',
-                'recurse' => param_hash[:purge],
-                'purge'   => param_hash[:purge]
-              )
-            end
-          }
+          end
 
-        end
-      end
-
-      describe "on supported osfamily: AIX" do
-
-        it { should contain_class('sudo::params') }
-
-        it {
-          if param_hash[:enable] == 'true'
-            should contain_file('/etc/sudoers').with(
-              'ensure'  => 'present',
-              'owner'   => 'root',
-              'group'   => 'system',
-              'mode'    => '0440',
-              'replace' => param_hash[:config_file_replace]
-            )
+          it do
             should contain_file('/etc/sudoers.d/').with(
               'ensure'  => 'directory',
               'owner'   => 'root',
@@ -88,14 +63,56 @@ describe 'sudo' do
               'recurse' => param_hash[:purge],
               'purge'   => param_hash[:purge]
             )
-            should contain_class('sudo::package').with(
-              'package' => 'sudo',
-              'package_ensure' => 'present',
-              'package_source' => 'http://www.oss4aix.org/compatible/aix53/sudo-1.8.7-1.aix5.1.ppc.rpm'
-            )
-
           end
-        }
+
+          it do
+            should contain_class('sudo::package').with(
+              'package'        => 'sudo',
+              'package_ensure' => param_hash[:package_ensure]
+            )
+          end
+
+        end
+      end
+
+      describe "on supported osfamily: AIX" do
+
+        let :facts do
+          {
+            :osfamily => 'AIX',
+          }
+        end
+
+        it { should contain_class('sudo::params') }
+
+        it do
+          should contain_file('/etc/sudoers').with(
+            'ensure'  => 'present',
+            'owner'   => 'root',
+            'group'   => 'system',
+            'mode'    => '0440',
+            'replace' => param_hash[:config_file_replace]
+          )
+        end
+
+        it do
+          should contain_file('/etc/sudoers.d/').with(
+            'ensure'  => 'directory',
+            'owner'   => 'root',
+            'group'   => 'system',
+            'mode'    => '0550',
+            'recurse' => param_hash[:purge],
+            'purge'   => param_hash[:purge]
+          )
+        end
+
+        it do
+          should contain_class('sudo::package').with(
+            'package'        => 'sudo',
+            'package_ensure' => param_hash[:package_ensure],
+            'package_source' => 'http://www.oss4aix.org/compatible/aix53/sudo-1.8.7-1.aix5.1.ppc.rpm'
+          )
+        end
 
       end
     end
