@@ -2,16 +2,15 @@
 
 Manage sudo configuration via Puppet
 
-## Show some love
-If you find this module useful, send some bitcoins to 1Na3YFUmdxKxJLiuRXQYJU2kiNqA3KY2j9
+### Gittip
+[![Support via Gittip](https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png)](https://www.gittip.com/saz/)
 
 ## Usage
 
 ### WARNING
 **This module will purge your current sudo config**
 
-If this is not what you're expecting, set `purge` and `config_file_replace` to **false**
-This might lead to problems, if the current sudoers file isn't including sudoers.d directory!
+If this is not what you're expecting, set `purge` and/or `config_file_replace` to **false**
 
 ### Install sudo with default sudoers
 
@@ -20,7 +19,14 @@ This might lead to problems, if the current sudoers file isn't including sudoers
     class { 'sudo': }
 ```
 
-#### Leave current sudo config as it is (expect problems!)
+#### Purge sudoers.d directory, but leave sudoers file as it is
+```
+    class { 'sudo':
+      config_file_replace => true,
+    }
+```
+
+#### Leave current sudo config as it is
 ```
     class { 'sudo':
       purge               => false,
