@@ -38,12 +38,12 @@
 #
 # [Remember: No empty lines between comments and class definition]
 define sudo::conf(
-  $ensure = present,
-  $priority = 10,
-  $content = undef,
-  $source = undef,
+  $ensure          = present,
+  $priority        = 10,
+  $content         = undef,
+  $source          = undef,
   $sudo_config_dir = undef
-) {
+  ) {
 
   include sudo
 

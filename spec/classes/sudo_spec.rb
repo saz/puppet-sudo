@@ -115,6 +115,86 @@ describe 'sudo' do
         end
 
       end
+
+      describe "on supported osfamily: Solaris 10" do
+
+        let :facts do
+          {
+            :osfamily        => 'Solaris',
+            :kernelrelease   => '5.10',
+          }
+        end
+
+        it { should contain_class('sudo::params') }
+
+        it {
+          if param_hash[:enable] == 'true'
+            should contain_file('/etc/sudoers').with(
+              'ensure'  => 'present',
+              'owner'   => 'root',
+              'group'   => 'system',
+              'mode'    => '0440',
+              'replace' => param_hash[:config_file_replace]
+            )
+            should contain_file('/etc/sudoers.d/').with(
+              'ensure'  => 'directory',
+              'owner'   => 'root',
+              'group'   => 'root',
+              'mode'    => '0550',
+              'recurse' => param_hash[:purge],
+              'purge'   => param_hash[:purge]
+            )
+            should contain_class('sudo::package').with(
+              'package' => 'TCMsudo',
+              'package_ensure' => 'present',
+              'package_source' => 'http://wwwx.sudo.ws/sudo/dist/packages/Solaris/10/TCMsudo-1.8.9p5-i386.pkg.gz',
+              'package_admin_file' => '/var/sadm/install/admin/puppet'
+            )
+
+          end
+        }
+
+      end
+
+      describe "on supported osfamily: Solaris 11" do
+
+        let :facts do
+          {
+            :osfamily        => 'Solaris',
+            :kernelrelease   => '5.11',
+          }
+        end
+
+        it { should contain_class('sudo::params') }
+
+        it {
+          if param_hash[:enable] == 'true'
+            should contain_file('/etc/sudoers').with(
+              'ensure'  => 'present',
+              'owner'   => 'root',
+              'group'   => 'system',
+              'mode'    => '0440',
+              'replace' => param_hash[:config_file_replace]
+            )
+            should contain_file('/etc/sudoers.d/').with(
+              'ensure'  => 'directory',
+              'owner'   => 'root',
+              'group'   => 'root',
+              'mode'    => '0550',
+              'recurse' => param_hash[:purge],
+              'purge'   => param_hash[:purge]
+            )
+            should contain_class('sudo::package').with(
+              'package' => 'sudo',
+              'package_ensure' => 'present'
+            )
+
+          end
+        }
+
+      end
     end
+
+
   end
 end

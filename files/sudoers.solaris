@@ -38,7 +38,7 @@
 # Defaults env_keep += "LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET"
 ##
 ## Run X applications through sudo; HOME is used to find the
-## .Xauthority file.  Note that other programs use HOME to find   
+## .Xauthority file.  Note that other programs use HOME to find
 ## configuration files and this may lead to privilege escalation!
 # Defaults env_keep += "HOME"
 ##
@@ -87,4 +87,4 @@
 
 ## Read drop-in files from /opt/sfw/etc/sudoers.d
 ## (the '#' here does not indicate a comment)
-#includedir /opt/sfw/etc/sudoers.d
+#includedir /etc/sudoers.d
