@@ -83,7 +83,7 @@ class sudo::params {
     }
     aix: {
       $package = 'sudo'
-      $package_source = 'http://www.oss4aix.org/compatible/aix53/sudo-1.8.7-1.aix5.1.ppc.rpm'
+      $package_source = 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.9-6.aix53.lam.rpm'
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
       $source = "${source_base}sudoers.aix"

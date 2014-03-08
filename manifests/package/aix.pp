@@ -37,7 +37,6 @@ class sudo::package::aix (
   $package_ensure = 'present',
 
   ) {
-    require ldap
 
     package { $package:
       ensure   => $package_ensure,

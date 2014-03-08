@@ -3,4 +3,3 @@ fixtures:
     "sudo": "#{source_dir}"
   repositories:
     stdlib: "http://github.com/puppetlabs/puppetlabs-stdlib.git"
-    ldap: "http://github.com/tosmi/puppet-ldap.git"
