@@ -14,7 +14,6 @@ rvm:
 env:
   matrix:
     - PUPPET_GEM_VERSION="~> 2.7.0"
-    - PUPPET_GEM_VERSION="~> 3.0.0"
     - PUPPET_GEM_VERSION="~> 3.1.0"
     - PUPPET_GEM_VERSION="~> 3.2.0"
     - PUPPET_GEM_VERSION="~> 3.3.0"
