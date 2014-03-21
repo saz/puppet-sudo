@@ -15,19 +15,19 @@ If this is not what you're expecting, set `purge` and/or `config_file_replace` t
 ### Install sudo with default sudoers
 
 #### Purge current sudo config
-```
+```puppet
     class { 'sudo': }
 ```
 
 #### Purge sudoers.d directory, but leave sudoers file as it is
-```
+```puppet
     class { 'sudo':
       config_file_replace => true,
     }
 ```
 
 #### Leave current sudo config as it is
-```
+```puppet
     class { 'sudo':
       purge               => false,
       config_file_replace => false,
@@ -36,7 +36,7 @@ If this is not what you're expecting, set `purge` and/or `config_file_replace` t
 
 ### Adding sudoers configuration snippet
 
-```
+```puppet
     class { 'sudo': }
     sudo::conf { 'web':
       source => 'puppet:///files/etc/sudoers.d/web',
