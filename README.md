@@ -49,7 +49,7 @@ If this is not what you're expecting, set `purge` and/or `config_file_replace` t
     }
     sudo::conf { 'joe':
       priority => 60,
-      source   => 'puppet:///files/etc/sudoers.d/users/joed',
+      source   => 'puppet:///files/etc/sudoers.d/users/joe',
     }
 ```
 
@@ -61,9 +61,9 @@ A hiera hash may be used to assemble the sudoers configuration.
 Hash merging is also enabled, which supports layering the configuration settings.
 
 Examples using:
-    - YAML backend
-    - an environment called __production__
-    - a __/etc/puppet/hiera.yaml__ hierarchy configuration:
+- YAML backend
+- an environment called __production__
+- a __/etc/puppet/hiera.yaml__ hierarchy configuration:
 
 ```yaml
 :hierarchy:
@@ -73,7 +73,7 @@ Examples using:
 
 ##### Load module
 
-Load the module and configuration settings via Puppet Code or your ENC.
+Load the module via Puppet Code or your ENC.
 
 ```puppet
     include sudo
@@ -92,15 +92,16 @@ sudo::configs:
         'priority'  : 10
     'joe':
         'priority'  : 60
-        'source'    : 'puppet:///files/etc/sudoers.d/users/joed'
+        'source'    : 'puppet:///files/etc/sudoers.d/users/joe'
 ```
 
 ##### Configure Hiera YAML __(production.yaml)__
 
-This will only apply to the production environment. In this example we are:
-    - inheriting/preserving the __web__ configuration
-    - overriding the __admins__ configuration
-    - removing the __joe__ configuration
+This will only apply to the production environment.
+In this example we are:
+- inheriting/preserving the __web__ configuration
+- overriding the __admins__ configuration
+- removing the __joe__ configuration
 
 ```yaml
 sudo::configs:
@@ -109,15 +110,17 @@ sudo::configs:
         'priority'  : 10
     'joe':
         'ensure'    : 'absent'
+        'source'    : 'puppet:///files/etc/sudoers.d/users/joe'
 ```
 
-If you additionally have Hiera >= 1.2.0 and enable [Hiera Deeper Merging](http://docs.puppetlabs.com/hiera/1/lookup_types.html#deep-merging-in-hiera--120) you may conditionally override any setting.
+If you have Hiera version >= 1.2.0 and enable [Hiera Deeper Merging](http://docs.puppetlabs.com/hiera/1/lookup_types.html#deep-merging-in-hiera--120) you may conditionally override any setting.
 
-In the following example we are:
-    - inheriting/preserving the __web__ configuration
-    - overriding the __admins:content__ setting
-    - inheriting/preserving the __admins:priority__ setting
-    - removing the __joe__ configuration
+In this example we are:
+- inheriting/preserving the __web__ configuration
+- overriding the __admins:content__ setting
+- inheriting/preserving the __admins:priority__ setting
+- inheriting/preserving the __joe:source__ and __joe:priority__ settings
+- removing the __joe__ configuration
 
 ```yaml
 sudo::configs:
@@ -138,12 +141,12 @@ sudo::configs:
 | enable              | boolean | true        | Set this to remove or purge all sudoers configs |
 | package             | string  | OS specific | Set package name if platform is not supported |
 | package_ensure      | string  | present     | latest, absent, or a specific package version |
-| package_source      | string  | OS specific | Set package source _(for unsupported platforms)) |
+| package_source      | string  | OS specific | Set package source _(for unsupported platforms)_ |
 | purge               | boolean | true        | Purge unmanaged files from config_dir |
-| config_file         | string  | OS specific | Set config_file _(for unsupported platforms)) |
+| config_file         | string  | OS specific | Set config_file _(for unsupported platforms)_ |
 | config_file_replace | boolean | true        | Replace config file with module config file |
 | config_dir          | string  | OS specific | Set config_dir _(for unsupported platforms)_ |
-| source              | string  | OS specific | Set source _(for unsupported platforms)) |
+| source              | string  | OS specific | Set source _(for unsupported platforms)_ |
 
 ## sudo::conf class / sudo::configs hash parameters
 
@@ -153,5 +156,5 @@ sudo::configs:
 | priority        | number | 10          | file name prefix |
 | content         | string | undef       | content of configuration snippet |
 | source          | string | undef       | source of configuration snippet |
-| sudo_config_dir | string | OS Specific | configuration snippet directory. Set if your platform is not supported. |
+| sudo_config_dir | string | OS Specific | configuration snippet directory _(for unsupported platforms)_ |
 
