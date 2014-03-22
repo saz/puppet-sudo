@@ -34,7 +34,9 @@ If this is not what you're expecting, set `purge` and/or `config_file_replace` t
     }
 ```
 
-### Adding sudoers configuration snippet
+### Adding sudoers configuration
+
+#### Using Code
 
 ```puppet
     class { 'sudo': }
@@ -51,24 +53,105 @@ If this is not what you're expecting, set `purge` and/or `config_file_replace` t
     }
 ```
 
-### sudo::conf notes
+#### Using Hiera
+
+__NOTE: This functionality requires Puppet version >= 3__
+
+A hiera hash may be used to assemble the sudoers configuration.
+Hash merging is also enabled, which supports layering the configuration settings.
+
+Examples using:
+    - YAML backend
+    - an environment called __production__
+    - a __/etc/puppet/hiera.yaml__ hierarchy configuration:
+
+```yaml
+:hierarchy:
+  - "%{environment}"
+  - "defaults"
+```
+
+##### Load module
+
+Load the module and configuration settings via Puppet Code or your ENC.
+
+```puppet
+    include sudo
+```
+
+##### Configure Hiera YAML __(defaults.yaml)__
+
+These defaults will apply to all systems.
+
+```yaml
+sudo::configs:
+    'web':
+        'source'    : 'puppet:///files/etc/sudoers.d/web'
+    'admins':
+        'content'   : "%admins ALL=(ALL) NOPASSWD: ALL"
+        'priority'  : 10
+    'joe':
+        'priority'  : 60
+        'source'    : 'puppet:///files/etc/sudoers.d/users/joed'
+```
+
+##### Configure Hiera YAML __(production.yaml)__
+
+This will only apply to the production environment. In this example we are:
+    - inheriting/preserving the __web__ configuration
+    - overriding the __admins__ configuration
+    - removing the __joe__ configuration
+
+```yaml
+sudo::configs:
+    'admins':
+        'content'   : "%prodadmins ALL=(ALL) NOPASSWD: ALL"
+        'priority'  : 10
+    'joe':
+        'ensure'    : 'absent'
+```
+
+If you additionally have Hiera >= 1.2.0 and enable [Hiera Deeper Merging](http://docs.puppetlabs.com/hiera/1/lookup_types.html#deep-merging-in-hiera--120) you may conditionally override any setting.
+
+In the following example we are:
+    - inheriting/preserving the __web__ configuration
+    - overriding the __admins:content__ setting
+    - inheriting/preserving the __admins:priority__ setting
+    - removing the __joe__ configuration
+
+```yaml
+sudo::configs:
+    'admins':
+        'content'   : "%prodadmins ALL=(ALL) NOPASSWD: ALL"
+    'joe':
+        'ensure'    : 'absent'
+```
+
+### sudo::conf / sudo::configs notes
 * You can pass template() through content parameter.
 * One of content or source must be set.
 
-## Additional class parameters
-* enable: true or false. Set this to remove or purge all sudoers configs
-* package: string, default: OS specific. Set package name, if platform is not supported.
-* package_ensure: string, latest, absent, or a specific version of the package you need.
-* package_source: string, default: OS specific. Set package source, if platform is not supported.
-* purge: true or false, default: true. Purge unmanaged files from config_dir.
-* config_file: string, default: OS specific. Set config_file, if platform is not supported.
-* config_file_replace: true or false, default: true. Replace config file with module config file.
-* config_dir: string, default: OS specific. Set config_dir, if platform is not supported.
-* source: string, default: OS specific. Set source, if platform is not supported.
+## sudo class parameters
 
-## sudo::conf parameters
-* ensure: present or absent, default: present
-* priority: number, default: 10
-* content: string, default: undef
-* source: string, default: undef
-* sudo_config_dir: string, default: OS specific. Set sudo_config_dir, if platform is not supported.
+| Parameter           | Type    | Default     | Description |
+| :--------------     | :------ |:----------- | :---------- |
+| enable              | boolean | true        | Set this to remove or purge all sudoers configs |
+| package             | string  | OS specific | Set package name if platform is not supported |
+| package_ensure      | string  | present     | latest, absent, or a specific package version |
+| package_source      | string  | OS specific | Set package source _(for unsupported platforms)) |
+| purge               | boolean | true        | Purge unmanaged files from config_dir |
+| config_file         | string  | OS specific | Set config_file _(for unsupported platforms)) |
+| config_file_replace | boolean | true        | Replace config file with module config file |
+| config_dir          | string  | OS specific | Set config_dir _(for unsupported platforms)_ |
+| source              | string  | OS specific | Set source _(for unsupported platforms)) |
+
+## sudo::conf class / sudo::configs hash parameters
+
+| Parameter       | Type   | Default     | Description |
+| :-------------- | :----- |:----------- | :---------- |
+| ensure          | string | present     | present or absent |
+| priority        | number | 10          | file name prefix |
+| content         | string | undef       | content of configuration snippet |
+| source          | string | undef       | source of configuration snippet |
+| sudo_config_dir | string | OS Specific | configuration snippet directory. Set if your platform is not supported. |
+
