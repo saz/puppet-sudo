@@ -139,7 +139,7 @@ sudo::configs:
 | Parameter           | Type    | Default     | Description |
 | :--------------     | :------ |:----------- | :---------- |
 | enable              | boolean | true        | Set this to remove or purge all sudoers configs |
-| package             | string  | OS specific | Set package name if platform is not supported |
+| package             | string  | OS specific | Set package name _(for unsupported platforms)_ |
 | package_ensure      | string  | present     | latest, absent, or a specific package version |
 | package_source      | string  | OS specific | Set package source _(for unsupported platforms)_ |
 | purge               | boolean | true        | Purge unmanaged files from config_dir |
