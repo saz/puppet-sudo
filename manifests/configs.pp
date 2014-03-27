@@ -14,18 +14,10 @@ class sudo::configs {
   # http://docs.puppetlabs.com/hiera/1/puppet.html#limitations
   # https://tickets.puppetlabs.com/browse/HI-118
   #
-  # NOTE: There is no way to detect the existence of hiera. This functionality
-  #   is therefore made exclusive to Puppet 3+ (hiera is embedded) in order
-  #   to preserve backwards compatibility.
-  #
-  # http://projects.puppetlabs.com/issues/12345
-  #
-  if (versioncmp($::puppetversion, '3') != -1) {
-    $configs = hiera_hash('sudo::configs', undef)
+  $configs = hiera_hash('sudo::configs', undef)
 
-    if $configs {
-      create_resources('::sudo::conf', $configs)
-    }
+  if $configs {
+    create_resources('::sudo::conf', $configs)
   }
 
 }

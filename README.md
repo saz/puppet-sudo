@@ -55,8 +55,6 @@ If this is not what you're expecting, set `purge` and/or `config_file_replace` t
 
 #### Using Hiera
 
-__NOTE: This functionality requires Puppet version >= 3__
-
 A hiera hash may be used to assemble the sudoers configuration.
 Hash merging is also enabled, which supports layering the configuration settings.
 
@@ -73,10 +71,23 @@ Examples using:
 
 ##### Load module
 
+###### Using Puppet version 3+
+
 Load the module via Puppet Code or your ENC.
 
 ```puppet
     include sudo
+```
+
+###### Using Puppet version 2.7+
+
+After [Installing Hiera](http://docs.puppetlabs.com/hiera/1/installing.html):
+
+- Load the `sudo` and `sudo::configs` modules via Puppet Code or your ENC.
+
+```puppet
+    include sudo
+    include sudo::configs
 ```
 
 ##### Configure Hiera YAML __(defaults.yaml)__
