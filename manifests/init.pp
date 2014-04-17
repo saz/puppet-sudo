@@ -82,7 +82,7 @@ class sudo(
   $config_file         = $sudo::params::config_file,
   $config_file_replace = true,
   $config_dir          = $sudo::params::config_dir,
-  $source              = $sudo::params::source,
+  $source              = $sudo::params::source
 ) inherits sudo::params {
 
 
