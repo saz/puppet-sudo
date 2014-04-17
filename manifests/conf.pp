@@ -82,9 +82,14 @@ define sudo::conf(
   }
 
   exec {"sudo-syntax-check for file ${sudo_config_dir_real}${priority}_${dname}":
-    command     => "visudo -c -f '${sudo_config_dir_real}${priority}_${dname}' || ( rm -f '${sudo_config_dir_real}${priority}_${dname}' && exit 1)",
+    command     => "visudo -c || ( rm -f '${sudo_config_dir_real}${priority}_${dname}' && exit 1)",
     refreshonly => true,
     path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin', '/usr/local/bin', '/usr/local/sbin'],
   }
+
+  anchor { "sudo::conf::${name}::start": } ->
+  File["${priority}_${dname}"] ->
+  Exec["sudo-syntax-check for file ${sudo_config_dir_real}${priority}_${dname}"] ->
+  anchor { "sudo::conf::${name}::end": }
 
 }
