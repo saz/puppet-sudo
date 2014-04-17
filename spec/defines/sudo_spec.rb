@@ -37,7 +37,7 @@ describe 'sudo::conf', :type => :define do
     }
 
     it { should contain_exec("sudo-syntax-check for file #{params[:sudo_config_dir]}#{params[:priority]}_#{title}").with({
-        'command'     => "visudo -c -f '#{params[:sudo_config_dir]}#{params[:priority]}_#{title}' || ( rm -f '#{params[:sudo_config_dir]}#{params[:priority]}_#{title}' && exit 1)",
+        'command'     => "visudo -c || ( rm -f '#{params[:sudo_config_dir]}#{params[:priority]}_#{title}' && exit 1)",
         'refreshonly' => 'true',
       })
     }
