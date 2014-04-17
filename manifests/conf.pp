@@ -48,13 +48,19 @@ define sudo::conf(
   include sudo
 
   # Hack to allow the user to set the config_dir from the
-  # sudo::confg parameter, but default to $sudo::params::config_dir
+  # sudo::config parameter, but default to $sudo::params::config_dir
   # if it is not provided. $sudo::params isn't included before
   # the parameters are loaded in.
   $sudo_config_dir_real = $sudo_config_dir ? {
     undef            => $sudo::params::config_dir,
     $sudo_config_dir => $sudo_config_dir
   }
+
+  # sudo skip file name that contain a "."
+  $dname = regsubst($name, '\.', '-', 'G')
+
+  # build current file name with path
+  $cur_file = "${sudo_config_dir_real}${priority}_${dname}"
 
   Class['sudo'] -> Sudo::Conf[$name]
 
@@ -64,32 +70,34 @@ define sudo::conf(
     $content_real = undef
   }
 
-  # sudo skip file name that contain a "."
-  $dname = regsubst($name, '\.', '-', 'G')
+  if $ensure == 'present' {
+    $notify_real = Exec["sudo-syntax-check for file ${cur_file}"]
+  } else {
+    $notify_real = undef
+  }
 
   file { "${priority}_${dname}":
     ensure  => $ensure,
-    path    => "${sudo_config_dir_real}${priority}_${dname}",
+    path    => $cur_file,
     owner   => 'root',
     group   => $sudo::params::config_file_group,
     mode    => '0440',
     source  => $source,
     content => $content_real,
-    notify  => $ensure ? {
-      'present' => Exec["sudo-syntax-check for file ${sudo_config_dir_real}${priority}_${dname}"],
-      default   => undef,
-    },
+    notify  => $notify_real,
+    require => Exec["sudo-syntax-check for file ${cur_file}"],
   }
 
-  exec {"sudo-syntax-check for file ${sudo_config_dir_real}${priority}_${dname}":
-    command     => "visudo -c || ( rm -f '${sudo_config_dir_real}${priority}_${dname}' && exit 1)",
+  exec {"sudo-syntax-check for file ${cur_file}":
+    command     => "visudo -c || ( rm -f '${cur_file}' && exit 1)",
     refreshonly => true,
-    path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin', '/usr/local/bin', '/usr/local/sbin'],
+    path        => [
+      '/bin',
+      '/sbin',
+      '/usr/bin',
+      '/usr/sbin',
+      '/usr/local/bin',
+      '/usr/local/sbin'
+    ],
   }
-
-  anchor { "sudo::conf::${name}::start": } ->
-  File["${priority}_${dname}"] ->
-  Exec["sudo-syntax-check for file ${sudo_config_dir_real}${priority}_${dname}"] ->
-  anchor { "sudo::conf::${name}::end": }
-
 }
