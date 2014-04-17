@@ -48,7 +48,7 @@
 #
 #   [*config_file_replace*]
 #     Replace configuration file with that one delivered with this module
-#     Default: false
+#     Default: true
 #
 #   [*config_dir*]
 #     Main configuration directory
