@@ -42,6 +42,11 @@ describe 'sudo::conf', :type => :define do
       })
     }
 
+    it { should contain_file(filename).that_notifies("Exec[sudo-syntax-check for file #{params[:sudo_config_dir]}#{params[:priority]}_#{title}]") }
+
+    it { should_not contain_exec("sudo-syntax-check for file #{params[:sudo_config_dir]}#{params[:priority]}_#{title}").that_requires("File[#{filename}]") }
+    it { should_not contain_file(filename).that_requires("Exec[sudo-syntax-check for file #{params[:sudo_config_dir]}#{params[:priority]}_#{title}]") }
+
   end
 
   describe "when removing an sudo entry" do
