@@ -85,7 +85,6 @@ define sudo::conf(
     source  => $source,
     content => $content_real,
     notify  => $notify_real,
-    require => Exec["sudo-syntax-check for file ${cur_file}"],
   }
 
   exec {"sudo-syntax-check for file ${cur_file}":
@@ -100,4 +99,7 @@ define sudo::conf(
       '/usr/local/sbin'
     ],
   }
+
+  File["${priority}_${dname}"] ->
+  Exec["sudo-syntax-check for file ${cur_file}"]
 }
