@@ -75,7 +75,7 @@
 class sudo(
   $enable              = true,
   $package             = $sudo::params::package,
-  $package_ensure      = present,
+  $package_ensure      = $sudo::params::package_ensure,
   $package_source      = $sudo::params::package_source,
   $package_admin_file  = $sudo::params::package_admin_file,
   $purge               = true,
