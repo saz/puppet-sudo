@@ -1,5 +1,5 @@
 name    'saz-sudo'
-version '3.0.5'
+version '3.0.6'
 source 'UNKNOWN'
 author 'saz'
 license 'Apache License, Version 2.0'
