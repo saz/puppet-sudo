@@ -99,7 +99,4 @@ define sudo::conf(
       '/usr/local/sbin'
     ],
   }
-
-  File["${priority}_${dname}"] ->
-  Exec["sudo-syntax-check for file ${cur_file}"]
 }
