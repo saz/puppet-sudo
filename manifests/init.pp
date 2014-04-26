@@ -15,7 +15,7 @@
 #
 #   [*package_ensure*]
 #     Allows you to ensure a particular version of a package
-#     Default: present
+#     Default: present / lastest for RHEL < 5.5
 #
 #   [*package_source*]
 #     Where to find the package.  Only set this on AIX (required) and
