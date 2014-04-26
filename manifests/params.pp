@@ -27,6 +27,10 @@ class sudo::params {
     }
     redhat: {
       $package = 'sudo'
+
+      # rhel 5.0 to 5.4 use sudo 1.6.9 which does not support
+      # includedir, so we have to make sure sudo 1.7 (comes with rhel
+      # 5.5) is installed.
       $package_ensure = $::operatingsystemrelease ? {
         /^5.[01234]/ => "latest",
         default     => "present",
