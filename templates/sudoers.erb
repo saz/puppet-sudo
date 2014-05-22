@@ -1,0 +1,15 @@
+# file managed by puppet
+Defaults    env_keep=SSH_AUTH_SOCK
+Defaults    !authenticate
+Defaults    env_reset
+<% if has_variable?("sudo_mailto") -%>
+Defaults    mailto=<%= sudo_mailto %>
+<% end -%>
+Defaults    always_set_home
+Defaults    secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+root  ALL=(ALL) ALL
+
+# This directive only works with version >= 1.7.2!
+#includedir /etc/sudoers.d
+##
+#
