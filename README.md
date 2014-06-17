@@ -22,7 +22,7 @@ If this is not what you're expecting, set `purge` and/or `config_file_replace` t
 #### Purge sudoers.d directory, but leave sudoers file as it is
 ```puppet
     class { 'sudo':
-      config_file_replace => true,
+      config_file_replace => false,
     }
 ```
 
