@@ -15,7 +15,7 @@
 #
 #   [*package_ensure*]
 #     Allows you to ensure a particular version of a package
-#     Default: present
+#     Default: present / lastest for RHEL < 5.5
 #
 #   [*package_source*]
 #     Where to find the package.  Only set this on AIX (required) and
@@ -75,7 +75,7 @@
 class sudo(
   $enable              = true,
   $package             = $sudo::params::package,
-  $package_ensure      = present,
+  $package_ensure      = $sudo::params::package_ensure,
   $package_source      = $sudo::params::package_source,
   $package_admin_file  = $sudo::params::package_admin_file,
   $purge               = true,
@@ -148,4 +148,7 @@ class sudo(
     include 'sudo::configs'
   }
 
+  anchor { 'sudo::begin': } ->
+  Class['sudo::package']    ->
+  anchor { 'sudo::end': }
 }

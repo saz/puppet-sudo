@@ -75,6 +75,29 @@ describe 'sudo' do
         end
       end
 
+      describe 'on RedHat 5.4' do
+        let :facts do
+          {
+            :osfamily               => 'RedHat',
+            :operatingsystemrelease => '5.4'
+          }
+        end
+
+        it do
+          if params == {}
+            should contain_class('sudo::package').with(
+              'package'        => 'sudo',
+              'package_ensure' => 'latest'
+            )
+          else
+            should contain_class('sudo::package').with(
+              'package'        => 'sudo',
+              'package_ensure' => param_hash[:package_ensure]
+            )
+          end
+        end
+      end
+
       describe "on supported osfamily: AIX" do
 
         let :facts do
