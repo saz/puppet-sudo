@@ -42,7 +42,8 @@ define sudo::conf(
   $priority        = 10,
   $content         = undef,
   $source          = undef,
-  $sudo_config_dir = undef
+  $sudo_config_dir = undef,
+  $sudo_file_name  = undef
   ) {
 
   include sudo
@@ -60,7 +61,11 @@ define sudo::conf(
   $dname = regsubst($name, '\.', '-', 'G')
 
   # build current file name with path
-  $cur_file = "${sudo_config_dir_real}${priority}_${dname}"
+  if $sudo_file_name != undef {
+    $cur_file = "${sudo_config_dir_real}${sudo_file_name}"
+  } else {
+    $cur_file = "${sudo_config_dir_real}${priority}_${dname}"
+  }
 
   Class['sudo'] -> Sudo::Conf[$name]
 
