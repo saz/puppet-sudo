@@ -4,18 +4,18 @@
 ## Examples are provided at the bottom of the file for collections
 ## of related commands, which can then be delegated out to particular
 ## users or groups.
-##
+## 
 ## This file must be edited with the 'visudo' command.
 
 ## Host Aliases
-## Groups of machines. You may prefer to use hostnames (perhap using
+## Groups of machines. You may prefer to use hostnames (perhap using 
 ## wildcards for entire domains) or IP addresses instead.
 # Host_Alias     FILESERVERS = fs1, fs2
 # Host_Alias     MAILSERVERS = smtp, smtp2
 
 ## User Aliases
 ## These aren't often necessary, as you can use regular groups
-## (ie, from files, LDAP, NIS, etc) in this file - just use %groupname
+## (ie, from files, LDAP, NIS, etc) in this file - just use %groupname 
 ## rather than USERALIAS
 # User_Alias ADMINS = jsmith, mikem
 
@@ -24,36 +24,42 @@
 ## These are groups of related commands...
 
 ## Networking
-Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables, /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool
+#Cmnd_Alias NETWORKING = /sbin/route, /sbin/ifconfig, /bin/ping, /sbin/dhclient, /usr/bin/net, /sbin/iptables, /usr/bin/rfcomm, /usr/bin/wvdial, /sbin/iwconfig, /sbin/mii-tool
 
 ## Installation and management of software
-Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum
+#Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum
 
 ## Services
-Cmnd_Alias SERVICES = /sbin/service, /sbin/chkconfig
+#Cmnd_Alias SERVICES = /sbin/service, /sbin/chkconfig
 
 ## Updating the locate database
-Cmnd_Alias LOCATE = /usr/sbin/updatedb
+#Cmnd_Alias LOCATE = /usr/bin/updatedb
 
 ## Storage
-Cmnd_Alias STORAGE = /sbin/fdisk, /sbin/sfdisk, /sbin/parted, /sbin/partprobe, /bin/mount, /bin/umount
+#Cmnd_Alias STORAGE = /sbin/fdisk, /sbin/sfdisk, /sbin/parted, /sbin/partprobe, /bin/mount, /bin/umount
 
 ## Delegating permissions
-Cmnd_Alias DELEGATING = /usr/sbin/visudo, /bin/chown, /bin/chmod, /bin/chgrp
+#Cmnd_Alias DELEGATING = /usr/sbin/visudo, /bin/chown, /bin/chmod, /bin/chgrp 
 
 ## Processes
-Cmnd_Alias PROCESSES = /bin/nice, /bin/kill, /usr/bin/kill, /usr/bin/killall
+#Cmnd_Alias PROCESSES = /bin/nice, /bin/kill, /usr/bin/kill, /usr/bin/killall
 
 ## Drivers
-Cmnd_Alias DRIVERS = /sbin/modprobe
+#Cmnd_Alias DRIVERS = /sbin/modprobe
 
 # Defaults specification
 
 #
-# Disable "ssh hostname sudo <cmd>", because it will show the password in clear.
+# Disable "ssh hostname sudo <cmd>", because it will show the password in clear. 
 #         You have to run "ssh -t hostname sudo <cmd>".
 #
 Defaults    requiretty
+
+#
+# Refuse to run if unable to disable echo on the tty. This setting should also be
+# changed in order to be able to use sudo without a tty. See requiretty above.
+#
+Defaults   !visiblepw
 
 Defaults    env_reset
 Defaults    env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR \
@@ -63,35 +69,32 @@ Defaults    env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR \
                         LC_PAPER LC_TELEPHONE LC_TIME LC_ALL LANGUAGE LINGUAS \
                         _XKB_CHARSET XAUTHORITY"
 
-## Next comes the main part: which users can run what software on
+## Next comes the main part: which users can run what software on 
 ## which machines (the sudoers file can be shared between multiple
 ## systems).
 ## Syntax:
 ##
-##      user    MACHINE=COMMANDS
-##
+## 	user	MACHINE=COMMANDS
 ##
 ## The COMMANDS section may have other options added to it.
 ##
-## Allow root to run any commands anywhere
-root    ALL=(ALL)       ALL
+## Allow root to run any commands anywhere 
+root	ALL=(ALL) 	ALL
 
-## Allows members of the 'sys' group to run networking, software,
+## Allows members of the 'sys' group to run networking, software, 
 ## service management apps and more.
 # %sys ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS
 
 ## Allows people in group wheel to run all commands
-# %wheel        ALL=(ALL)       ALL
+# %wheel	ALL=(ALL)	ALL
 
 ## Same thing without a password
-# %wheel        ALL=(ALL)       NOPASSWD: ALL
+# %wheel	ALL=(ALL)	NOPASSWD: ALL
 
-## Allows members of the users group to mount and unmount the
+## Allows members of the users group to mount and unmount the 
 ## cdrom as root
 # %users  ALL=/sbin/mount /mnt/cdrom, /sbin/umount /mnt/cdrom
 
 ## Allows members of the users group to shutdown this system
 # %users  localhost=/sbin/shutdown -h now
-
-## Read drop-in files from /etc/sudoers.d (the # here does not mean a comment)
 #includedir /etc/sudoers.d
