@@ -180,4 +180,4 @@ sudo::conf { "foreman-proxy":
 | content         | string | undef       | content of configuration snippet |
 | source          | string | undef       | source of configuration snippet |
 | sudo_config_dir | string | OS Specific | configuration snippet directory _(for unsupported platforms)_ |
-
+| sudo_file_name  | string | undef		 | custom file name for sudo file in sudoers directory |
