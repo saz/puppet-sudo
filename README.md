@@ -141,6 +141,18 @@ sudo::configs:
         'ensure'    : 'absent'
 ```
 
+##### Set a custom name for the sudoers file
+
+In some edge cases, the automatically generated sudoers file name is insufficient. For example, when an application generates a sudoers file with a fixed file name, using this class with the purge option enabled will always delete the custom file and adding it manually will generate a file with the right content, but the wrong name. To solve this, you can use the ```sudo_file_name``` option to manually set the desired file name. 
+
+```puppet
+sudo::conf { "foreman-proxy":
+	ensure          => "present",
+	source          => "puppet:///modules/sudo/foreman-proxy",
+	sudo_file_name  => "foreman-proxy",
+}
+```
+
 ### sudo::conf / sudo::configs notes
 * You can pass template() through content parameter.
 * One of content or source must be set.
@@ -168,4 +180,4 @@ sudo::configs:
 | content         | string | undef       | content of configuration snippet |
 | source          | string | undef       | source of configuration snippet |
 | sudo_config_dir | string | OS Specific | configuration snippet directory _(for unsupported platforms)_ |
-
+| sudo_file_name  | string | undef		 | custom file name for sudo file in sudoers directory |
