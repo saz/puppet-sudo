@@ -40,6 +40,10 @@
 #     Whether or not to purge sudoers.d directory
 #     Default: true
 #
+#   [*purge_ignore*]
+#     Files to exclude from purging in sudoers.d directory
+#     Default: undef
+#
 #   [*config_file*]
 #     Main configuration file.
 #     Only set this, if your platform is not supported or you know,
@@ -79,6 +83,7 @@ class sudo(
   $package_source      = $sudo::params::package_source,
   $package_admin_file  = $sudo::params::package_admin_file,
   $purge               = true,
+  $purge_ignore        = undef,
   $config_file         = $sudo::params::config_file,
   $config_file_replace = true,
   $config_dir          = $sudo::params::config_dir,
@@ -122,6 +127,7 @@ class sudo(
     mode    => '0550',
     recurse => $purge,
     purge   => $purge,
+    ignore  => $purge_ignore,
     require => Package[$package],
   }
 
