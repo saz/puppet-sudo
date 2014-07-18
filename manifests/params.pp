@@ -3,6 +3,7 @@ class sudo::params {
 
   case $::osfamily {
     debian: {
+      $package_source = false
       case $::operatingsystem {
         'Ubuntu': {
           $source = "${source_base}sudoers.ubuntu"
@@ -26,6 +27,7 @@ class sudo::params {
       $config_file_group = 'root'
     }
     redhat: {
+      $package_source = false
       $package = 'sudo'
 
       # rhel 5.0 to 5.4 use sudo 1.6.9 which does not support
@@ -45,6 +47,7 @@ class sudo::params {
       $config_file_group = 'root'
     }
     suse: {
+      $package_source = false
       $package = 'sudo'
       $package_ensure = 'present'
       $config_file = '/etc/sudoers'
@@ -55,6 +58,7 @@ class sudo::params {
     solaris: {
       case $::operatingsystem {
         'OmniOS': {
+          $package_source = false
           $package = 'sudo'
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
@@ -65,6 +69,7 @@ class sudo::params {
         default: {
           case $::kernelrelease {
             '5.11': {
+              $package_source = false
               $package = 'pkg://solaris/security/sudo'
               $package_ensure = 'present'
               $config_file = '/etc/sudoers'
@@ -90,6 +95,7 @@ class sudo::params {
       }
     }
     freebsd: {
+      $package_source = false
       $package = 'security/sudo'
       $package_ensure = 'present'
       $config_file = '/usr/local/etc/sudoers'
@@ -98,6 +104,7 @@ class sudo::params {
       $config_file_group = 'wheel'
     }
     aix: {
+      $package_source = false
       $package = 'sudo'
       $package_ensure = 'present'
       $package_source = 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.9-6.aix53.lam.rpm'
@@ -107,6 +114,7 @@ class sudo::params {
       $config_file_group = 'system'
     }
     default: {
+      $package_source = false
       case $::operatingsystem {
         gentoo: {
           $package = 'sudo'
