@@ -3,6 +3,7 @@ class sudo::params {
 
   case $::osfamily {
     debian: {
+      $package_admin_file = false
       $package_source = false
       case $::operatingsystem {
         'Ubuntu': {
@@ -27,6 +28,7 @@ class sudo::params {
       $config_file_group = 'root'
     }
     redhat: {
+      $package_admin_file = false
       $package_source = false
       $package = 'sudo'
 
@@ -47,6 +49,7 @@ class sudo::params {
       $config_file_group = 'root'
     }
     suse: {
+      $package_admin_file = false
       $package_source = false
       $package = 'sudo'
       $package_ensure = 'present'
@@ -58,6 +61,7 @@ class sudo::params {
     solaris: {
       case $::operatingsystem {
         'OmniOS': {
+          $package_admin_file = false
           $package_source = false
           $package = 'sudo'
           $package_ensure = 'present'
@@ -69,6 +73,7 @@ class sudo::params {
         default: {
           case $::kernelrelease {
             '5.11': {
+              $package_admin_file = false
               $package_source = false
               $package = 'pkg://solaris/security/sudo'
               $package_ensure = 'present'
@@ -95,6 +100,7 @@ class sudo::params {
       }
     }
     freebsd: {
+      $package_admin_file = false
       $package_source = false
       $package = 'security/sudo'
       $package_ensure = 'present'
@@ -104,6 +110,7 @@ class sudo::params {
       $config_file_group = 'wheel'
     }
     aix: {
+      $package_admin_file = false
       $package_source = false
       $package = 'sudo'
       $package_ensure = 'present'
@@ -114,6 +121,7 @@ class sudo::params {
       $config_file_group = 'system'
     }
     default: {
+      $package_admin_file = false
       $package_source = false
       case $::operatingsystem {
         gentoo: {
