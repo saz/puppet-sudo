@@ -79,7 +79,7 @@ define sudo::conf(
     if is_array($content) {
       $content_real = join($content, "\n")
     } else {
-      $content_real = $content}
+      $content_real = $content
     }
 
   } else {
