@@ -30,7 +30,7 @@
 # Copyright 2013 Toni Schmidbauer
 #
 class sudo::package(
-  $package,
+  $package = '',
   $package_ensure = present,
   $package_source = '',
   $package_admin_file = '',
