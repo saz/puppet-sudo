@@ -6,7 +6,10 @@ describe 'sudo::conf', :type => :define do
 
   let :facts do
     {
-      :osfamily => 'Debian'
+      :lsbdistcodename => 'wheezy',
+      :operatingsystem => 'Debian',
+      :osfamily        => 'Debian',
+      :puppetversion   => '3.7.0',
     }
   end
 
