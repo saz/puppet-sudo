@@ -36,7 +36,11 @@ describe 'sudo' do
 
         let :facts do
           {
-            :osfamily        => osfamily,
+            :operatingsystem           => osfamily,
+            :operatingsystemrelease    => '7.0',
+            :operatingsystemmajrelease => '7',
+            :osfamily                  => osfamily,
+            :puppetversion             => '3.7.0',
           }
         end
 
@@ -78,8 +82,10 @@ describe 'sudo' do
       describe 'on RedHat 5.4' do
         let :facts do
           {
-            :osfamily               => 'RedHat',
-            :operatingsystemrelease => '5.4'
+            :osfamily                  => 'RedHat',
+            :operatingsystemrelease    => '5.4',
+            :operatingsystemmajrelease => '5',
+            :puppetversion             => '3.7.0',
           }
         end
 
@@ -102,7 +108,8 @@ describe 'sudo' do
 
         let :facts do
           {
-            :osfamily => 'AIX',
+            :osfamily      => 'AIX',
+            :puppetversion => '3.7.0',
           }
         end
 
@@ -143,8 +150,10 @@ describe 'sudo' do
 
         let :facts do
           {
+            :operatingsystem => 'Solaris',
             :osfamily        => 'Solaris',
             :kernelrelease   => '5.10',
+            :puppetversion   => '3.7.0',
           }
         end
 
@@ -186,8 +195,10 @@ describe 'sudo' do
 
         let :facts do
           {
+            :operatingsystem => 'Solaris',
             :osfamily        => 'Solaris',
             :kernelrelease   => '5.11',
+            :puppetversion   => '3.7.0',
           }
         end
 
