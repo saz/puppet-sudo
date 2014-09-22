@@ -32,8 +32,8 @@
 # Copyright 2013 Toni Schmidbauer
 #
 class sudo::package::aix (
-  $package,
-  $package_source,
+  $package = '',
+  $package_source = '',
   $package_ensure = 'present',
 
   ) {

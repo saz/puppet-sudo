@@ -33,7 +33,7 @@
 # Copyright 2013 Toni Schmidbauer
 #
 class sudo::package::solaris (
-  $package,
+  $package = '',
   $package_source     = '',
   $package_ensure     = 'present',
   $package_admin_file = '',

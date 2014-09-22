@@ -1,3 +1,5 @@
+#class sudo::params 
+#Set the paramters for the sudo module
 class sudo::params {
   $source_base = "puppet:///modules/${module_name}/"
 
