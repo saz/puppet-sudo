@@ -76,7 +76,12 @@ define sudo::conf(
   }
 
   if $content != undef {
-    $content_real = "${content}\n"
+    if is_array($content) {
+      $content_real = join($content, "\n")
+    } else {
+      $content_real = $content
+    }
+
   } else {
     $content_real = undef
   }
@@ -94,7 +99,7 @@ define sudo::conf(
     group   => $sudo::params::config_file_group,
     mode    => '0440',
     source  => $source,
-    content => $content_real,
+    content => "${content_real}\n",
     notify  => $notify_real,
   }
 
