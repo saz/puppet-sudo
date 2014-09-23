@@ -23,6 +23,8 @@ class sudo::params {
       }
       $package           = 'sudo'
       $package_ensure    = 'present'
+      $package_source    = ''
+      $package_admin_file = ''
       $config_file       = '/etc/sudoers'
       $config_dir        = '/etc/sudoers.d/'
       $config_file_group = 'root'
@@ -37,6 +39,8 @@ class sudo::params {
         /^5.[01234]/ => "latest",
         default     => "present",
       }
+      $package_source = ''
+      $package_admin_file = ''
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
       $source = $::operatingsystemrelease ? {
@@ -49,6 +53,8 @@ class sudo::params {
     suse: {
       $package = 'sudo'
       $package_ensure = 'present'
+      $package_source = ''
+      $package_admin_file = ''
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
       $source = "${source_base}sudoers.suse"
@@ -59,6 +65,8 @@ class sudo::params {
         'OmniOS': {
           $package = 'sudo'
           $package_ensure = 'present'
+          $package_source = ''
+          $package_admin_file = ''
           $config_file = '/etc/sudoers'
           $config_dir = '/etc/sudoers.d/'
           $source = "${source_base}sudoers.omnios"
@@ -69,6 +77,8 @@ class sudo::params {
             '5.11': {
               $package = 'pkg://solaris/security/sudo'
               $package_ensure = 'present'
+              $package_source = ''
+              $package_admin_file = ''
               $config_file = '/etc/sudoers'
               $config_dir = '/etc/sudoers.d/'
               $source = "${source_base}sudoers.solaris"
@@ -94,6 +104,8 @@ class sudo::params {
     freebsd: {
       $package = 'security/sudo'
       $package_ensure = 'present'
+      $package_source = ''
+      $package_admin_file = ''
       $config_file = '/usr/local/etc/sudoers'
       $config_dir = '/usr/local/etc/sudoers.d/'
       $source = "${source_base}sudoers.freebsd"
@@ -103,6 +115,7 @@ class sudo::params {
       $package = 'sudo'
       $package_ensure = 'present'
       $package_source = 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.9-6.aix53.lam.rpm'
+      $package_admin_file = ''
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d/'
       $source = "${source_base}sudoers.aix"
@@ -142,6 +155,8 @@ class sudo::params {
           fail("Unsupported platform: ${::osfamily}/${::operatingsystem}")
         }
       }
+      $package_source = ''
+      $package_admin_file = ''
     }
   }
 }
