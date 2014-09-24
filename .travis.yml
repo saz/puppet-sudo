@@ -16,11 +16,5 @@ env:
     - PUPPET_GEM_VERSION="~> 3.0.0"
     - PUPPET_GEM_VERSION="~> 3.3.0"
     - PUPPET_GEM_VERSION="~> 3.7.1"
-matrix:
-  include:
-    - rvm: 1.9.3
-      env: PUPPET_GEM_VERSION="~> 2.7.0"
-    - rvm: 2.0.0
-      env: PUPPET_GEM_VERSION="~> 3.3.0"
 notifications:
   email: false
