@@ -71,7 +71,7 @@ define sudo::conf(
 
   if $::osfamily == 'RedHat' {
     if (versioncmp($::sudoversion, '1.7.2p1') < 0) {
-      warning("Found sudo with version $::sudoversion, but at least version 1.7.2p1 is required!")
+      warning("Found sudo with version ${::sudoversion}, but at least version 1.7.2p1 is required!")
     }
   }
 

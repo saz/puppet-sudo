@@ -36,8 +36,8 @@ class sudo::params {
       # includedir, so we have to make sure sudo 1.7 (comes with rhel
       # 5.5) is installed.
       $package_ensure = $::operatingsystemrelease ? {
-        /^5.[01234]/ => "latest",
-        default     => "present",
+        /^5.[01234]/ => 'latest',
+        default      => 'present',
       }
       $package_source = ''
       $package_admin_file = ''
