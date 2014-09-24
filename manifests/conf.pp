@@ -80,10 +80,10 @@ define sudo::conf(
       $lines = join($content, "\n")
       $content_real = "${lines}\n"
     } else {
-      $content_lines = "${content}\n"
+      $content_real = "${content}\n"
     }
   } else {
-    $content_lines = undef
+    $content_real = undef
   }
 
   if $ensure == 'present' {
