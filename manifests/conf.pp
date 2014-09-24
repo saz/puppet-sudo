@@ -77,13 +77,13 @@ define sudo::conf(
 
   if $content != undef {
     if is_array($content) {
-      $content_real = join($content, "\n")
+      $lines = join($content, "\n")
+      $content_real = "${lines}\n"
     } else {
-      $content_real = $content
+      $content_lines = "${content}\n"
     }
-
   } else {
-    $content_real = undef
+    $content_lines = undef
   }
 
   if $ensure == 'present' {
@@ -99,7 +99,7 @@ define sudo::conf(
     group   => $sudo::params::config_file_group,
     mode    => '0440',
     source  => $source,
-    content => "${content_real}\n",
+    content => $content_real,
     notify  => $notify_real,
   }
 
