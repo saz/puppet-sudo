@@ -87,7 +87,8 @@ class sudo(
   $config_file         = $sudo::params::config_file,
   $config_file_replace = true,
   $config_dir          = $sudo::params::config_dir,
-  $source              = $sudo::params::source
+  $source              = $sudo::params::source,
+  $content             = undef
 ) inherits sudo::params {
 
 
@@ -111,13 +112,24 @@ class sudo(
     package_admin_file => $package_admin_file,
   }
 
+  $config_file_source = $content? {
+    ''      => $source,
+    default => undef,
+  }
+
+  $config_file_content = $content? {
+    ''      => undef,
+    default => template($content),
+  }
+
   file { $config_file:
     ensure  => $file_ensure,
     owner   => 'root',
     group   => $sudo::params::config_file_group,
     mode    => '0440',
     replace => $config_file_replace,
-    source  => $source,
+    source  => $config_file_source,
+    content => $config_file_content,
     require => Package[$package],
   }
 
