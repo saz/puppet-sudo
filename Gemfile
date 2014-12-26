@@ -8,7 +8,7 @@ group :development, :test do
   gem 'puppet-lint'
   gem 'puppetlabs_spec_helper'
   gem 'rake',                    '>=0.9.2.2'
-  gem 'rspec-puppet'
+  gem 'rspec-puppet', :github => 'rodjek/rspec-puppet'
 end
 
 gem 'hiera-puppet', :require => false
