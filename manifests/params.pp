@@ -112,6 +112,16 @@ class sudo::params {
       $source = "${source_base}sudoers.freebsd"
       $config_file_group = 'wheel'
     }
+    openbsd: {
+      $package = undef
+      $package_ensure = 'present'
+      $package_source = ''
+      $package_admin_file = ''
+      $config_file = '/etc/sudoers'
+      $config_dir = '/etc/sudoers.d/'
+      $source = "${source_base}sudoers.openbsd"
+      $config_file_group = 'wheel'
+    }
     aix: {
       $package = 'sudo'
       $package_ensure = 'present'
