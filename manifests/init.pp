@@ -151,9 +151,9 @@ class sudo(
   #
   #   http://projects.puppetlabs.com/issues/12345
   #
-  if (versioncmp($::puppetversion, '3') != -1) {
-    include 'sudo::configs'
-  }
+  #if (versioncmp($::puppetversion, '3') != -1) {
+  #  include 'sudo::configs'
+  #}
 
   anchor { 'sudo::begin': } ->
   Class['sudo::package']    ->
