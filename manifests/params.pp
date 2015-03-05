@@ -46,6 +46,7 @@ class sudo::params {
       $source = $::operatingsystemrelease ? {
         /^5/    => "${source_base}sudoers.rhel5",
         /^6/    => "${source_base}sudoers.rhel6",
+        /^7/    => "${source_base}sudoers.rhel7",
         default => "${source_base}sudoers.rhel6",
         }
       $config_file_group = 'root'
