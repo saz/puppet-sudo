@@ -88,7 +88,7 @@ class sudo::params {
             '5.10': {
               $package = 'TCMsudo'
               $package_ensure = 'present'
-              $package_source = 'http://www.sudo.ws/sudo/dist/packages/Solaris/10/TCMsudo-1.8.9p5-i386.pkg.gz'
+              $package_source = "http://www.sudo.ws/sudo/dist/packages/Solaris/10/TCMsudo-1.8.9p5-${::hardwareisa}.pkg.gz"
               $package_admin_file = '/var/sadm/install/admin/puppet'
               $config_file = '/etc/sudoers'
               $config_dir = '/etc/sudoers.d/'
