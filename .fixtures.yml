@@ -2,4 +2,4 @@ fixtures:
   symlinks:
     "sudo": "#{source_dir}"
   repositories:
-    stdlib: "http://github.com/puppetlabs/puppetlabs-stdlib.git"
+    stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
