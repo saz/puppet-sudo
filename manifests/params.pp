@@ -10,14 +10,10 @@ class sudo::params {
           $source = "${source_base}sudoers.ubuntu"
         }
         default: {
-
-          case $::lsbdistcodename {
-            'wheezy': {
-              $source = "${source_base}sudoers.wheezy"
-            }
-            default: {
-              $source = "${source_base}sudoers.deb"
-            }
+          if (0 + $::operatingsystemmajrelease >= 7) {
+            $source = "${source_base}sudoers.debian"
+          } else {
+            $source = "${source_base}sudoers.olddebian"
           }
         }
       }
