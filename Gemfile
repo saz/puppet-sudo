@@ -9,6 +9,7 @@ group :development, :test do
   gem 'puppetlabs_spec_helper'
   gem 'rake',                    '>=0.9.2.2'
   gem 'rspec-puppet'
+  gem 'metadata-json-lint',  :require => false
 end
 
 group :system_tests do
