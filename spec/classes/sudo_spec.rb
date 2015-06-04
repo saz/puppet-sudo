@@ -154,6 +154,7 @@ describe 'sudo' do
             :osfamily        => 'Solaris',
             :kernelrelease   => '5.10',
             :puppetversion   => '3.7.0',
+            :hardwareisa     => 'i386',
           }
         end
 
