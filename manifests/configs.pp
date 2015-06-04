@@ -20,7 +20,7 @@ class sudo::configs (
   $configs = hiera_hash('sudo::configs', $configs_hash)
 
   if !empty($configs) {
-    create_resources('::sudo::conf', $configs)
+    create_resources('sudo::conf', $configs)
   }
 
 }
