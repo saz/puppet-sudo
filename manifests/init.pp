@@ -67,7 +67,8 @@
 #     Default: auto-set, platform specific
 #
 # Actions:
-#   Installs sudo package and checks the state of sudoers file and sudoers.d directory.
+#   Installs sudo package and checks the state of sudoers file and
+#   sudoers.d directory.
 #
 # Requires:
 #   Nothing
