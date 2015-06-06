@@ -60,11 +60,17 @@ define sudo::conf(
   # sudo skip file name that contain a "."
   $dname = regsubst($name, '\.', '-', 'G')
 
+  if size("x${priority}") == 2 {
+    $priority_real = "0${priority}"
+  } else {
+    $priority_real = $priority
+  }
+
   # build current file name with path
   if $sudo_file_name != undef {
     $cur_file = "${sudo_config_dir_real}${sudo_file_name}"
   } else {
-    $cur_file = "${sudo_config_dir_real}${priority}_${dname}"
+    $cur_file = "${sudo_config_dir_real}${priority_real}_${dname}"
   }
 
   Class['sudo'] -> Sudo::Conf[$name]
@@ -92,7 +98,7 @@ define sudo::conf(
     $notify_real = undef
   }
 
-  file { "${priority}_${dname}":
+  file { "${priority_real}_${dname}":
     ensure  => $ensure,
     path    => $cur_file,
     owner   => 'root',
