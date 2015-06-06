@@ -135,7 +135,7 @@ class sudo::params {
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
           $config_dir = '/etc/sudoers.d/'
-          $source = "${source_base}sudoers.deb"
+          $source = "${source_base}sudoers.gentoo"
           $config_file_group = 'root'
         }
         archlinux: {

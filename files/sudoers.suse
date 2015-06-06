@@ -34,6 +34,8 @@
 ## Prevent environment variables from influencing programs in an
 ## unexpected or harmful way (CVE-2005-2959, CVE-2005-4158, CVE-2006-0151)
 Defaults always_set_home
+## Path that will be used for every command run from sudo
+Defaults secure_path="/usr/sbin:/usr/bin:/sbin:/bin"
 Defaults env_reset
 ## Change env_reset to !env_reset in previous line to keep all environment variables
 ## Following list will no longer be necessary after this change
