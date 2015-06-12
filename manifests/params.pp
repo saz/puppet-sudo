@@ -128,6 +128,16 @@ class sudo::params {
       $source = "${source_base}sudoers.aix"
       $config_file_group = 'system'
     }
+    darwin: {
+      $package = undef
+      $package_ensure = 'present'
+      $package_source = ''
+      $package_admin_file = ''
+      $config_file = '/etc/sudoers'
+      $config_dir = '/etc/sudoers.d/'
+      $source = "${source_base}sudoers.darwin"
+      $config_file_group = 'wheel'
+    }
     default: {
       case $::operatingsystem {
         gentoo: {
