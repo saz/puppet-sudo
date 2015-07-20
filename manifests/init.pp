@@ -119,7 +119,7 @@ class sudo(
     mode    => '0440',
     replace => $config_file_replace,
     source  => $source,
-    require => Package[$package],
+    require => Class['sudo::package'],
   }
 
   file { $config_dir:
@@ -130,7 +130,7 @@ class sudo(
     recurse => $purge,
     purge   => $purge,
     ignore  => $purge_ignore,
-    require => Package[$package],
+    require => Class['sudo::package'],
   }
 
   if $config_file_replace == false and $::osfamily == 'RedHat' and $::operatingsystemmajrelease == '5' {

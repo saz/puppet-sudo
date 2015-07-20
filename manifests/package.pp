@@ -44,7 +44,6 @@ class sudo::package(
         package_ensure => $package_ensure,
       }
     }
-    openbsd: {}
     solaris: {
       class { 'sudo::package::solaris':
         package            => $package,
@@ -54,8 +53,10 @@ class sudo::package(
       }
     }
     default: {
-      package { $package:
-        ensure => $package_ensure,
+      if $package != '' {
+        package { $package:
+          ensure => $package_ensure,
+        }
       }
     }
   }

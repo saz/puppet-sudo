@@ -109,7 +109,11 @@ class sudo::params {
       $config_file_group = 'wheel'
     }
     openbsd: {
-      $package = undef
+      if (versioncmp($::kernelversion, '5.8') < 0) {
+        $package = ''
+      } else {
+        $package = 'sudo'
+      }
       $package_ensure = 'present'
       $package_source = ''
       $package_admin_file = ''
