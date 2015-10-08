@@ -10,7 +10,8 @@ class sudo::params {
           $source = "${source_base}sudoers.ubuntu"
         }
         default: {
-          if (versioncmp($::operatingsystemmajrelease, '7') < 0) {
+          if ($::operatingsystemmajrelease =~ /\/sid/)
+          or (versioncmp($::operatingsystemmajrelease, '7') < 0) {
             $source = "${source_base}sudoers.debian"
           } else {
             $source = "${source_base}sudoers.olddebian"
