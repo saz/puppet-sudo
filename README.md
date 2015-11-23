@@ -154,6 +154,12 @@ sudo::conf { "foreman-proxy":
 }
 ```
 
+##### Use of LDAP along with sudo
+
+Sudo do not always include by default the support for LDAP.
+On Debian and Ubuntu a special package sudo-ldap will be used.
+On Gentoo there is also the needing to include portage module by Gentoo. If not present, only a notification will be shown.
+
 ### sudo::conf / sudo::configs notes
 * You can pass template() through content parameter.
 * One of content or source must be set.
@@ -163,6 +169,7 @@ sudo::conf { "foreman-proxy":
 | Parameter           | Type    | Default     | Description |
 | :--------------     | :------ |:----------- | :---------- |
 | enable              | boolean | true        | Set this to remove or purge all sudoers configs |
+| ldap_enable         | boolean | false       | Set this to add support to LDAP |
 | package             | string  | OS specific | Set package name _(for unsupported platforms)_ |
 | package_ensure      | string  | present     | latest, absent, or a specific package version |
 | package_source      | string  | OS specific | Set package source _(for unsupported platforms)_ |

@@ -79,6 +79,7 @@
 # [Remember: No empty lines between comments and class definition]
 class sudo(
   $enable              = true,
+  $ldap_enable         = false,
   $package             = $sudo::params::package,
   $package_ensure      = $sudo::params::package_ensure,
   $package_source      = $sudo::params::package_source,
@@ -138,6 +139,19 @@ class sudo(
       changes => ['set /files/etc/sudoers/#includedir /etc/sudoers.d'],
       incl    => $config_file,
       lens    => 'FixedSudoers.lns',
+    }
+  }
+  
+  if $ldap_enable == true and $::operatingsystem == 'Gentoo' {
+    if defined( Class["portage"] ) {
+      Class['sudo'] -> Class['portage']
+      package_use { 'app-admin/sudo':
+        use     => ['ldap'],
+        target  => 'sudo-flags',
+        ensure  => present,
+      }
+    } else {
+      notify {'portage package needed to define ldap use on sudo':}
     }
   }
 
