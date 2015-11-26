@@ -17,7 +17,11 @@ class sudo::params {
           }
         }
       }
-      $package           = 'sudo'
+      if ( $ldap_enable == 'false' ) {
+        $package         = 'sudo'
+      } else {
+        $package         = 'sudo-ldap'
+      }
       $package_ensure    = 'present'
       $package_source    = ''
       $package_admin_file = ''
@@ -26,6 +30,7 @@ class sudo::params {
       $config_file_group = 'root'
     }
     redhat: {
+      # in redhat sudo package is already compiled for ldap support
       $package = 'sudo'
 
       # rhel 5.0 to 5.4 use sudo 1.6.9 which does not support
