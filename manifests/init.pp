@@ -143,7 +143,7 @@ class sudo(
   }
   
   if $ldap_enable == true and $::operatingsystem == 'Gentoo' {
-    if defined( Class["portage"] ) {
+    if defined( '::portage' ) {
       Class['sudo'] -> Class['portage']
       package_use { 'app-admin/sudo':
         use     => ['ldap'],
