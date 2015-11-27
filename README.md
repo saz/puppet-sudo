@@ -175,7 +175,6 @@ sudo::conf { "foreman-proxy":
 | Parameter           | Type    | Default     | Description |
 | :--------------     | :------ |:----------- | :---------- |
 | enable              | boolean | true        | Set this to remove or purge all sudoers configs |
-| ldap_enable         | boolean | false       | Set this to add support to LDAP |
 | package             | string  | OS specific | Set package name _(for unsupported platforms)_ |
 | package_ensure      | string  | present     | latest, absent, or a specific package version |
 | package_source      | string  | OS specific | Set package source _(for unsupported platforms)_ |
@@ -185,6 +184,7 @@ sudo::conf { "foreman-proxy":
 | config_file_replace | boolean | true        | Replace config file with module config file |
 | config_dir          | string  | OS specific | Set config_dir _(for unsupported platforms)_ |
 | source              | string  | OS specific | Set source _(for unsupported platforms)_ |
+| ldap_enable         | boolean | false       | Add support to LDAP |
 
 ## sudo::conf class / sudo::configs hash parameters
 

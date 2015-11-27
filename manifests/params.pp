@@ -1,4 +1,4 @@
-#class sudo::params 
+#class sudo::params
 #Set the paramters for the sudo module
 class sudo::params {
   $source_base = "puppet:///modules/${module_name}/"
@@ -17,11 +17,8 @@ class sudo::params {
           }
         }
       }
-      if ( $ldap_enable == 'false' ) {
-        $package         = 'sudo'
-      } else {
-        $package         = 'sudo-ldap'
-      }
+      $package = 'sudo'
+      $package_ldap = 'sudo-ldap'
       $package_ensure    = 'present'
       $package_source    = ''
       $package_admin_file = ''
@@ -30,8 +27,9 @@ class sudo::params {
       $config_file_group = 'root'
     }
     redhat: {
-      # in redhat sudo package is already compiled for ldap support
       $package = 'sudo'
+      # in redhat sudo package is already compiled for ldap support
+      $package_ldap = $package
 
       # rhel 5.0 to 5.4 use sudo 1.6.9 which does not support
       # includedir, so we have to make sure sudo 1.7 (comes with rhel
@@ -137,6 +135,7 @@ class sudo::params {
       case $::operatingsystem {
         gentoo: {
           $package = 'sudo'
+          $package_ldap = $package
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
           $config_dir = '/etc/sudoers.d/'
