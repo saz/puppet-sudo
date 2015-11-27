@@ -51,6 +51,7 @@ class sudo::package(
           fail ('portage package needed to define ldap use on sudo')
         }
       }
+      default: { }
     }
   }
 
