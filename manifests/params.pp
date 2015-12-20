@@ -76,7 +76,7 @@ class sudo::params {
           $package_admin_file = ''
           $config_file = '/opt/local/etc/sudoers'
           $config_dir = '/opt/local/etc/sudoers.d/'
-          $source = "${source_base}sudoers.solaris"
+          $source = "${source_base}sudoers.smartos"
           $config_file_group = 'root'
         }
         default: {
