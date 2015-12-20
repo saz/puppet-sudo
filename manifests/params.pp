@@ -1,4 +1,4 @@
-#class sudo::params 
+#class sudo::params
 #Set the paramters for the sudo module
 class sudo::params {
   $source_base = "puppet:///modules/${module_name}/"
@@ -67,6 +67,16 @@ class sudo::params {
           $config_file = '/etc/sudoers'
           $config_dir = '/etc/sudoers.d/'
           $source = "${source_base}sudoers.omnios"
+          $config_file_group = 'root'
+        }
+        'SmartOS': {
+          $package = 'sudo'
+          $package_ensure = 'present'
+          $package_source = ''
+          $package_admin_file = ''
+          $config_file = '/opt/local/etc/sudoers'
+          $config_dir = '/opt/local/etc/sudoers.d/'
+          $source = "${source_base}sudoers.solaris"
           $config_file_group = 'root'
         }
         default: {
