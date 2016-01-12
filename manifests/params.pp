@@ -1,4 +1,4 @@
-#class sudo::params 
+#class sudo::params
 #Set the paramters for the sudo module
 class sudo::params {
   $source_base = "puppet:///modules/${module_name}/"
@@ -22,6 +22,7 @@ class sudo::params {
       $package_source    = ''
       $package_admin_file = ''
       $config_file       = '/etc/sudoers'
+      $includedirsudoers = false
       $config_dir        = '/etc/sudoers.d/'
       $config_file_group = 'root'
     }
@@ -38,6 +39,10 @@ class sudo::params {
       $package_source = ''
       $package_admin_file = ''
       $config_file = '/etc/sudoers'
+      $includedirsudoers = $::operatingsystemmajrelease ? {
+        '5'     => true,
+        default => false,
+      }
       $config_dir = '/etc/sudoers.d/'
       $source = $::operatingsystemrelease ? {
         /^5/    => "${source_base}sudoers.rhel5",
@@ -53,6 +58,7 @@ class sudo::params {
       $package_source = ''
       $package_admin_file = ''
       $config_file = '/etc/sudoers'
+      $includedirsudoers = false
       $config_dir = '/etc/sudoers.d/'
       $source = "${source_base}sudoers.suse"
       $config_file_group = 'root'
@@ -65,6 +71,7 @@ class sudo::params {
           $package_source = ''
           $package_admin_file = ''
           $config_file = '/etc/sudoers'
+          $includedirsudoers = false
           $config_dir = '/etc/sudoers.d/'
           $source = "${source_base}sudoers.omnios"
           $config_file_group = 'root'
@@ -77,6 +84,7 @@ class sudo::params {
               $package_source = ''
               $package_admin_file = ''
               $config_file = '/etc/sudoers'
+              $includedirsudoers = false
               $config_dir = '/etc/sudoers.d/'
               $source = "${source_base}sudoers.solaris"
               $config_file_group = 'root'
@@ -87,6 +95,7 @@ class sudo::params {
               $package_source = "http://www.sudo.ws/sudo/dist/packages/Solaris/10/TCMsudo-1.8.9p5-${::hardwareisa}.pkg.gz"
               $package_admin_file = '/var/sadm/install/admin/puppet'
               $config_file = '/etc/sudoers'
+              $includedirsudoers = false
               $config_dir = '/etc/sudoers.d/'
               $source = "${source_base}sudoers.solaris"
               $config_file_group = 'root'
@@ -104,6 +113,7 @@ class sudo::params {
       $package_source = ''
       $package_admin_file = ''
       $config_file = '/usr/local/etc/sudoers'
+      $includedirsudoers = false
       $config_dir = '/usr/local/etc/sudoers.d/'
       $source = "${source_base}sudoers.freebsd"
       $config_file_group = 'wheel'
@@ -114,6 +124,7 @@ class sudo::params {
       $package_source = ''
       $package_admin_file = ''
       $config_file = '/etc/sudoers'
+      $includedirsudoers = false
       $config_dir = '/etc/sudoers.d/'
       $source = "${source_base}sudoers.openbsd"
       $config_file_group = 'wheel'
@@ -124,6 +135,7 @@ class sudo::params {
       $package_source = 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.9-6.aix53.lam.rpm'
       $package_admin_file = ''
       $config_file = '/etc/sudoers'
+      $includedirsudoers = false
       $config_dir = '/etc/sudoers.d/'
       $source = "${source_base}sudoers.aix"
       $config_file_group = 'system'
@@ -134,6 +146,7 @@ class sudo::params {
           $package = 'sudo'
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
+          $includedirsudoers = false
           $config_dir = '/etc/sudoers.d/'
           $source = "${source_base}sudoers.gentoo"
           $config_file_group = 'root'
@@ -142,6 +155,7 @@ class sudo::params {
           $package = 'sudo'
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
+          $includedirsudoers = false
           $config_dir = '/etc/sudoers.d/'
           $source = "${source_base}sudoers.archlinux"
           $config_file_group = 'root'
@@ -150,6 +164,7 @@ class sudo::params {
           $package = 'sudo'
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
+          $includedirsudoers = false
           $config_dir = '/etc/sudoers.d/'
           $source = $::operatingsystemrelease ? {
             /^5/    => "${source_base}sudoers.rhel5",

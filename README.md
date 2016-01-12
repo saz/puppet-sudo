@@ -170,6 +170,7 @@ sudo::conf { "foreman-proxy":
 | purge_ignore        | string  | undef       | Files excluded from purging in config_dir |
 | config_file         | string  | OS specific | Set config_file _(for unsupported platforms)_ |
 | config_file_replace | boolean | true        | Replace config file with module config file |
+| includedirsudoers   | boolean | OS specific | Add #includedir /etc/sudoers.d with augeas |
 | config_dir          | string  | OS specific | Set config_dir _(for unsupported platforms)_ |
 | source              | string  | OS specific | Set source _(for unsupported platforms)_ |
 

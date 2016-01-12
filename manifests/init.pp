@@ -54,6 +54,10 @@
 #     Replace configuration file with that one delivered with this module
 #     Default: true
 #
+#   [*includedirsudoers*]
+#     Add #includedir /etc/sudoers.d to the end of sudoers, if not config_file_replace
+#     Default: true if RedHat 5.x
+#
 #   [*config_dir*]
 #     Main configuration directory
 #     Only set this, if your platform is not supported or you know,
@@ -87,6 +91,7 @@ class sudo(
   $purge_ignore        = undef,
   $config_file         = $sudo::params::config_file,
   $config_file_replace = true,
+  $includedirsudoers   = $sudo::params::includedirsudoers,
   $config_dir          = $sudo::params::config_dir,
   $source              = $sudo::params::source
 ) inherits sudo::params {
@@ -133,7 +138,7 @@ class sudo(
     require => Package[$package],
   }
 
-  if $config_file_replace == false and $::osfamily == 'RedHat' and $::operatingsystemmajrelease == '5' {
+  if $config_file_replace == false and $includedirsudoers {
     augeas { 'includedirsudoers':
       changes => ['set /files/etc/sudoers/#includedir /etc/sudoers.d'],
       incl    => $config_file,
