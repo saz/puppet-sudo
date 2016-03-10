@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "summary": "Manage sudo configuration via Puppet",
   "source": "https://github.com/saz/puppet-sudo",
-  "project_page": "https://forge.puppetlabs.com/examplecorp/mymodule",
+  "project_page": "https://forge.puppetlabs.com/saz/sudo",
   "issues_url": "https://github.com/saz/puppet-sudo/issues",
   "tags": ["sudo"],
   "operatingsystem_support": [
