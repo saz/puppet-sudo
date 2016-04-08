@@ -54,9 +54,7 @@ class sudo::package(
       }
     }
     default: {
-      package { $package:
-        ensure => $package_ensure,
-      }
+      ensure_packages($package)
     }
   }
 }
