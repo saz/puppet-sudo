@@ -118,7 +118,9 @@ define sudo::conf(
       '/usr/bin',
       '/usr/sbin',
       '/usr/local/bin',
-      '/usr/local/sbin'
+      '/usr/local/sbin',
+      '/opt/local/sbin/',
+      '/opt/local/bin/'
     ],
   }
 }
