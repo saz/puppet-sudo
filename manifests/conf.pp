@@ -53,7 +53,7 @@ define sudo::conf(
   # if it is not provided. $sudo::params isn't included before
   # the parameters are loaded in.
   $sudo_config_dir_real = $sudo_config_dir ? {
-    undef            => $sudo::params::config_dir,
+    undef            => $sudo::config_dir,
     $sudo_config_dir => $sudo_config_dir
   }
 
