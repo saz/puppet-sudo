@@ -66,6 +66,10 @@
 #     what you're doing.
 #     Default: auto-set, platform specific
 #
+#   [*ldap_enable*]
+#     Enable ldap support on the package
+#     Default: false
+#
 # Actions:
 #   Installs sudo package and checks the state of sudoers file and
 #   sudoers.d directory.
@@ -79,7 +83,8 @@
 # [Remember: No empty lines between comments and class definition]
 class sudo(
   $enable              = true,
-  $package             = $sudo::params::package,
+  $package_default     = $sudo::params::package,
+  $package_ldap        = $sudo::params::package_ldap,
   $package_ensure      = $sudo::params::package_ensure,
   $package_source      = $sudo::params::package_source,
   $package_admin_file  = $sudo::params::package_admin_file,
@@ -88,7 +93,8 @@ class sudo(
   $config_file         = $sudo::params::config_file,
   $config_file_replace = true,
   $config_dir          = $sudo::params::config_dir,
-  $source              = $sudo::params::source
+  $source              = $sudo::params::source,
+  $ldap_enable         = false,
 ) inherits sudo::params {
 
 
@@ -105,11 +111,27 @@ class sudo(
     default: { fail('no $enable is set') }
   }
 
+  validate_bool($ldap_enable)
+  case $ldap_enable {
+    true: {
+      if $package_ldap == undef {
+        fail('on your os ldap support for sudo is not yet supported')
+      }
+      $package = $package_ldap
+    }
+    false: {
+      $package = $package_default
+    }
+    default: { fail('no $ldap_enable is set') }
+  }
+
+
   class { 'sudo::package':
     package            => $package,
     package_ensure     => $package_ensure,
     package_source     => $package_source,
     package_admin_file => $package_admin_file,
+    ldap_enable        => $ldap_enable,
   }
 
   file { $config_file:

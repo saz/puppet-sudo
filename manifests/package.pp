@@ -34,7 +34,26 @@ class sudo::package(
   $package_ensure = present,
   $package_source = '',
   $package_admin_file = '',
+  $ldap_enable = false,
   ) {
+
+  if $ldap_enable == true {
+    case $::osfamily {
+      'Gentoo': {
+        if defined( '::portage' ) {
+          Class['sudo'] -> Class['portage']
+          package_use { 'app-admin/sudo':
+            ensure => present,
+            use    => ['ldap'],
+            target => 'sudo-flags',
+          }
+        } else {
+          fail ('portage package needed to define ldap use on sudo')
+        }
+      }
+      default: { }
+    }
+  }
 
   case $::osfamily {
     aix: {

@@ -35,6 +35,18 @@ If this is not what you're expecting, set `purge` and/or `config_file_replace` t
     }
 ```
 
+#### Use LDAP along with sudo
+
+Sudo do not always include by default the support for LDAP.
+On Debian and Ubuntu a special package sudo-ldap will be used.
+On Gentoo there is also the needing to include [puppet portage module by Gentoo](https://forge.puppetlabs.com/gentoo/portage). If not present, only a notification will be shown.
+
+```puppet
+    class { 'sudo':
+      ldap_enable         => true,
+    }
+```
+
 ### Adding sudoers configuration
 
 #### Using Code
@@ -172,6 +184,7 @@ sudo::conf { "foreman-proxy":
 | config_file_replace | boolean | true        | Replace config file with module config file |
 | config_dir          | string  | OS specific | Set config_dir _(for unsupported platforms)_ |
 | source              | string  | OS specific | Set source _(for unsupported platforms)_ |
+| ldap_enable         | boolean | false       | Add support to LDAP |
 
 ## sudo::conf class / sudo::configs hash parameters
 
