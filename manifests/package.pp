@@ -45,6 +45,7 @@ class sudo::package(
       }
     }
     openbsd: {}
+    darwin: {}
     solaris: {
       class { 'sudo::package::solaris':
         package            => $package,
