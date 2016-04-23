@@ -137,7 +137,7 @@ class sudo(
     augeas { 'includedirsudoers':
       changes => ['set /files/etc/sudoers/#includedir /etc/sudoers.d'],
       incl    => $config_file,
-      lens    => 'FixedSudoers.lns',
+      lens    => 'Sudoers.lns',
     }
   }
 
