@@ -64,6 +64,7 @@ class sudo::params {
       case $::operatingsystem {
         'OmniOS': {
           $package = 'sudo'
+          $package_ldap = undef
           $package_ensure = 'present'
           $package_source = ''
           $package_admin_file = ''
@@ -74,6 +75,7 @@ class sudo::params {
         }
         'SmartOS': {
           $package = 'sudo'
+          $package_ldap = undef
           $package_ensure = 'present'
           $package_source = ''
           $package_admin_file = ''
@@ -86,6 +88,7 @@ class sudo::params {
           case $::kernelrelease {
             '5.11': {
               $package = 'pkg://solaris/security/sudo'
+              $package_ldap = undef
               $package_ensure = 'present'
               $package_source = ''
               $package_admin_file = ''
@@ -96,6 +99,7 @@ class sudo::params {
             }
             '5.10': {
               $package = 'TCMsudo'
+              $package_ldap = undef
               $package_ensure = 'present'
               $package_source = "http://www.sudo.ws/sudo/dist/packages/Solaris/10/TCMsudo-1.8.9p5-${::hardwareisa}.pkg.gz"
               $package_admin_file = '/var/sadm/install/admin/puppet'
@@ -133,6 +137,7 @@ class sudo::params {
     }
     aix: {
       $package = 'sudo'
+      $package_ldap = undef
       $package_ensure = 'present'
       $package_source = 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.9-6.aix53.lam.rpm'
       $package_admin_file = ''
