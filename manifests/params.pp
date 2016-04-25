@@ -10,7 +10,9 @@ class sudo::params {
           $source = "${source_base}sudoers.ubuntu"
         }
         default: {
-          if ($::operatingsystemmajrelease =~ /Kali/) or (versioncmp($::operatingsystemmajrelease, '7') >= 0) {
+          if (versioncmp($::operatingsystemmajrelease, '7') >= 0) or
+             ($::operatingsystemmajrelease =~ /\/sid/) or
+             ($::operatingsystemmajrelease =~ /Kali/) {
             $source = "${source_base}sudoers.debian"
           } else {
             $source = "${source_base}sudoers.olddebian"
