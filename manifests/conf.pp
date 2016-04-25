@@ -110,7 +110,7 @@ define sudo::conf(
   }
 
   exec {"sudo-syntax-check for file ${cur_file}":
-    command     => "visudo -c -f ${cur_file} || ( rm -f '${cur_file}' && exit 1)",
+    command     => "visudo -c -f '${cur_file}' || ( rm -f '${cur_file}' && exit 1)",
     refreshonly => true,
     path        => [
       '/bin',
