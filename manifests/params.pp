@@ -11,8 +11,8 @@ class sudo::params {
         }
         default: {
           if (versioncmp($::operatingsystemmajrelease, '7') >= 0) or
-             ($::operatingsystemmajrelease =~ /\/sid/) or
-             ($::operatingsystemmajrelease =~ /Kali/) {
+            ($::operatingsystemmajrelease =~ /\/sid/) or
+            ($::operatingsystemmajrelease =~ /Kali/) {
             $source = "${source_base}sudoers.debian"
           } else {
             $source = "${source_base}sudoers.olddebian"
