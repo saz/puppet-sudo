@@ -28,7 +28,7 @@ RSpec.configure do |c|
     puppet_module_install(:source => proj_root, :module_name => 'sudo')
     hosts.each do |host|
       shell("/bin/touch #{default['puppetpath']}/hiera.yaml")
-      shell('puppet module install puppetlabs-stdlib --version >= 2.3.0', { :acceptable_exit_codes => [0] })
+      shell('puppet module install puppetlabs-stdlib --version >= 2.6.0', { :acceptable_exit_codes => [0] })
     end
   end
 end
