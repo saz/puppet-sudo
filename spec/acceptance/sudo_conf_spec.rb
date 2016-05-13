@@ -18,6 +18,13 @@ describe 'sudo::conf class' do
         membership => minimum,
       }
       ->
+      user { 'nosudoguy' :
+        home => '/home/nosudoguy',
+        shell => '/bin/bash',
+        managehome => true,
+        membership => minimum,
+      }
+      ->
       class {'sudo':
         purge               => false,
         config_file_replace => false,
@@ -33,8 +40,14 @@ describe 'sudo::conf class' do
       apply_manifest(pp, :catch_failures => true)
     end
 
-    describe command("su - janedoe -c 'echo Hello World'") do
+    describe command("su - janedoe -c 'sudo echo Hello World'") do
       its(:stdout) { should match /Hello World/ }
+      its(:exit_status) { should eq 0 }
+    end
+
+    describe command("su - nosudoguy -c 'sudo echo Hello World'") do
+      its(:stderr) { should match /no tty present and no askpass program specified/ }
+      its(:exit_status) { should eq 1 }
     end
   end
 end
