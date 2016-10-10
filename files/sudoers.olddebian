@@ -1,3 +1,5 @@
+# file managed by puppet (unless config_file_replace=false)
+#
 ## sudoers file.
 ##
 ## This file MUST be edited with the 'visudo' command as root.
