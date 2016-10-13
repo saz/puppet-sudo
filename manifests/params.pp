@@ -148,7 +148,7 @@ class sudo::params {
       $source = "${source_base}sudoers.aix"
       $config_file_group = 'system'
     }
-    darwin: {
+    Darwin: {
       $package = undef
       $package_ensure = 'present'
       $package_source = ''
