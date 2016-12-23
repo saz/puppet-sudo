@@ -42,6 +42,7 @@ define sudo::conf(
   $priority        = 10,
   $content         = undef,
   $source          = undef,
+  $template        = undef,
   $sudo_config_dir = undef,
   $sudo_file_name  = undef
   ) {
@@ -88,6 +89,8 @@ define sudo::conf(
     } else {
       $content_real = "${content}\n"
     }
+  } elsif $template != undef {
+    $content_real = template("${template}")
   } else {
     $content_real = undef
   }
