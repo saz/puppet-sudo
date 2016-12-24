@@ -90,7 +90,7 @@ define sudo::conf(
       $content_real = "${content}\n"
     }
   } elsif $template != undef {
-    $content_real = template("${template}")
+    $content_real = template($template)
   } else {
     $content_real = undef
   }
