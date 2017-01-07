@@ -4,7 +4,7 @@ class sudo::params {
   $source_base = "puppet:///modules/${module_name}/"
 
   case $::osfamily {
-    debian: {
+    'Debian': {
       case $::operatingsystem {
         'Ubuntu': {
           $source = "${source_base}sudoers.ubuntu"
@@ -28,7 +28,7 @@ class sudo::params {
       $config_dir        = '/etc/sudoers.d/'
       $config_file_group = 'root'
     }
-    redhat: {
+    'RedHat': {
       $package = 'sudo'
       # in redhat sudo package is already compiled for ldap support
       $package_ldap = $package
@@ -52,7 +52,7 @@ class sudo::params {
         }
       $config_file_group = 'root'
     }
-    suse: {
+    'Suse': {
       $package = 'sudo'
       $package_ensure = 'present'
       $package_source = ''
@@ -62,7 +62,7 @@ class sudo::params {
       $source = "${source_base}sudoers.suse"
       $config_file_group = 'root'
     }
-    solaris: {
+    'Solaris': {
       case $::operatingsystem {
         'OmniOS': {
           $package = 'sudo'
@@ -117,7 +117,7 @@ class sudo::params {
         }
       }
     }
-    freebsd: {
+    'FreeBSD': {
       $package = 'security/sudo'
       $package_ensure = 'present'
       $package_source = ''
@@ -127,7 +127,7 @@ class sudo::params {
       $source = "${source_base}sudoers.freebsd"
       $config_file_group = 'wheel'
     }
-    openbsd: {
+    'OpenBSD': {
       $package = undef
       $package_ensure = 'present'
       $package_source = ''
@@ -137,7 +137,7 @@ class sudo::params {
       $source = "${source_base}sudoers.openbsd"
       $config_file_group = 'wheel'
     }
-    aix: {
+    'AIX': {
       $package = 'sudo'
       $package_ldap = undef
       $package_ensure = 'present'
@@ -148,7 +148,7 @@ class sudo::params {
       $source = "${source_base}sudoers.aix"
       $config_file_group = 'system'
     }
-    darwin: {
+    'Darwin': {
       $package = undef
       $package_ensure = 'present'
       $package_source = ''
@@ -160,7 +160,7 @@ class sudo::params {
     }
     default: {
       case $::operatingsystem {
-        gentoo: {
+        'Gentoo': {
           $package = 'sudo'
           $package_ldap = $package
           $package_ensure = 'present'
@@ -169,7 +169,7 @@ class sudo::params {
           $source = "${source_base}sudoers.gentoo"
           $config_file_group = 'root'
         }
-        archlinux: {
+        'Archlinux': {
           $package = 'sudo'
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
@@ -177,7 +177,7 @@ class sudo::params {
           $source = "${source_base}sudoers.archlinux"
           $config_file_group = 'root'
         }
-        amazon: {
+        'Amazon': {
           $package = 'sudo'
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
