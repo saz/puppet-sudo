@@ -6,7 +6,6 @@ RSpec.configure do |c|
   c.before :each do
     # Ensure that we don't accidentally cache facts and environment
     # between test cases.
-#    Facter::Util::Loader.any_instance.stubs(:load_all)
     Facter.clear
     Facter.clear_messages
 
