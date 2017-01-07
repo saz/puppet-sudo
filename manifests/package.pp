@@ -74,7 +74,7 @@ class sudo::package(
       }
     }
     default: {
-      ensure_packages($package)
+      ensure_packages([$package])
     }
   }
 }
