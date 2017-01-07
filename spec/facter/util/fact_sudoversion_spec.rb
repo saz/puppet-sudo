@@ -7,7 +7,7 @@ describe Facter::Util::Fact do
 
   describe 'sudoversion' do
     context 'with value' do
-      before :each do
+      before do
         Facter::Util::Resolution.stubs(:which).with('sudo').returns(true)
         Facter::Util::Resolution.stubs(:exec).with('sudo -V 2>&1').returns('Sudo version 1.7.10p9')
       end
@@ -17,4 +17,3 @@ describe Facter::Util::Fact do
     end
   end
 end
-
