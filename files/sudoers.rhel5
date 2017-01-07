@@ -1,3 +1,5 @@
+# file managed by puppet (unless config_file_replace=false)
+#
 ## Sudoers allows particular users to run various commands as
 ## the root user, without needing the root password.
 ##

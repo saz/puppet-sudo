@@ -32,7 +32,7 @@ describe 'sudo::conf', :type => :define do
 
     it { should contain_file(filename).with({
         'ensure'  => 'present',
-        'content' => "%admins ALL=(ALL) NOPASSWD: ALL\n",
+        'content' => "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
         'owner'   => 'root',
         'group'   => 'root',
         'path'    => file_path,
@@ -73,7 +73,7 @@ describe 'sudo::conf', :type => :define do
 
     it { should contain_file(filename).with({
         'ensure'  => 'present',
-        'content' => "%admins ALL=(ALL) NOPASSWD: ALL\n",
+        'content' => "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
         'owner'   => 'root',
         'group'   => 'root',
         'path'    => file_path,
@@ -106,7 +106,7 @@ describe 'sudo::conf', :type => :define do
 
     it { should contain_file(filename).with({
         'ensure'  => 'absent',
-        'content' => "%admins ALL=(ALL) NOPASSWD: ALL\n",
+        'content' => "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
         'owner'   => 'root',
         'group'   => 'root',
         'path'    => file_path,
@@ -130,7 +130,7 @@ describe 'sudo::conf', :type => :define do
 
     it { should contain_file(filename).with({
         'ensure'  => 'absent',
-        'content' => "%admins ALL=(ALL) NOPASSWD: ALL\n",
+        'content' => "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
         'owner'   => 'root',
         'group'   => 'root',
         'path'    => file_path,
