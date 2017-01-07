@@ -1,10 +1,9 @@
 require 'spec_helper_acceptance'
 
 describe 'sudo class' do
-
   context 'default parameters' do
     # Using puppet_apply as a helper
-    it 'should work with no errors' do
+    it 'works with no errors' do
       pp = <<-EOS
       class { 'sudo': }
       EOS

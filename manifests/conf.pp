@@ -46,7 +46,7 @@ define sudo::conf(
   $sudo_file_name  = undef
   ) {
 
-  include sudo
+    include ::sudo
 
   # Hack to allow the user to set the config_dir from the
   # sudo::config parameter, but default to $sudo::params::config_dir
@@ -120,7 +120,7 @@ define sudo::conf(
       '/usr/local/bin',
       '/usr/local/sbin',
       '/opt/local/sbin/',
-      '/opt/local/bin/'
+      '/opt/local/bin/',
     ],
   }
 }
