@@ -2,8 +2,8 @@
 #Set the paramters for the sudo module
 class sudo::params {
   $source_base = "puppet:///modules/${module_name}/"
-
-  case $::osfamily {
+  $osfamily_lc = downcase($::osfamily)
+  case $osfamily_lc {
     debian: {
       case $::operatingsystem {
         'Ubuntu': {
