@@ -63,7 +63,6 @@ class sudo::package(
         package_ensure => $package_ensure,
       }
     }
-    'OpenBSD': {}
     'Darwin': {}
     'Solaris': {
       class { '::sudo::package::solaris':
@@ -74,7 +73,9 @@ class sudo::package(
       }
     }
     default: {
-      ensure_packages([$package])
+      if $package != '' {
+        ensure_packages([$package], {'ensure' => $package_ensure})
+      }
     }
   }
 }
