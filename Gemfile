@@ -37,7 +37,7 @@ group :development do
 end
 
 group :system_tests do
-  gem 'beaker', '~>2.51', :require => false
+  gem 'beaker',           :require => false
   gem 'beaker-rspec',     :require => false
   gem 'serverspec',       :require => false
   gem 'beaker-puppet_install_helper', require: false
