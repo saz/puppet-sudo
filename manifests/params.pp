@@ -59,6 +59,7 @@ class sudo::params {
     }
     'Suse': {
       $package = 'sudo'
+      $package_ldap = $package
       $package_ensure = 'present'
       $package_source = ''
       $package_admin_file = ''
@@ -128,6 +129,7 @@ class sudo::params {
     }
     'FreeBSD': {
       $package = 'security/sudo'
+      $package_ldap = undef
       $package_ensure = 'present'
       $package_source = ''
       $package_admin_file = ''
@@ -139,6 +141,7 @@ class sudo::params {
     }
     'OpenBSD': {
       $package = undef
+      $package_ldap = undef
       $package_ensure = 'present'
       $package_source = ''
       $package_admin_file = ''
@@ -162,6 +165,7 @@ class sudo::params {
     }
     'Darwin': {
       $package = undef
+      $package_ldap = undef
       $package_ensure = 'present'
       $package_source = ''
       $package_admin_file = ''
@@ -184,6 +188,7 @@ class sudo::params {
         }
         'Archlinux': {
           $package = 'sudo'
+          $package_ldap = $package
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
           $includedirsudoers = false
@@ -193,6 +198,7 @@ class sudo::params {
         }
         'Amazon': {
           $package = 'sudo'
+          $package_ldap = $package
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
           $includedirsudoers = false
