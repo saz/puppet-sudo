@@ -23,34 +23,32 @@ describe 'sudo::package' do
     let :params do
       {
         :package        => 'sudo',
-        :package_ensure => 'present',
+        :package_ensure => 'present'
       }
-
     end
     let :facts do
       {
         :osfamily      => 'OpenBSD',
-        :kernelversion => '5.8',
+        :kernelversion => '5.8'
       }
     end
 
-    it {
-      should contain_package('sudo').with('ensure' => 'present')
-    }
+    it do
+      is_expected.to contain_package('sudo').with('ensure' => 'present')
+    end
   end
 
   describe 'on supported osfamily: OpenBSD 5.7' do
-
     let :facts do
       {
         :osfamily      => 'OpenBSD',
-        :kernelversion => '5.7',
+        :kernelversion => '5.7'
       }
     end
 
-    it {
-      should_not contain_package('sudo')
-    }
+    it do
+      is_expected.not_to contain_package('sudo')
+    end
   end
 
   describe 'on supported osfamily: AIX' do
