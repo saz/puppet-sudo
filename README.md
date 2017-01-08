@@ -3,6 +3,20 @@ https://github.com/saz/puppet-sudo
 
 Manage sudo configuration via Puppet
 
+### Supported OS
+Some family and some specific os are supported by this module
+* debian osfamily (debian, ubuntu, kali, ...)
+* redhat osfamily (redhat, centos, fedora, ...)
+* suse osfamily (suse, opensuse, ...)
+* solaris osfamily (Solaris, OmniOS, SmartOS, ...)
+* freebsd osfamily
+* openbsd osfamily
+* aix osfamily
+* darwin osfamily
+* gentoo operating system
+* archlinux operating system
+* amazon operating system
+
 ### Gittip
 [![Support via Gittip](https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png)](https://www.gittip.com/saz/)
 
@@ -126,6 +140,7 @@ In this example we are:
 - inheriting/preserving the __web__ configuration
 - overriding the __admins__ configuration
 - removing the __joe__ configuration
+- adding the __bill__ template
 
 ```yaml
 sudo::configs:
@@ -135,6 +150,8 @@ sudo::configs:
     'joe':
         'ensure'    : 'absent'
         'source'    : 'puppet:///files/etc/sudoers.d/users/joe'
+    'bill':
+        'template'  : "mymodule/bill.erb"
 ```
 
 If you have Hiera version >= 1.2.0 and enable [Hiera Deeper Merging](http://docs.puppetlabs.com/hiera/1/lookup_types.html#deep-merging-in-hiera--120) you may conditionally override any setting.
@@ -145,6 +162,7 @@ In this example we are:
 - inheriting/preserving the __admins:priority__ setting
 - inheriting/preserving the __joe:source__ and __joe:priority__ settings
 - removing the __joe__ configuration
+- adding the __bill__ template
 
 ```yaml
 sudo::configs:
@@ -152,6 +170,8 @@ sudo::configs:
         'content'   : "%prodadmins ALL=(ALL) NOPASSWD: ALL"
     'joe':
         'ensure'    : 'absent'
+    'bill':
+        'template'  : "mymodule/bill.erb"
 ```
 
 ##### Set a custom name for the sudoers file
@@ -167,8 +187,9 @@ sudo::conf { "foreman-proxy":
 ```
 
 ### sudo::conf / sudo::configs notes
-* You can pass template() through content parameter.
 * One of content or source must be set.
+* Content may be an array, string will be added with return carriage after each element.
+* In order to properly pass a template() use template instead of content, as hiera would run template function otherwise.
 
 ## sudo class parameters
 
@@ -194,5 +215,6 @@ sudo::conf { "foreman-proxy":
 | priority        | number | 10          | file name prefix |
 | content         | string | undef       | content of configuration snippet |
 | source          | string | undef       | source of configuration snippet |
+| template        | string | undef       | template of configuration snippet |
 | sudo_config_dir | string | OS Specific | configuration snippet directory _(for unsupported platforms)_ |
 | sudo_file_name  | string | undef		 | custom file name for sudo file in sudoers directory |
