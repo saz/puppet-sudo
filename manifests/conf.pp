@@ -112,7 +112,7 @@ define sudo::conf(
     notify  => $notify_real,
   }
 
-  exec {"sudo-syntax-check for file ${cur_file_real}":
+  exec {"sudo-syntax-check for file ${cur_file}":
     command     => "visudo -c -f '${cur_file_real}' || ( rm -f '${cur_file_real}' && exit 1)",
     refreshonly => true,
     path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],

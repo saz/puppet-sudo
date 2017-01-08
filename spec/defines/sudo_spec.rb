@@ -85,6 +85,44 @@ describe 'sudo::conf', :type => :define do
     it { is_expected.not_to contain_file(filename).that_requires("Exec[sudo-syntax-check for file #{params[:sudo_config_dir]}0#{params[:priority]}_#{title}]") }
   end
 
+  describe 'when creating a sudo entry with whitespace in name' do
+    let(:title)    { 'admins hq' }
+    let(:filename) { '05_admins hq' }
+    let(:file_path) { '/etc/sudoers.d/05_admins_hq' }
+
+    let :params do
+      {
+        :priority        => 5,
+        :content         => '%admins_hq ALL=(ALL) NOPASSWD: ALL',
+        :sudo_config_dir => '/etc/sudoers.d/'
+      }
+    end
+
+    it do
+      is_expected.to contain_sudo__conf('admins hq').with(:priority => params[:priority],
+                                                          :content  => params[:content])
+    end
+
+    it do
+      is_expected.to contain_file(filename).with('ensure' => 'present',
+                                                 'content' => "# This file is managed by Puppet; changes may be overwritten\n%admins_hq ALL=(ALL) NOPASSWD: ALL\n",
+                                                 'owner'   => 'root',
+                                                 'group'   => 'root',
+                                                 'path'    => file_path,
+                                                 'mode'    => '0440')
+    end
+
+    it do
+      is_expected.to contain_exec("sudo-syntax-check for file #{params[:sudo_config_dir]}0#{params[:priority]}_#{title}").with('command' => "visudo -c -f '#{file_path}' || ( rm -f '#{file_path}' && exit 1)",
+                                                                                                                               'refreshonly' => 'true')
+    end
+
+    it { is_expected.to contain_file(filename).that_notifies("Exec[sudo-syntax-check for file #{params[:sudo_config_dir]}0#{params[:priority]}_#{title}]") }
+
+    it { is_expected.not_to contain_exec("sudo-syntax-check for file #{params[:sudo_config_dir]}0#{params[:priority]}_#{title}").that_requires("File[#{filename}]") }
+    it { is_expected.not_to contain_file(filename).that_requires("Exec[sudo-syntax-check for file #{params[:sudo_config_dir]}0#{params[:priority]}_#{title}]") }
+  end
+
   describe 'when removing an sudo entry' do
     let :params do
       {
