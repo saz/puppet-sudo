@@ -73,6 +73,9 @@ define sudo::conf(
     $cur_file = "${sudo_config_dir_real}${priority_real}_${dname}"
   }
 
+  # replace whitespace in file name
+  $cur_file_real = regsubst($cur_file, '\s+', '_', 'G')
+
   Class['sudo'] -> Sudo::Conf[$name]
 
   if $::osfamily == 'RedHat' {
@@ -100,7 +103,7 @@ define sudo::conf(
 
   file { "${priority_real}_${dname}":
     ensure  => $ensure,
-    path    => $cur_file,
+    path    => $cur_file_real,
     owner   => 'root',
     group   => $sudo::params::config_file_group,
     mode    => '0440',
@@ -109,18 +112,9 @@ define sudo::conf(
     notify  => $notify_real,
   }
 
-  exec {"sudo-syntax-check for file ${cur_file}":
-    command     => "visudo -c -f '${cur_file}' || ( rm -f '${cur_file}' && exit 1)",
+  exec {"sudo-syntax-check for file ${cur_file_real}":
+    command     => "visudo -c -f '${cur_file_real}' || ( rm -f '${cur_file_real}' && exit 1)",
     refreshonly => true,
-    path        => [
-      '/bin',
-      '/sbin',
-      '/usr/bin',
-      '/usr/sbin',
-      '/usr/local/bin',
-      '/usr/local/sbin',
-      '/opt/local/sbin/',
-      '/opt/local/bin/',
-    ],
+    path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
   }
 }
