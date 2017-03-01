@@ -180,6 +180,20 @@ describe 'sudo' do
             'package_admin_file' => '/var/sadm/install/admin/puppet'
           )
         end
+
+        context 'when package is set' do
+          let :params do
+            {
+              :package => 'mysudo'
+            }
+          end
+
+          it do
+            is_expected.to contain_class('sudo::package').with(
+              'package' => 'mysudo',
+              )
+          end
+        end
       end
 
       describe 'on supported osfamily: Solaris 11' do
