@@ -70,7 +70,7 @@ Style/WhileUntilModifier:
 Lint/AmbiguousRegexpLiteral:
   Enabled: true
 
-Lint/Eval:
+Security/Eval:
   Enabled: true
 
 Lint/BlockAlignment:
@@ -298,7 +298,7 @@ Style/EmptyLiteral:
 Metrics/LineLength:
   Enabled: false
 
-Style/MethodCallParentheses:
+Style/MethodCallWithoutArgsParentheses:
   Enabled: true
 
 Style/MethodDefParentheses:
@@ -484,6 +484,9 @@ Style/MultilineBlockLayout:
 Metrics/AbcSize:
   Enabled: False
 
+Metrics/BlockLength:
+  Enabled: False
+
 # 'Complexity' is very relative
 Metrics/PerceivedComplexity:
   Enabled: False
@@ -503,4 +506,3 @@ RSpec/DescribeClass:
 # Example length is not necessarily an indicator of code quality
 RSpec/ExampleLength:
   Enabled: False
-
