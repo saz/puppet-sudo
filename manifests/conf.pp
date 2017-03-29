@@ -100,25 +100,42 @@ define sudo::conf(
   }
 
   if $ensure == 'present' {
-    $notify_real = Exec["sudo-syntax-check for file ${cur_file}"]
+    if $sudo::validate_single {
+      $validate_cmd_real = 'visudo -c -f %'
+    } else {
+      $validate_cmd_real = undef
+    }
+    if $sudo::delete_on_error {
+      $notify_real = Exec["sudo-syntax-check for file ${cur_file}"]
+      $delete_cmd = "( rm -f '${cur_file_real}' && exit 1)"
+    } else {
+      $notify_real = Exec["sudo-syntax-check for file ${cur_file}"]
+      $errormsg = "Error on global-syntax-check with file ${cur_file_real}"
+      $delete_cmd = "( echo '${errormsg}' && echo '#${errormsg}' >>${cur_file_real} && exit 1)"
+    }
   } else {
+    $delete_cmd = ''
     $notify_real = undef
+    $validate_cmd_real = undef
   }
 
   file { "${priority_real}_${dname}":
-    ensure  => $ensure,
-    path    => $cur_file_real,
-    owner   => 'root',
-    group   => $sudo::params::config_file_group,
-    mode    => $sudo::params::config_file_mode,
-    source  => $source,
-    content => $content_real,
-    notify  => $notify_real,
+    ensure       => $ensure,
+    path         => $cur_file_real,
+    owner        => 'root',
+    group        => $sudo::params::config_file_group,
+    mode         => $sudo::params::config_file_mode,
+    source       => $source,
+    content      => $content_real,
+    notify       => $notify_real,
+    validate_cmd => $validate_cmd_real,
   }
 
   exec {"sudo-syntax-check for file ${cur_file}":
-    command     => "visudo -c -f '${cur_file_real}' || ( rm -f '${cur_file_real}' && exit 1)",
+    command     => "visudo -c || ${delete_cmd}",
     refreshonly => true,
     path        => $sudo_syntax_path,
   }
+
+
 }
