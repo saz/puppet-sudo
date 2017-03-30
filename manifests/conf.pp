@@ -118,6 +118,6 @@ define sudo::conf(
   exec {"sudo-syntax-check for file ${cur_file}":
     command     => "visudo -c -f '${cur_file_real}' || ( rm -f '${cur_file_real}' && exit 1)",
     refreshonly => true,
-    path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
+    path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin', '/opt/sfw/sbin'],
   }
 }
