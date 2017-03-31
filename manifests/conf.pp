@@ -38,13 +38,14 @@
 #
 # [Remember: No empty lines between comments and class definition]
 define sudo::conf(
-  $ensure          = present,
-  $priority        = 10,
-  $content         = undef,
-  $source          = undef,
-  $template        = undef,
-  $sudo_config_dir = undef,
-  $sudo_file_name  = undef
+  $ensure           = present,
+  $priority         = 10,
+  $content          = undef,
+  $source           = undef,
+  $template         = undef,
+  $sudo_config_dir  = undef,
+  $sudo_file_name   = undef
+  $sudo_syntax_path = ['/bin', '/sbin', '/usr/bin', '/usr/sbin']
   ) {
 
     include ::sudo
@@ -114,10 +115,10 @@ define sudo::conf(
     content => $content_real,
     notify  => $notify_real,
   }
-
+# Since different OSes may have their visudo in a different path, the path is treated as a modifiable variable.
   exec {"sudo-syntax-check for file ${cur_file}":
     command     => "visudo -c -f '${cur_file_real}' || ( rm -f '${cur_file_real}' && exit 1)",
     refreshonly => true,
-    path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
+    path        => $sudo_syntax_path,
   }
 }
