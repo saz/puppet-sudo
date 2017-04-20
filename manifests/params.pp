@@ -4,7 +4,7 @@ class sudo::params {
   $source_base = "puppet:///modules/${module_name}/"
 
   case $::osfamily {
-    debian: {
+    'Debian': {
       case $::operatingsystem {
         'Ubuntu': {
           $source = "${source_base}sudoers.ubuntu"
@@ -25,10 +25,11 @@ class sudo::params {
       $package_source    = ''
       $package_admin_file = ''
       $config_file       = '/etc/sudoers'
+      $includedirsudoers = false
       $config_dir        = '/etc/sudoers.d/'
       $config_file_group = 'root'
     }
-    redhat: {
+    'RedHat': {
       $package = 'sudo'
       # in redhat sudo package is already compiled for ldap support
       $package_ldap = $package
@@ -43,6 +44,10 @@ class sudo::params {
       $package_source = ''
       $package_admin_file = ''
       $config_file = '/etc/sudoers'
+      $includedirsudoers = $::operatingsystemmajrelease ? {
+        '5'     => true,
+        default => false,
+      }
       $config_dir = '/etc/sudoers.d/'
       $source = $::operatingsystemrelease ? {
         /^5/    => "${source_base}sudoers.rhel5",
@@ -52,17 +57,19 @@ class sudo::params {
         }
       $config_file_group = 'root'
     }
-    suse: {
+    'Suse': {
       $package = 'sudo'
+      $package_ldap = $package
       $package_ensure = 'present'
       $package_source = ''
       $package_admin_file = ''
       $config_file = '/etc/sudoers'
+      $includedirsudoers = false
       $config_dir = '/etc/sudoers.d/'
       $source = "${source_base}sudoers.suse"
       $config_file_group = 'root'
     }
-    solaris: {
+    'Solaris': {
       case $::operatingsystem {
         'OmniOS': {
           $package = 'sudo'
@@ -71,6 +78,7 @@ class sudo::params {
           $package_source = ''
           $package_admin_file = ''
           $config_file = '/etc/sudoers'
+          $includedirsudoers = false
           $config_dir = '/etc/sudoers.d/'
           $source = "${source_base}sudoers.omnios"
           $config_file_group = 'root'
@@ -95,6 +103,7 @@ class sudo::params {
               $package_source = ''
               $package_admin_file = ''
               $config_file = '/etc/sudoers'
+              $includedirsudoers = false
               $config_dir = '/etc/sudoers.d/'
               $source = "${source_base}sudoers.solaris"
               $config_file_group = 'root'
@@ -106,6 +115,7 @@ class sudo::params {
               $package_source = "http://www.sudo.ws/sudo/dist/packages/Solaris/10/TCMsudo-1.8.9p5-${::hardwareisa}.pkg.gz"
               $package_admin_file = '/var/sadm/install/admin/puppet'
               $config_file = '/etc/sudoers'
+              $includedirsudoers = false
               $config_dir = '/etc/sudoers.d/'
               $source = "${source_base}sudoers.solaris"
               $config_file_group = 'root'
@@ -117,39 +127,49 @@ class sudo::params {
         }
       }
     }
-    freebsd: {
+    'FreeBSD': {
       $package = 'security/sudo'
+      $package_ldap = undef
       $package_ensure = 'present'
       $package_source = ''
       $package_admin_file = ''
       $config_file = '/usr/local/etc/sudoers'
+      $includedirsudoers = false
       $config_dir = '/usr/local/etc/sudoers.d/'
       $source = "${source_base}sudoers.freebsd"
       $config_file_group = 'wheel'
     }
-    openbsd: {
-      $package = undef
+    'OpenBSD': {
+      if (versioncmp($::kernelversion, '5.8') < 0) {
+        $package = undef
+      } else {
+        $package = 'sudo'
+      }
+      $package_ldap = undef
       $package_ensure = 'present'
       $package_source = ''
       $package_admin_file = ''
       $config_file = '/etc/sudoers'
+      $includedirsudoers = false
       $config_dir = '/etc/sudoers.d/'
       $source = "${source_base}sudoers.openbsd"
       $config_file_group = 'wheel'
     }
-    aix: {
+    'AIX': {
       $package = 'sudo'
       $package_ldap = undef
       $package_ensure = 'present'
       $package_source = 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.9-6.aix53.lam.rpm'
       $package_admin_file = ''
       $config_file = '/etc/sudoers'
+      $includedirsudoers = false
       $config_dir = '/etc/sudoers.d/'
       $source = "${source_base}sudoers.aix"
       $config_file_group = 'system'
     }
-    darwin: {
+    'Darwin': {
       $package = undef
+      $package_ldap = undef
       $package_ensure = 'present'
       $package_source = ''
       $package_admin_file = ''
@@ -160,27 +180,32 @@ class sudo::params {
     }
     default: {
       case $::operatingsystem {
-        gentoo: {
+        'Gentoo': {
           $package = 'sudo'
           $package_ldap = $package
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
+          $includedirsudoers = false
           $config_dir = '/etc/sudoers.d/'
           $source = "${source_base}sudoers.gentoo"
           $config_file_group = 'root'
         }
-        archlinux: {
+        'Archlinux': {
           $package = 'sudo'
+          $package_ldap = $package
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
+          $includedirsudoers = false
           $config_dir = '/etc/sudoers.d/'
           $source = "${source_base}sudoers.archlinux"
           $config_file_group = 'root'
         }
-        amazon: {
+        'Amazon': {
           $package = 'sudo'
+          $package_ldap = $package
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
+          $includedirsudoers = false
           $config_dir = '/etc/sudoers.d/'
           $source = $::operatingsystemrelease ? {
             /^5/    => "${source_base}sudoers.rhel5",

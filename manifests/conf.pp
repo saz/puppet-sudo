@@ -42,11 +42,12 @@ define sudo::conf(
   $priority        = 10,
   $content         = undef,
   $source          = undef,
+  $template        = undef,
   $sudo_config_dir = undef,
   $sudo_file_name  = undef
   ) {
 
-  include sudo
+    include ::sudo
 
   # Hack to allow the user to set the config_dir from the
   # sudo::config parameter, but default to $sudo::params::config_dir
@@ -73,6 +74,9 @@ define sudo::conf(
     $cur_file = "${sudo_config_dir_real}${priority_real}_${dname}"
   }
 
+  # replace whitespace in file name
+  $cur_file_real = regsubst($cur_file, '\s+', '_', 'G')
+
   Class['sudo'] -> Sudo::Conf[$name]
 
   if $::osfamily == 'RedHat' {
@@ -86,8 +90,10 @@ define sudo::conf(
       $lines = join($content, "\n")
       $content_real = "${lines}\n"
     } else {
-      $content_real = "${content}\n"
+      $content_real = "# This file is managed by Puppet; changes may be overwritten\n${content}\n"
     }
+  } elsif $template != undef {
+    $content_real = template($template)
   } else {
     $content_real = undef
   }
@@ -100,7 +106,7 @@ define sudo::conf(
 
   file { "${priority_real}_${dname}":
     ensure  => $ensure,
-    path    => $cur_file,
+    path    => $cur_file_real,
     owner   => 'root',
     group   => $sudo::params::config_file_group,
     mode    => '0440',
@@ -110,17 +116,8 @@ define sudo::conf(
   }
 
   exec {"sudo-syntax-check for file ${cur_file}":
-    command     => "visudo -c -f '${cur_file}' || ( rm -f '${cur_file}' && exit 1)",
+    command     => "visudo -c -f '${cur_file_real}' || ( rm -f '${cur_file_real}' && exit 1)",
     refreshonly => true,
-    path        => [
-      '/bin',
-      '/sbin',
-      '/usr/bin',
-      '/usr/sbin',
-      '/usr/local/bin',
-      '/usr/local/sbin',
-      '/opt/local/sbin/',
-      '/opt/local/bin/'
-    ],
+    path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
   }
 }
