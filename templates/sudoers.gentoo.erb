@@ -29,6 +29,7 @@
 ## Groups of commands.  Often used to group related commands together.
 # Cmnd_Alias	PROCESSES = /usr/bin/nice, /bin/kill, /usr/bin/renice, \
 # 			    /usr/bin/pkill, /usr/bin/top
+# Cmnd_Alias	REBOOT = /sbin/halt, /sbin/reboot, /sbin/poweroff
 
 ##
 ## Defaults specification
@@ -62,7 +63,7 @@
 # Defaults log_output
 # Defaults!/usr/bin/sudoreplay !log_output
 # Defaults!/usr/local/bin/sudoreplay !log_output
-# Defaults!/sbin/reboot !log_output
+# Defaults!REBOOT !log_output
 
 ##
 ## Runas alias specification
@@ -71,7 +72,7 @@
 ##
 ## User privilege specification
 ##
-#root ALL=(ALL) ALL
+root ALL=(ALL) ALL
 
 ## Uncomment to allow members of group wheel to execute any command
 # %wheel ALL=(ALL) ALL
@@ -87,6 +88,9 @@
 # Defaults targetpw  # Ask for the password of the target user
 # ALL ALL=(ALL) ALL  # WARNING: only use this together with 'Defaults targetpw'
 
-## Read drop-in files from /opt/sfw/etc/sudoers.d
+## Read drop-in files
 ## (the '#' here does not indicate a comment)
-#includedir /etc/sudoers.d
+#includedir <%= @config_dir %>
+<% @extra_include_dirs.each do |include_dir| -%>
+#includedir <%= include_dir %>
+<% end if @extra_include_dirs -%>

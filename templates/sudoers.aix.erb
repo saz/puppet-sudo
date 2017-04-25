@@ -37,7 +37,7 @@
 ## when running commands via sudo.
 ##
 ## Locale settings
-Defaults env_keep += "LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET"
+# Defaults env_keep += "LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET"
 ##
 ## Run X applications through sudo; HOME is used to find the
 ## .Xauthority file.  Note that other programs use HOME to find   
@@ -45,7 +45,7 @@ Defaults env_keep += "LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET"
 # Defaults env_keep += "HOME"
 ##
 ## X11 resource path settings
-Defaults env_keep += "XAPPLRESDIR XFILESEARCHPATH XUSERFILESEARCHPATH"
+# Defaults env_keep += "XAPPLRESDIR XFILESEARCHPATH XUSERFILESEARCHPATH"
 ##
 ## Desktop path settings
 # Defaults env_keep += "QTDIR KDEDIR"
@@ -71,7 +71,7 @@ Defaults env_keep += "XAPPLRESDIR XFILESEARCHPATH XUSERFILESEARCHPATH"
 ##
 ## User privilege specification
 ##
-root 	ALL=(ALL) ALL
+root ALL=(ALL) ALL
 
 ## Uncomment to allow members of group wheel to execute any command
 # %wheel ALL=(ALL) ALL
@@ -87,6 +87,9 @@ root 	ALL=(ALL) ALL
 # Defaults targetpw  # Ask for the password of the target user
 # ALL ALL=(ALL) ALL  # WARNING: only use this together with 'Defaults targetpw'
 
-## Read drop-in files from /etc/sudoers.d
+## Read drop-in files
 ## (the '#' here does not indicate a comment)
-#includedir /etc/sudoers.d
+#includedir <%= @config_dir %>
+<% @extra_include_dirs.each do |include_dir| -%>
+#includedir <%= include_dir %>
+<% end if @extra_include_dirs -%>

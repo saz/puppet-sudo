@@ -49,6 +49,9 @@ root	ALL=(ALL) SETENV: ALL
 # %users  ALL=/sbin/mount /cdrom,/sbin/umount /cdrom
 # %users  localhost=/sbin/shutdown -h now
 
-# pull in configurations in /etc/sudoers.d
+# Read drop-in files
 # the # does not mark the line as a comment
-#includedir /etc/sudoers.d
+#includedir <%= @config_dir %>
+<% @extra_include_dirs.each do |include_dir| -%>
+#includedir <%= include_dir %>
+<% end if @extra_include_dirs -%>

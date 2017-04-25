@@ -80,6 +80,9 @@ root ALL=(ALL) ALL
 ## Same thing without a password
 # %wheel ALL=(ALL) NOPASSWD: ALL
 
-## Read drop-in files from /etc/sudoers.d
+## Read drop-in files
 ## (the '#' here does not indicate a comment)
-#includedir /etc/sudoers.d
+#includedir <%= @config_dir %>
+<% @extra_include_dirs.each do |include_dir| -%>
+#includedir <%= include_dir %>
+<% end if @extra_include_dirs -%>

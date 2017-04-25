@@ -69,9 +69,9 @@ define sudo::conf(
 
   # build current file name with path
   if $sudo_file_name != undef {
-    $cur_file = "${sudo_config_dir_real}${sudo_file_name}"
+    $cur_file = "${sudo_config_dir_real}/${sudo_file_name}"
   } else {
-    $cur_file = "${sudo_config_dir_real}${priority_real}_${dname}"
+    $cur_file = "${sudo_config_dir_real}/${priority_real}_${dname}"
   }
 
   # replace whitespace in file name
