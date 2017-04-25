@@ -54,7 +54,7 @@ describe 'sudo' do
           end
 
           it do
-            is_expected.to contain_file('/etc/sudoers.d/').with(
+            is_expected.to contain_file('/etc/sudoers.d').with(
               'ensure'  => 'directory',
               'owner'   => 'root',
               'group'   => 'root',
@@ -119,7 +119,7 @@ describe 'sudo' do
         end
 
         it do
-          is_expected.to contain_file('/etc/sudoers.d/').with(
+          is_expected.to contain_file('/etc/sudoers.d').with(
             'ensure'  => 'directory',
             'owner'   => 'root',
             'group'   => 'system',
@@ -162,7 +162,7 @@ describe 'sudo' do
         end
 
         it do
-          is_expected.to contain_file('/etc/sudoers.d/').with(
+          is_expected.to contain_file('/etc/sudoers.d').with(
             'ensure'  => 'directory',
             'owner'   => 'root',
             'group'   => 'root',
@@ -205,7 +205,7 @@ describe 'sudo' do
         end
 
         it do
-          is_expected.to contain_file('/etc/sudoers.d/').with(
+          is_expected.to contain_file('/etc/sudoers.d').with(
             'ensure'  => 'directory',
             'owner'   => 'root',
             'group'   => 'root',
