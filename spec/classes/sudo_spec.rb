@@ -29,7 +29,7 @@ describe 'sudo' do
         param_set
       end
 
-      %w(Debian Redhat).each do |osfamily|
+      %w[Debian Redhat].each do |osfamily|
         let :facts do
           {
             :operatingsystem           => osfamily,
