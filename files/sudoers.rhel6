@@ -75,7 +75,7 @@ Defaults    env_keep += "LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY
 #
 # Defaults   env_keep += "HOME"
 
-Defaults    secure_path = /usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+Defaults    secure_path = /usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin
 
 ## Next comes the main part: which users can run what software on 
 ## which machines (the sudoers file can be shared between multiple
