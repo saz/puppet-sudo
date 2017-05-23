@@ -50,22 +50,17 @@
 #     what you're doing.
 #     Default: auto-set, platform specific
 #
-#   [*config_file_replace*]
-#     Replace configuration file with that one delivered with this module
-#     Default: true
-#
-#   [*includedirsudoers*]
-#     Add #includedir /etc/sudoers.d to the end of sudoers, if not config_file_replace
-#     Default: true if RedHat 5.x
-#
 #   [*config_dir*]
-#     Main configuration directory
-#     Only set this, if your platform is not supported or you know,
-#     what you're doing.
+#     Main directory containing sudo snippets, imported via
+#     includedir stanza in sudoers file
 #     Default: auto-set, platform specific
 #
-#   [*source*]
-#     Alternate source file location
+#   [*extra_include_dirs*]
+#     Array of additional directories containing sudo snippets
+#     Default: undef
+#
+#   [*content*]
+#     Alternate content file location
 #     Only set this, if your platform is not supported or you know,
 #     what you're doing.
 #     Default: auto-set, platform specific
@@ -96,9 +91,9 @@ class sudo(
   $purge_ignore        = undef,
   $config_file         = $sudo::params::config_file,
   $config_file_replace = true,
-  $includedirsudoers   = $sudo::params::includedirsudoers,
   $config_dir          = $sudo::params::config_dir,
-  $source              = $sudo::params::source,
+  $extra_include_dirs  = undef,
+  $content             = $sudo::params::content,
   $ldap_enable         = false,
 ) inherits sudo::params {
 
@@ -145,7 +140,7 @@ class sudo(
     group   => $sudo::params::config_file_group,
     mode    => '0440',
     replace => $config_file_replace,
-    source  => $source,
+    content => template($content),
     require => Class['sudo::package'],
   }
 
@@ -158,14 +153,6 @@ class sudo(
     purge   => $purge,
     ignore  => $purge_ignore,
     require => Class['sudo::package'],
-  }
-
-  if $config_file_replace == false and $includedirsudoers {
-    augeas { 'includedirsudoers':
-      changes => ['set /files/etc/sudoers/#includedir /etc/sudoers.d'],
-      incl    => $config_file,
-      lens    => 'Sudoers.lns',
-    }
   }
 
   # Load the Hiera based sudoer configuration (if enabled and present)
@@ -183,7 +170,7 @@ class sudo(
     include '::sudo::configs'
   }
 
-  anchor { 'sudo::begin': } ->
-  Class['sudo::package']    ->
-  anchor { 'sudo::end': }
+  anchor { 'sudo::begin': }
+  -> Class['sudo::package']
+  -> anchor { 'sudo::end': }
 }

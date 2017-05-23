@@ -106,5 +106,8 @@ root	ALL=(ALL) 	ALL
 ## Allows members of the users group to shutdown this system
 # %users  localhost=/sbin/shutdown -h now
 
-## Read drop-in files from /etc/sudoers.d (the # here does not mean a comment)
-#includedir /etc/sudoers.d
+## Read drop-in files
+#includedir <%= @config_dir %>
+<% @extra_include_dirs.each do |include_dir| -%>
+#includedir <%= include_dir %>
+<% end if @extra_include_dirs -%>

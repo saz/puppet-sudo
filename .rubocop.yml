@@ -4,10 +4,13 @@ AllCops:
   Include:
     - ./**/*.rb
   Exclude:
+    - files/**/*
     - vendor/**/*
     - .vendor/**/*
     - pkg/**/*
     - spec/fixtures/**/*
+    - Gemfile
+    - Rakefile
 Lint/ConditionPosition:
   Enabled: true
 
@@ -495,6 +498,9 @@ Lint/UselessAssignment:
   Enabled: true
 
 Style/ClosingParenthesisIndentation:
+  Enabled: false
+
+Metrics/BlockLength:
   Enabled: false
 
 # RSpec

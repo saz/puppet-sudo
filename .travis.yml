@@ -25,11 +25,9 @@ matrix:
   - rvm: 2.2
     env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
   - rvm: 2.3.1
-    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=build
-  - rvm: 2.3.1
     env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=rubocop
   - rvm: 2.3.1
-    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test FORGEDEPLOY=true
+    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=build FORGEDEPLOY=true
 notifications:
   email: false
 deploy:
