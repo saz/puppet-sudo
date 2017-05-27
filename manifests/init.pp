@@ -82,7 +82,7 @@
 # [Remember: No empty lines between comments and class definition]
 class sudo(
   $enable              = true,
-  $package_default     = $sudo::params::package,
+  $package             = $sudo::params::package,
   $package_ldap        = $sudo::params::package_ldap,
   $package_ensure      = $sudo::params::package_ensure,
   $package_source      = $sudo::params::package_source,
@@ -117,17 +117,17 @@ class sudo(
       if $package_ldap == undef {
         fail('on your os ldap support for sudo is not yet supported')
       }
-      $package = $package_ldap
+      $package_real = $package_ldap
     }
     false: {
-      $package = $package_default
+      $package_real = $package
     }
     default: { fail('no $ldap_enable is set') }
   }
 
 
   class { '::sudo::package':
-    package            => $package,
+    package            => $package_real,
     package_ensure     => $package_ensure,
     package_source     => $package_source,
     package_admin_file => $package_admin_file,
