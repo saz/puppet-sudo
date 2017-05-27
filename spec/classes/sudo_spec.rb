@@ -190,7 +190,7 @@ describe 'sudo' do
 
           it do
             is_expected.to contain_class('sudo::package').with(
-              'package' => 'mysudo',
+              'package' => 'mysudo'
               )
           end
         end
