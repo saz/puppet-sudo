@@ -179,4 +179,29 @@ describe 'sudo::conf', :type => :define do
       )
     end
   end
+
+  describe 'when adding a sudo entry with array content' do
+    let :params do
+      {
+        content: [
+          '%admins ALL=(ALL) NOPASSWD: ALL',
+          '%wheel ALL=(ALL) NOPASSWD: ALL',
+        ]
+      }
+    end
+
+    let(:filename) { '10_admins' }
+    let(:file_path) { '/etc/sudoers.d/10_admins' }
+
+    it do
+      is_expected.to contain_file(filename).with(
+        ensure:   'present',
+        content:  "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n%wheel ALL=(ALL) NOPASSWD: ALL\n",
+        owner:    'root',
+        group:    'root',
+        path:     file_path,
+        mode:     '0440'
+      )
+    end
+  end
 end

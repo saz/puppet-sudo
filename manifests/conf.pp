@@ -89,7 +89,7 @@ define sudo::conf(
   if $content != undef {
     if is_array($content) {
       $lines = join($content, "\n")
-      $content_real = "${lines}\n"
+      $content_real = "# This file is managed by Puppet; changes may be overwritten\n${lines}\n"
     } else {
       $content_real = "# This file is managed by Puppet; changes may be overwritten\n${content}\n"
     }
