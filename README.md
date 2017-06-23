@@ -3,6 +3,10 @@ https://github.com/saz/puppet-sudo
 
 Manage sudo configuration via Puppet
 
+### Supported Puppet versions
+* Puppet >= 4
+* Last version supporting Puppet 3: v4.2.0
+
 ### Supported OS
 Some family and some specific os are supported by this module
 * debian osfamily (debian, ubuntu, kali, ...)
