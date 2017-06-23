@@ -185,7 +185,7 @@ describe 'sudo::conf', :type => :define do
       {
         content: [
           '%admins ALL=(ALL) NOPASSWD: ALL',
-          '%wheel ALL=(ALL) NOPASSWD: ALL',
+          '%wheel ALL=(ALL) NOPASSWD: ALL'
         ]
       }
     end
