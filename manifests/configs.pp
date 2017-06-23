@@ -17,7 +17,7 @@ class sudo::configs (
   # http://docs.puppetlabs.com/hiera/1/puppet.html#limitations
   # https://tickets.puppetlabs.com/browse/HI-118
   #
-  $configs = hiera_hash('sudo::configs', $configs_hash)
+  $configs = lookup('sudo::configs', Hash, {"strategy" => "deep", "merge_hash_arrays" => true}, $configs_hash)
 
   if !empty($configs) {
     create_resources('sudo::conf', $configs)
