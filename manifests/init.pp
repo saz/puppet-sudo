@@ -81,26 +81,25 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class sudo(
-  $enable              = true,
-  $package             = $sudo::params::package,
-  $package_ldap        = $sudo::params::package_ldap,
-  $package_ensure      = $sudo::params::package_ensure,
-  $package_source      = $sudo::params::package_source,
-  $package_admin_file  = $sudo::params::package_admin_file,
-  $purge               = true,
-  $purge_ignore        = undef,
-  $config_file         = $sudo::params::config_file,
-  $config_file_mode    = $sudo::params::config_file_mode,
-  $config_file_replace = true,
-  $config_dir          = $sudo::params::config_dir,
-  $config_dir_mode     = $sudo::params::config_dir_mode,
-  $extra_include_dirs  = undef,
-  $content             = $sudo::params::content,
-  $ldap_enable         = false,
+  Boolean                  $enable              = true,
+  String                   $package             = $sudo::params::package,
+  String                   $package_ldap        = $sudo::params::package_ldap,
+  String                   $package_ensure      = $sudo::params::package_ensure,
+  Optional[String]         $package_source      = $sudo::params::package_source,
+  Optional[String]         $package_admin_file  = $sudo::params::package_admin_file,
+  Boolean                  $purge               = true,
+  Optional[String]         $purge_ignore        = undef,
+  String                   $config_file         = $sudo::params::config_file,
+  Boolean                  $config_file_replace = true,
+  String                   $config_file_mode    = $sudo::params::config_file_mode,
+  String                   $config_dir          = $sudo::params::config_dir,
+  String                   $config_dir_mode     = $sudo::params::config_dir_mode,
+  Optional[Array[String]]  $extra_include_dirs  = undef,
+  String                   $content             = $sudo::params::content,
+  Boolean                  $ldap_enable         = false,
 ) inherits sudo::params {
 
 
-  validate_bool($enable)
   case $enable {
     true: {
       $dir_ensure  = 'directory'
@@ -113,7 +112,6 @@ class sudo(
     default: { fail('no $enable is set') }
   }
 
-  validate_bool($ldap_enable)
   case $ldap_enable {
     true: {
       if $package_ldap == undef {
@@ -172,7 +170,5 @@ class sudo(
     include '::sudo::configs'
   }
 
-  anchor { 'sudo::begin': }
-  -> Class['sudo::package']
-  -> anchor { 'sudo::end': }
+  contain class { 'sudo::package': }
 }
