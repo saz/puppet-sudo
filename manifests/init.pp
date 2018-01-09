@@ -83,7 +83,7 @@
 class sudo(
   Boolean                  $enable              = true,
   String                   $package             = $sudo::params::package,
-  String                   $package_ldap        = $sudo::params::package_ldap,
+  Optional[String]         $package_ldap        = $sudo::params::package_ldap,
   String                   $package_ensure      = $sudo::params::package_ensure,
   Optional[String]         $package_source      = $sudo::params::package_source,
   Optional[String]         $package_admin_file  = $sudo::params::package_admin_file,
