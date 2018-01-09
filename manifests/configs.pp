@@ -7,10 +7,9 @@
 # See the primary sudo module documentation for usage and examples.
 #
 class sudo::configs (
-    $configs_hash = {},
+    Hash $configs_hash = {},
   ){
 
-  validate_hash ( $configs_hash )
   # NOTE: hiera_hash does not work as expected in a parameterized class
   #   definition; so we call it here.
   #
