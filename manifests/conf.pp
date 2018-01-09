@@ -110,7 +110,7 @@ define sudo::conf(
     path    => $cur_file_real,
     owner   => 'root',
     group   => $sudo::params::config_file_group,
-    mode    => '0440',
+    mode    => $sudo::params::config_file_mode,
     source  => $source,
     content => $content_real,
     notify  => $notify_real,

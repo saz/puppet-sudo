@@ -1,7 +1,9 @@
 #class sudo::params
 #Set the paramters for the sudo module
 class sudo::params {
-  $content_base = "${module_name}/"
+  $content_base     = "${module_name}/"
+  $config_file_mode = '0440'
+  $config_dir_mode  = '0550'
 
   case $::osfamily {
     'Debian': {
