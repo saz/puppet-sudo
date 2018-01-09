@@ -168,5 +168,7 @@ class sudo(
     include '::sudo::configs'
   }
 
-  contain class { 'sudo::package': }
+  anchor { 'sudo::begin': }
+  -> Class['sudo::package']
+  -> anchor { 'sudo::end': }
 }
