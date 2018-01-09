@@ -170,7 +170,5 @@ class sudo(
     include '::sudo::configs'
   }
 
-  anchor { 'sudo::begin': }
-  -> Class['sudo::package']
-  -> anchor { 'sudo::end': }
+  contain class { 'sudo::package': }
 }
