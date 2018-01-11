@@ -32,5 +32,4 @@ deploy:
   on:
     tags: true
     all_branches: true
-    rvm: 2.3.1
     condition: "$FORGEDEPLOY = true"
