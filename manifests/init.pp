@@ -112,6 +112,7 @@ class sudo(
   Boolean                  $ldap_enable         = false,
   Boolean                  $delete_on_error     = true,
   Boolean                  $validate_single     = false,
+  Boolean                  $config_dir_keepme   = $sudo::params::config_dir_keepme,
 ) inherits sudo::params {
 
 
@@ -167,6 +168,14 @@ class sudo(
     purge   => $purge,
     ignore  => $purge_ignore,
     require => Class['sudo::package'],
+  }
+
+  if $config_dir_keepme {
+    file { "${config_dir}/.keep-me":
+      ensure => file,
+      owner  => 'root',
+      group  => $sudo::params::config_file_group,
+    }
   }
 
   # Load the Hiera based sudoer configuration (if enabled and present)
