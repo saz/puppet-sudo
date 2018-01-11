@@ -69,6 +69,19 @@
 #     Enable ldap support on the package
 #     Default: false
 #
+#   [*delete_on_error*]
+#     True if you want that the configuration is deleted on an error 
+#     during a complete visudo -c run. If false it will just return 
+#     an error and will add a comment to the sudoers configuration so
+#     that the resource will be checked at the following run.
+#     Default: true
+#
+#   [*validate_single*]
+#     Do a validate on the "single" file in the sudoers.d directory.
+#     If the validate fail the file will not be saved or changed 
+#     if a file already exist.
+#     Default: false
+#
 # Actions:
 #   Installs sudo package and checks the state of sudoers file and
 #   sudoers.d directory.
@@ -97,6 +110,8 @@ class sudo(
   Optional[Array[String]]  $extra_include_dirs  = undef,
   String                   $content             = $sudo::params::content,
   Boolean                  $ldap_enable         = false,
+  Boolean                  $delete_on_error     = true,
+  Boolean                  $validate_single     = false,
 ) inherits sudo::params {
 
 
@@ -124,7 +139,6 @@ class sudo(
     }
     default: { fail('no $ldap_enable is set') }
   }
-
 
   class { '::sudo::package':
     package            => $package_real,
