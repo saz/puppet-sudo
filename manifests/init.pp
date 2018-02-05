@@ -147,6 +147,7 @@ class sudo(
       package_source     => $package_source,
       package_admin_file => $package_admin_file,
       ldap_enable        => $ldap_enable,
+      before             => [ File[$config_file], File[$config_dir] ],
     }
   }
 
@@ -157,7 +158,6 @@ class sudo(
     mode    => $config_file_mode,
     replace => $config_file_replace,
     content => template($content),
-    require => Class['sudo::package'],
   }
 
   file { $config_dir:
@@ -168,7 +168,6 @@ class sudo(
     recurse => $purge,
     purge   => $purge,
     ignore  => $purge_ignore,
-    require => Class['sudo::package'],
   }
 
   if $config_dir_keepme {
@@ -193,8 +192,9 @@ class sudo(
   if (versioncmp($::puppetversion, '3') != -1) {
     include '::sudo::configs'
   }
-
-  anchor { 'sudo::begin': }
-  -> Class['sudo::package']
-  -> anchor { 'sudo::end': }
+  if $package_real {
+    anchor { 'sudo::begin': }
+    -> Class['sudo::package']
+    -> anchor { 'sudo::end': }
+  }
 }
