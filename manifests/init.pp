@@ -95,7 +95,7 @@
 # [Remember: No empty lines between comments and class definition]
 class sudo(
   Boolean                  $enable              = true,
-  String                   $package             = $sudo::params::package,
+  Optional[String]         $package             = $sudo::params::package,
   Optional[String]         $package_ldap        = $sudo::params::package_ldap,
   String                   $package_ensure      = $sudo::params::package_ensure,
   Optional[String]         $package_source      = $sudo::params::package_source,
@@ -140,13 +140,14 @@ class sudo(
     }
     default: { fail('no $ldap_enable is set') }
   }
-
-  class { '::sudo::package':
-    package            => $package_real,
-    package_ensure     => $package_ensure,
-    package_source     => $package_source,
-    package_admin_file => $package_admin_file,
-    ldap_enable        => $ldap_enable,
+  if $package_real
+    class { '::sudo::package':
+      package            => $package_real,
+      package_ensure     => $package_ensure,
+      package_source     => $package_source,
+      package_admin_file => $package_admin_file,
+      ldap_enable        => $ldap_enable,
+    }
   }
 
   file { $config_file:
