@@ -70,15 +70,15 @@
 #     Default: false
 #
 #   [*delete_on_error*]
-#     True if you want that the configuration is deleted on an error 
-#     during a complete visudo -c run. If false it will just return 
+#     True if you want that the configuration is deleted on an error
+#     during a complete visudo -c run. If false it will just return
 #     an error and will add a comment to the sudoers configuration so
 #     that the resource will be checked at the following run.
 #     Default: true
 #
 #   [*validate_single*]
 #     Do a validate on the "single" file in the sudoers.d directory.
-#     If the validate fail the file will not be saved or changed 
+#     If the validate fail the file will not be saved or changed
 #     if a file already exist.
 #     Default: false
 #
@@ -95,7 +95,7 @@
 # [Remember: No empty lines between comments and class definition]
 class sudo (
   Boolean                                   $enable              = true,
-  String                                    $package             = $sudo::params::package,
+  Optional[String]                          $package             = $sudo::params::package,
   Optional[String]                          $package_ldap        = $sudo::params::package_ldap,
   String                                    $package_ensure      = $sudo::params::package_ensure,
   Optional[String]                          $package_source      = $sudo::params::package_source,
@@ -140,13 +140,15 @@ class sudo (
     }
     default: { fail('no $ldap_enable is set') }
   }
-
-  class { '::sudo::package':
-    package            => $package_real,
-    package_ensure     => $package_ensure,
-    package_source     => $package_source,
-    package_admin_file => $package_admin_file,
-    ldap_enable        => $ldap_enable,
+  if $package_real {
+    class { '::sudo::package':
+      package            => $package_real,
+      package_ensure     => $package_ensure,
+      package_source     => $package_source,
+      package_admin_file => $package_admin_file,
+      ldap_enable        => $ldap_enable,
+      before             => [ File[$config_file], File[$config_dir] ],
+    }
   }
 
   file { $config_file:
@@ -156,7 +158,6 @@ class sudo (
     mode    => $config_file_mode,
     replace => $config_file_replace,
     content => template($content),
-    require => Class['sudo::package'],
   }
 
   file { $config_dir:
@@ -167,7 +168,6 @@ class sudo (
     recurse => $purge,
     purge   => $purge,
     ignore  => $purge_ignore,
-    require => Class['sudo::package'],
   }
 
   if $config_dir_keepme {
@@ -192,8 +192,9 @@ class sudo (
   if (versioncmp($::puppetversion, '3') != -1) {
     include '::sudo::configs'
   }
-
-  anchor { 'sudo::begin': }
-  -> Class['sudo::package']
-  -> anchor { 'sudo::end': }
+  if $package_real {
+    anchor { 'sudo::begin': }
+    -> Class['sudo::package']
+    -> anchor { 'sudo::end': }
+  }
 }
