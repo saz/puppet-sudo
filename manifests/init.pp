@@ -93,26 +93,26 @@
 #   class { 'sudo': }
 #
 # [Remember: No empty lines between comments and class definition]
-class sudo(
-  Boolean                  $enable              = true,
-  Optional[String]         $package             = $sudo::params::package,
-  Optional[String]         $package_ldap        = $sudo::params::package_ldap,
-  String                   $package_ensure      = $sudo::params::package_ensure,
-  Optional[String]         $package_source      = $sudo::params::package_source,
-  Optional[String]         $package_admin_file  = $sudo::params::package_admin_file,
-  Boolean                  $purge               = true,
-  Optional[String]         $purge_ignore        = undef,
-  String                   $config_file         = $sudo::params::config_file,
-  Boolean                  $config_file_replace = true,
-  String                   $config_file_mode    = $sudo::params::config_file_mode,
-  String                   $config_dir          = $sudo::params::config_dir,
-  String                   $config_dir_mode     = $sudo::params::config_dir_mode,
-  Optional[Array[String]]  $extra_include_dirs  = undef,
-  String                   $content             = $sudo::params::content,
-  Boolean                  $ldap_enable         = false,
-  Boolean                  $delete_on_error     = true,
-  Boolean                  $validate_single     = false,
-  Boolean                  $config_dir_keepme   = $sudo::params::config_dir_keepme,
+class sudo (
+  Boolean                                   $enable              = true,
+  Optional[String]                          $package             = $sudo::params::package,
+  Optional[String]                          $package_ldap        = $sudo::params::package_ldap,
+  String                                    $package_ensure      = $sudo::params::package_ensure,
+  Optional[String]                          $package_source      = $sudo::params::package_source,
+  Optional[String]                          $package_admin_file  = $sudo::params::package_admin_file,
+  Boolean                                   $purge               = true,
+  Optional[Variant[String, Array[String]]]  $purge_ignore        = undef,
+  String                                    $config_file         = $sudo::params::config_file,
+  Boolean                                   $config_file_replace = true,
+  String                                    $config_file_mode    = $sudo::params::config_file_mode,
+  String                                    $config_dir          = $sudo::params::config_dir,
+  String                                    $config_dir_mode     = $sudo::params::config_dir_mode,
+  Optional[Array[String]]                   $extra_include_dirs  = undef,
+  String                                    $content             = $sudo::params::content,
+  Boolean                                   $ldap_enable         = false,
+  Boolean                                   $delete_on_error     = true,
+  Boolean                                   $validate_single     = false,
+  Boolean                                   $config_dir_keepme   = $sudo::params::config_dir_keepme,
 ) inherits sudo::params {
 
 
