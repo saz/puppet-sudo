@@ -310,7 +310,10 @@ Style/StringLiterals:
 Style/TrailingCommaInArguments:
   Enabled: true
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+
+Style/TrailingCommaInArrayLiteral:
   Enabled: true
 
 Style/GlobalVars:
@@ -507,8 +510,8 @@ RSpec/DescribeClass:
 RSpec/ExampleLength:
   Enabled: False
 
-RSpec/NestedGroups:                                                                                                                                                                                              
-  Max: 4 
+RSpec/NestedGroups:
+  Max: 4
 
 RSpec/MultipleExpectations:
   Max: 2
