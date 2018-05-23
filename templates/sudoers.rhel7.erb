@@ -32,7 +32,7 @@
 # Cmnd_Alias SOFTWARE = /bin/rpm, /usr/bin/up2date, /usr/bin/yum
 
 ## Services
-# Cmnd_Alias SERVICES = /sbin/service, /sbin/chkconfig
+# Cmnd_Alias SERVICES = /sbin/service, /sbin/chkconfig, /usr/bin/systemctl start, /usr/bin/systemctl stop, /usr/bin/systemctl reload, /usr/bin/systemctl restart, /usr/bin/systemctl status, /usr/bin/systemctl enable, /usr/bin/systemctl disable
 
 ## Updating the locate database
 # Cmnd_Alias LOCATE = /usr/bin/updatedb
@@ -109,7 +109,7 @@ root	ALL=(ALL) 	ALL
 ## Allows members of the users group to shutdown this system
 # %users  localhost=/sbin/shutdown -h now
 
-## Read drop-in files
+## Read drop-in files from /etc/sudoers.d (the # here does not mean a comment)
 #includedir <%= @config_dir %>
 <% @extra_include_dirs.each do |include_dir| -%>
 #includedir <%= include_dir %>
