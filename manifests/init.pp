@@ -50,28 +50,36 @@
 #     what you're doing.
 #     Default: auto-set, platform specific
 #
-#   [*config_file_replace*]
-#     Replace configuration file with that one delivered with this module
-#     Default: true
-#
-#   [*includedirsudoers*]
-#     Add #includedir /etc/sudoers.d to the end of sudoers, if not config_file_replace
-#     Default: true if RedHat 5.x
-#
 #   [*config_dir*]
-#     Main configuration directory
-#     Only set this, if your platform is not supported or you know,
-#     what you're doing.
+#     Main directory containing sudo snippets, imported via
+#     includedir stanza in sudoers file
 #     Default: auto-set, platform specific
 #
-#   [*source*]
-#     Alternate source file location
+#   [*extra_include_dirs*]
+#     Array of additional directories containing sudo snippets
+#     Default: undef
+#
+#   [*content*]
+#     Alternate content file location
 #     Only set this, if your platform is not supported or you know,
 #     what you're doing.
 #     Default: auto-set, platform specific
 #
 #   [*ldap_enable*]
 #     Enable ldap support on the package
+#     Default: false
+#
+#   [*delete_on_error*]
+#     True if you want that the configuration is deleted on an error
+#     during a complete visudo -c run. If false it will just return
+#     an error and will add a comment to the sudoers configuration so
+#     that the resource will be checked at the following run.
+#     Default: true
+#
+#   [*validate_single*]
+#     Do a validate on the "single" file in the sudoers.d directory.
+#     If the validate fail the file will not be saved or changed
+#     if a file already exist.
 #     Default: false
 #
 # Actions:
@@ -85,25 +93,29 @@
 #   class { 'sudo': }
 #
 # [Remember: No empty lines between comments and class definition]
-class sudo(
-  $enable              = true,
-  $package_default     = $sudo::params::package,
-  $package_ldap        = $sudo::params::package_ldap,
-  $package_ensure      = $sudo::params::package_ensure,
-  $package_source      = $sudo::params::package_source,
-  $package_admin_file  = $sudo::params::package_admin_file,
-  $purge               = true,
-  $purge_ignore        = undef,
-  $config_file         = $sudo::params::config_file,
-  $config_file_replace = true,
-  $includedirsudoers   = $sudo::params::includedirsudoers,
-  $config_dir          = $sudo::params::config_dir,
-  $source              = $sudo::params::source,
-  $ldap_enable         = false,
+class sudo (
+  Boolean                                   $enable              = true,
+  Optional[String]                          $package             = $sudo::params::package,
+  Optional[String]                          $package_ldap        = $sudo::params::package_ldap,
+  String                                    $package_ensure      = $sudo::params::package_ensure,
+  Optional[String]                          $package_source      = $sudo::params::package_source,
+  Optional[String]                          $package_admin_file  = $sudo::params::package_admin_file,
+  Boolean                                   $purge               = true,
+  Optional[Variant[String, Array[String]]]  $purge_ignore        = undef,
+  String                                    $config_file         = $sudo::params::config_file,
+  Boolean                                   $config_file_replace = true,
+  String                                    $config_file_mode    = $sudo::params::config_file_mode,
+  String                                    $config_dir          = $sudo::params::config_dir,
+  String                                    $config_dir_mode     = $sudo::params::config_dir_mode,
+  Optional[Array[String]]                   $extra_include_dirs  = undef,
+  String                                    $content             = $sudo::params::content,
+  Boolean                                   $ldap_enable         = false,
+  Boolean                                   $delete_on_error     = true,
+  Boolean                                   $validate_single     = false,
+  Boolean                                   $config_dir_keepme   = $sudo::params::config_dir_keepme,
 ) inherits sudo::params {
 
 
-  validate_bool($enable)
   case $enable {
     true: {
       $dir_ensure  = 'directory'
@@ -116,55 +128,53 @@ class sudo(
     default: { fail('no $enable is set') }
   }
 
-  validate_bool($ldap_enable)
   case $ldap_enable {
     true: {
       if $package_ldap == undef {
         fail('on your os ldap support for sudo is not yet supported')
       }
-      $package = $package_ldap
+      $package_real = $package_ldap
     }
     false: {
-      $package = $package_default
+      $package_real = $package
     }
     default: { fail('no $ldap_enable is set') }
   }
-
-
-  class { '::sudo::package':
-    package            => $package,
-    package_ensure     => $package_ensure,
-    package_source     => $package_source,
-    package_admin_file => $package_admin_file,
-    ldap_enable        => $ldap_enable,
+  if $package_real {
+    class { '::sudo::package':
+      package            => $package_real,
+      package_ensure     => $package_ensure,
+      package_source     => $package_source,
+      package_admin_file => $package_admin_file,
+      ldap_enable        => $ldap_enable,
+      before             => [ File[$config_file], File[$config_dir] ],
+    }
   }
 
   file { $config_file:
     ensure  => $file_ensure,
     owner   => 'root',
     group   => $sudo::params::config_file_group,
-    mode    => '0440',
+    mode    => $config_file_mode,
     replace => $config_file_replace,
-    source  => $source,
-    require => Class['sudo::package'],
+    content => template($content),
   }
 
   file { $config_dir:
     ensure  => $dir_ensure,
     owner   => 'root',
     group   => $sudo::params::config_file_group,
-    mode    => '0550',
+    mode    => $config_dir_mode,
     recurse => $purge,
     purge   => $purge,
     ignore  => $purge_ignore,
-    require => Class['sudo::package'],
   }
 
-  if $config_file_replace == false and $includedirsudoers {
-    augeas { 'includedirsudoers':
-      changes => ['set /files/etc/sudoers/#includedir /etc/sudoers.d'],
-      incl    => $config_file,
-      lens    => 'Sudoers.lns',
+  if $config_dir_keepme {
+    file { "${config_dir}/.keep-me":
+      ensure => file,
+      owner  => 'root',
+      group  => $sudo::params::config_file_group,
     }
   }
 
@@ -182,8 +192,9 @@ class sudo(
   if (versioncmp($::puppetversion, '3') != -1) {
     include '::sudo::configs'
   }
-
-  anchor { 'sudo::begin': } ->
-  Class['sudo::package']    ->
-  anchor { 'sudo::end': }
+  if $package_real {
+    anchor { 'sudo::begin': }
+    -> Class['sudo::package']
+    -> anchor { 'sudo::end': }
+  }
 }

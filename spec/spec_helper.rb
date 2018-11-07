@@ -3,7 +3,7 @@ require 'puppetlabs_spec_helper/module_spec_helper'
 RSpec.configure do |c|
   c.include PuppetlabsSpec::Files
 
-  c.before :each do
+  c.before do
     # Ensure that we don't accidentally cache facts and environment
     # between test cases.
     Facter.clear
@@ -18,7 +18,7 @@ RSpec.configure do |c|
     end
   end
 
-  c.after :each do
+  c.after do
     PuppetlabsSpec::Files.cleanup
   end
 end

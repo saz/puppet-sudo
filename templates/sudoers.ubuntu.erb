@@ -9,7 +9,7 @@
 #
 Defaults	env_reset
 Defaults	mail_badpass
-Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin:/snap/bin"
 
 # Host alias specification
 
@@ -28,4 +28,7 @@ root	ALL=(ALL:ALL) ALL
 
 # See sudoers(5) for more information on "#include" directives:
 
-#includedir /etc/sudoers.d
+#includedir <%= @config_dir %>
+<% @extra_include_dirs.each do |include_dir| -%>
+#includedir <%= include_dir %>
+<% end if @extra_include_dirs -%>

@@ -14,14 +14,22 @@
 ##
 ## Groups of machines. These may include host names (optionally with wildcards),
 ## IP addresses, network numbers or netgroups.
-# Host_Alias    WEBSERVERS = www1, www2, www3
+# Host_Alias	WEBSERVERS = www1, www2, www3
 
 ##
 ## User alias specification
 ##
 ## Groups of users.  These may consist of user names, uids, Unix groups,
 ## or netgroups.
-# User_Alias    ADMINS = millert, dowdy, mikef
+# User_Alias	ADMINS = millert, dowdy, mikef
+
+##
+## Cmnd alias specification
+##
+## Groups of commands.  Often used to group related commands together.
+# Cmnd_Alias	PROCESSES = /usr/bin/nice, /bin/kill, /usr/bin/renice, \
+# 			    /usr/bin/pkill, /usr/bin/top
+
 ##
 ## Defaults specification
 ##
@@ -32,7 +40,7 @@
 # Defaults env_keep += "LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET"
 ##
 ## Run X applications through sudo; HOME is used to find the
-## .Xauthority file.  Note that other programs use HOME to find
+## .Xauthority file.  Note that other programs use HOME to find   
 ## configuration files and this may lead to privilege escalation!
 # Defaults env_keep += "HOME"
 ##
@@ -72,13 +80,16 @@ root ALL=(ALL) ALL
 # %wheel ALL=(ALL) NOPASSWD: ALL
 
 ## Uncomment to allow members of group sudo to execute any command
-# %sudo ALL=(ALL) ALL
+# %sudo	ALL=(ALL) ALL
 
 ## Uncomment to allow any user to run sudo if they know the password
 ## of the user they are running the command as (root by default).
 # Defaults targetpw  # Ask for the password of the target user
 # ALL ALL=(ALL) ALL  # WARNING: only use this together with 'Defaults targetpw'
 
-## Read drop-in files from /opt/local/etc/sudoers.d
+## Read drop-in files
 ## (the '#' here does not indicate a comment)
-#includedir /opt/local/etc/sudoers.d
+#includedir <%= @config_dir %>
+<% @extra_include_dirs.each do |include_dir| -%>
+#includedir <%= include_dir %>
+<% end if @extra_include_dirs -%>

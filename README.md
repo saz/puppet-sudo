@@ -3,6 +3,10 @@ https://github.com/saz/puppet-sudo
 
 Manage sudo configuration via Puppet
 
+### Supported Puppet versions
+* Puppet >= 4
+* Last version supporting Puppet 3: v4.2.0
+
 ### Supported OS
 Some family and some specific os are supported by this module
 * debian osfamily (debian, ubuntu, kali, ...)
@@ -205,7 +209,7 @@ sudo::conf { "foreman-proxy":
 | config_file_replace | boolean | true        | Replace config file with module config file |
 | includedirsudoers   | boolean | OS specific | Add #includedir /etc/sudoers.d with augeas |
 | config_dir          | string  | OS specific | Set config_dir _(for unsupported platforms)_ |
-| source              | string  | OS specific | Set source _(for unsupported platforms)_ |
+| content             | string  | OS specific | Alternate content file location |
 | ldap_enable         | boolean | false       | Add support to LDAP |
 
 ## sudo::conf class / sudo::configs hash parameters

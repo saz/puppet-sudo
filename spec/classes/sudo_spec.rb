@@ -29,7 +29,7 @@ describe 'sudo' do
         param_set
       end
 
-      %w(Debian Redhat).each do |osfamily|
+      %w[Debian Redhat].each do |osfamily|
         let :facts do
           {
             :operatingsystem           => osfamily,
@@ -54,7 +54,7 @@ describe 'sudo' do
           end
 
           it do
-            is_expected.to contain_file('/etc/sudoers.d/').with(
+            is_expected.to contain_file('/etc/sudoers.d').with(
               'ensure'  => 'directory',
               'owner'   => 'root',
               'group'   => 'root',
@@ -119,7 +119,7 @@ describe 'sudo' do
         end
 
         it do
-          is_expected.to contain_file('/etc/sudoers.d/').with(
+          is_expected.to contain_file('/etc/sudoers.d').with(
             'ensure'  => 'directory',
             'owner'   => 'root',
             'group'   => 'system',
@@ -162,7 +162,7 @@ describe 'sudo' do
         end
 
         it do
-          is_expected.to contain_file('/etc/sudoers.d/').with(
+          is_expected.to contain_file('/etc/sudoers.d').with(
             'ensure'  => 'directory',
             'owner'   => 'root',
             'group'   => 'root',
@@ -179,6 +179,20 @@ describe 'sudo' do
             'package_source' => 'http://www.sudo.ws/sudo/dist/packages/Solaris/10/TCMsudo-1.8.9p5-i386.pkg.gz',
             'package_admin_file' => '/var/sadm/install/admin/puppet'
           )
+        end
+
+        context 'when package is set' do
+          let :params do
+            {
+              :package => 'mysudo'
+            }
+          end
+
+          it do
+            is_expected.to contain_class('sudo::package').with(
+              'package' => 'mysudo'
+              )
+          end
         end
       end
 
@@ -205,7 +219,7 @@ describe 'sudo' do
         end
 
         it do
-          is_expected.to contain_file('/etc/sudoers.d/').with(
+          is_expected.to contain_file('/etc/sudoers.d').with(
             'ensure'  => 'directory',
             'owner'   => 'root',
             'group'   => 'root',
