@@ -79,6 +79,12 @@
 # Defaults!/usr/local/bin/sudoreplay !log_output
 # Defaults!REBOOT !log_output
 
+<% if @use_sudoreplay %>
+Defaults log_output
+Defaults!/usr/local/bin/sudoreplay !log_output
+<% end -%>
+
+
 ##
 ## Runas alias specification
 ##

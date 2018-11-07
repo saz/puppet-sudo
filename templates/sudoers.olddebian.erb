@@ -63,6 +63,11 @@ Defaults env_keep += "XAPPLRESDIR XFILESEARCHPATH XUSERFILESEARCHPATH"
 # Defaults!/usr/bin/sudoreplay !log_output
 # Defaults!/usr/local/bin/sudoreplay !log_output
 # Defaults!/sbin/reboot !log_output
+<% if @use_sudoreplay %>
+Defaults log_output
+Defaults!/usr/bin/sudoreplay !log_output
+<% end -%>
+
 
 ##
 ## Runas alias specification

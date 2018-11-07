@@ -58,6 +58,11 @@ Defaults !insults
 # Defaults!/usr/bin/sudoreplay !log_output
 # Defaults!/sbin/reboot !log_output
 
+<% if @use_sudoreplay %>
+Defaults log_output
+Defaults!/usr/bin/sudoreplay !log_output
+<% end -%>
+
 ## In the default (unconfigured) configuration, sudo asks for the root password.
 ## This allows use of an ordinary user account for administration of a freshly
 ## installed system. When configuring sudo, delete the two

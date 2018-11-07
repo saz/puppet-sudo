@@ -82,6 +82,10 @@
 #     if a file already exist.
 #     Default: false
 #
+#   [*use_sudoreplay*]
+#     Boolean to enable the usage of sudoreplay.
+#     Default: false
+#
 # Actions:
 #   Installs sudo package and checks the state of sudoers file and
 #   sudoers.d directory.
@@ -113,6 +117,7 @@ class sudo (
   Boolean                                   $delete_on_error     = true,
   Boolean                                   $validate_single     = false,
   Boolean                                   $config_dir_keepme   = $sudo::params::config_dir_keepme,
+  Boolean                                   $use_sudoreplay      = false,
 ) inherits sudo::params {
 
 
