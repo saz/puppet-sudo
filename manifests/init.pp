@@ -86,6 +86,10 @@
 #     Boolean to enable the usage of sudoreplay.
 #     Default: false
 #
+#   [*sudoreplay_discard*]
+#     Array of additional command to discard in sudo log.
+#     Default: undef
+#
 # Actions:
 #   Installs sudo package and checks the state of sudoers file and
 #   sudoers.d directory.
