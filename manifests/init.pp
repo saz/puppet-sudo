@@ -118,7 +118,7 @@ class sudo (
   Boolean                                   $validate_single     = false,
   Boolean                                   $config_dir_keepme   = $sudo::params::config_dir_keepme,
   Boolean                                   $use_sudoreplay      = false,
-  Optional[Array[String]]                   $sudoreplay          = undef,
+  Optional[Array[String]]                   $sudoreplay_discard  = undef,
 ) inherits sudo::params {
 
 
