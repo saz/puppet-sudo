@@ -66,8 +66,10 @@ Defaults env_keep += "XAPPLRESDIR XFILESEARCHPATH XUSERFILESEARCHPATH"
 <% if @use_sudoreplay %>
 Defaults log_output
 Defaults!/usr/bin/sudoreplay !log_output
+<% if @sudoreplay_discard %>
 <% @sudoreplay_discard.each do |command| -%>
 Defaults!<%= command %> !log_output
+<% end -%>
 <% end -%>
 <% end -%>
 
