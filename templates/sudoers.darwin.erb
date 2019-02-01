@@ -30,6 +30,16 @@ Defaults	env_keep += "DISPLAY XAUTHORIZATION XAUTHORITY"
 Defaults	env_keep += "EDITOR VISUAL"
 Defaults	env_keep += "HOME MAIL"
 
+<% if @use_sudoreplay %>
+Defaults log_output
+Defaults!/usr/bin/sudoreplay !log_output
+<% if @sudoreplay_discard %>
+<% @sudoreplay_discard.each do |command| -%>
+Defaults!<%= command %> !log_output
+<% end -%>
+<% end -%>
+<% end -%>
+
 # Runas alias specification
 
 # User privilege specification

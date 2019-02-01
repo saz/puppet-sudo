@@ -11,6 +11,16 @@ Defaults	env_reset
 Defaults	mail_badpass
 Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin:/snap/bin"
 
+<% if @use_sudoreplay %>
+Defaults log_output
+Defaults!/usr/bin/sudoreplay !log_output
+<% if @sudoreplay_discard %>
+<% @sudoreplay_discard.each do |command| -%>
+Defaults!<%= command %> !log_output
+<% end -%>
+<% end -%>
+<% end -%>
+
 # Host alias specification
 
 # User alias specification

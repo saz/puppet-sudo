@@ -72,8 +72,10 @@ Defaults    env_keep += "LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY
 <% if @use_sudoreplay %>
 Defaults log_output
 Defaults!/usr/bin/sudoreplay !log_output
+<% if @sudoreplay_discard %>
 <% @sudoreplay_discard.each do |command| -%>
 Defaults!<%= command %> !log_output
+<% end -%>
 <% end -%>
 <% end -%>
 
