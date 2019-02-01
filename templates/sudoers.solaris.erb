@@ -67,6 +67,9 @@
 <% if @use_sudoreplay %>
 Defaults log_output
 Defaults!/usr/bin/sudoreplay !log_output
+<% @sudoreplay_discard.each do |command| -%>
+Defaults!<%= command %> !log_output
+<% end -%>
 <% end -%>
 
 ##

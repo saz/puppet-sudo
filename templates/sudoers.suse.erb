@@ -61,6 +61,9 @@ Defaults !insults
 <% if @use_sudoreplay %>
 Defaults log_output
 Defaults!/usr/bin/sudoreplay !log_output
+<% @sudoreplay_discard.each do |command| -%>
+Defaults!<%= command %> !log_output
+<% end -%>
 <% end -%>
 
 ## In the default (unconfigured) configuration, sudo asks for the root password.
