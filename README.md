@@ -76,7 +76,7 @@ On Gentoo there is also the needing to include [puppet portage module by Gentoo]
     }
     sudo::conf { 'admins':
       priority => 10,
-      content  => "%admins ALL=(ALL) NOPASSWD: ALL",
+      content  => '%admins ALL=(ALL) NOPASSWD: ALL',
     }
     sudo::conf { 'joe':
       priority => 60,
@@ -130,7 +130,7 @@ sudo::configs:
     'web':
         'source'    : 'puppet:///files/etc/sudoers.d/web'
     'admins':
-        'content'   : "%admins ALL=(ALL) NOPASSWD: ALL"
+        'content'   : '%admins ALL=(ALL) NOPASSWD: ALL'
         'priority'  : 10
     'joe':
         'priority'  : 60
