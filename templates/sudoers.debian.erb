@@ -4,6 +4,18 @@ Defaults	env_reset
 Defaults	mail_badpass
 Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin"
 
+<% if @use_sudoreplay %>
+Defaults log_output
+Defaults!/usr/bin/sudoreplay !log_output
+<% if @sudoreplay_discard %>
+<% @sudoreplay_discard.each do |command| -%>
+Defaults!<%= command %> !log_output
+<% end -%>
+<% end -%>
+<% end -%>
+
+
+
 # User privilege specification
 root	ALL=(ALL:ALL) ALL
 
@@ -16,3 +28,4 @@ root	ALL=(ALL:ALL) ALL
 <% @extra_include_dirs.each do |include_dir| -%>
 #includedir <%= include_dir %>
 <% end if @extra_include_dirs -%>
+
