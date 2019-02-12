@@ -12,6 +12,7 @@ if RUBY_VERSION >= '2.2.0'
 end
 
 PuppetLint.configuration.fail_on_warnings = true
+PuppetLint.configuration.absolute_classname_reverse = true
 PuppetLint.configuration.send('relative')
 PuppetLint.configuration.send('disable_140chars')
 PuppetLint.configuration.send('disable_class_inherits_from_params_class')
