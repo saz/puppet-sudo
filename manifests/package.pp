@@ -40,8 +40,8 @@ class sudo::package(
   if $ldap_enable == true {
     case $::osfamily {
       'Gentoo': {
-        if defined( '::portage' ) {
-          Class['::sudo'] -> Class['::portage']
+        if defined( 'portage' ) {
+          Class['sudo'] -> Class['portage']
           package_use { 'app-admin/sudo':
             ensure => present,
             use    => ['ldap'],
@@ -57,7 +57,7 @@ class sudo::package(
 
   case $::osfamily {
     'AIX': {
-      class { '::sudo::package::aix':
+      class { 'sudo::package::aix':
         package        => $package,
         package_source => $package_source,
         package_ensure => $package_ensure,
@@ -65,7 +65,7 @@ class sudo::package(
     }
     'Darwin': {}
     'Solaris': {
-      class { '::sudo::package::solaris':
+      class { 'sudo::package::solaris':
         package            => $package,
         package_source     => $package_source,
         package_ensure     => $package_ensure,

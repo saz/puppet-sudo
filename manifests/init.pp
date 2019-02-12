@@ -156,7 +156,7 @@ class sudo (
     default: { fail('no $ldap_enable is set') }
   }
   if $package_real {
-    class { '::sudo::package':
+    class { 'sudo::package':
       package            => $package_real,
       package_ensure     => $package_ensure,
       package_source     => $package_source,
