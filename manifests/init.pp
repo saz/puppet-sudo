@@ -90,6 +90,10 @@
 #     Array of additional command to discard in sudo log.
 #     Default: undef
 #
+#   [*configs*]
+#     A hash of sudo::conf's
+#     Default: {}
+#
 # Actions:
 #   Installs sudo package and checks the state of sudoers file and
 #   sudoers.d directory.
@@ -123,6 +127,7 @@ class sudo (
   Boolean                                   $config_dir_keepme   = $sudo::params::config_dir_keepme,
   Boolean                                   $use_sudoreplay      = false,
   Optional[Array[String]]                   $sudoreplay_discard  = undef,
+  Hash                                      $configs             = {},
 ) inherits sudo::params {
 
 
@@ -188,20 +193,12 @@ class sudo (
     }
   }
 
-  # Load the Hiera based sudoer configuration (if enabled and present)
-  #
-  # NOTE: We must use 'include' here to avoid circular dependencies with
-  #     sudo::conf
-  #
-  # NOTE: There is no way to detect the existence of hiera. This automatic
-  #   functionality is therefore made exclusive to Puppet 3+ (hiera is embedded)
-  #   in order to preserve backwards compatibility.
-  #
-  #   http://projects.puppetlabs.com/issues/12345
-  #
-  if (versioncmp($::puppetversion, '3') != -1) {
-    include '::sudo::configs'
+  $configs.each |$config_name, $config| {
+    sudo::conf { $config_name:
+      * => $config,
+    }
   }
+
   if $package_real {
     anchor { 'sudo::begin': }
     -> Class['sudo::package']
