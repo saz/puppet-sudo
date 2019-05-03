@@ -160,6 +160,7 @@ class sudo::params {
       $package_ldap = undef
       $package_ensure = 'present'
       $package_source = 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.9-6.aix53.lam.rpm'
+      $package_provider_override = 'rpm'
       $package_admin_file = ''
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d'

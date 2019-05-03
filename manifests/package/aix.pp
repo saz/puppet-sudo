@@ -16,6 +16,9 @@
 # [*package_source*]
 #   Where to find the sudo packge, should be a local file or a uri
 #
+# [*package_provider_override*]
+#   Override the default package provider
+#
 # === Examples
 #
 #  class { sudo::package::aix:
@@ -35,12 +38,12 @@ class sudo::package::aix (
   $package = '',
   $package_source = '',
   $package_ensure = 'present',
-
+  $package_provider_override = '',
   ) {
 
     package { $package:
       ensure   => $package_ensure,
       source   => $package_source,
-      provider => rpm,
+      provider => $package_provider_override,
     }
 }

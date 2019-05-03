@@ -28,6 +28,10 @@
 #     Default: AIX: perzl.org
 #              Solaris: www.sudo.ws
 #
+#   [*package_provider_override*]
+#     Allows you to override the default package provider.
+#     Default: rpm
+#
 #   [*package_admin_file*]
 #     Where to find a Solaris 10 package admin file for
 #     an unattended installation. We do not supply a default file, so
@@ -106,28 +110,29 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class sudo (
-  Boolean                                   $enable              = true,
-  Optional[String]                          $package             = $sudo::params::package,
-  Optional[String]                          $package_ldap        = $sudo::params::package_ldap,
-  String                                    $package_ensure      = $sudo::params::package_ensure,
-  Optional[String]                          $package_source      = $sudo::params::package_source,
-  Optional[String]                          $package_admin_file  = $sudo::params::package_admin_file,
-  Boolean                                   $purge               = true,
-  Optional[Variant[String, Array[String]]]  $purge_ignore        = undef,
-  String                                    $config_file         = $sudo::params::config_file,
-  Boolean                                   $config_file_replace = true,
-  String                                    $config_file_mode    = $sudo::params::config_file_mode,
-  String                                    $config_dir          = $sudo::params::config_dir,
-  String                                    $config_dir_mode     = $sudo::params::config_dir_mode,
-  Optional[Array[String]]                   $extra_include_dirs  = undef,
-  String                                    $content             = $sudo::params::content,
-  Boolean                                   $ldap_enable         = false,
-  Boolean                                   $delete_on_error     = true,
-  Boolean                                   $validate_single     = false,
-  Boolean                                   $config_dir_keepme   = $sudo::params::config_dir_keepme,
-  Boolean                                   $use_sudoreplay      = false,
-  Optional[Array[String]]                   $sudoreplay_discard  = undef,
-  Hash                                      $configs             = {},
+  Boolean                                   $enable                    = true,
+  Optional[String]                          $package                   = $sudo::params::package,
+  Optional[String]                          $package_ldap              = $sudo::params::package_ldap,
+  String                                    $package_ensure            = $sudo::params::package_ensure,
+  Optional[String]                          $package_source            = $sudo::params::package_source,
+  Optional[String]                          $package_provider_override = $sudo::params::package_provider_override,
+  Optional[String]                          $package_admin_file        = $sudo::params::package_admin_file,
+  Boolean                                   $purge                     = true,
+  Optional[Variant[String, Array[String]]]  $purge_ignore              = undef,
+  String                                    $config_file               = $sudo::params::config_file,
+  Boolean                                   $config_file_replace       = true,
+  String                                    $config_file_mode          = $sudo::params::config_file_mode,
+  String                                    $config_dir                = $sudo::params::config_dir,
+  String                                    $config_dir_mode           = $sudo::params::config_dir_mode,
+  Optional[Array[String]]                   $extra_include_dirs        = undef,
+  String                                    $content                   = $sudo::params::content,
+  Boolean                                   $ldap_enable               = false,
+  Boolean                                   $delete_on_error           = true,
+  Boolean                                   $validate_single           = false,
+  Boolean                                   $config_dir_keepme         = $sudo::params::config_dir_keepme,
+  Boolean                                   $use_sudoreplay            = false,
+  Optional[Array[String]]                   $sudoreplay_discard        = undef,
+  Hash                                      $configs                   = {},
 ) inherits sudo::params {
 
 
@@ -157,12 +162,13 @@ class sudo (
   }
   if $package_real {
     class { 'sudo::package':
-      package            => $package_real,
-      package_ensure     => $package_ensure,
-      package_source     => $package_source,
-      package_admin_file => $package_admin_file,
-      ldap_enable        => $ldap_enable,
-      before             => [ File[$config_file], File[$config_dir] ],
+      package                   => $package_real,
+      package_ensure            => $package_ensure,
+      package_source            => $package_source,
+      package_provider_override => $package_provider_override,
+      package_admin_file        => $package_admin_file,
+      ldap_enable               => $ldap_enable,
+      before                    => [ File[$config_file], File[$config_dir] ],
     }
   }
 

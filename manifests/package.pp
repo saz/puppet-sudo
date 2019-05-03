@@ -15,6 +15,9 @@
 # [*package_source*]
 #   Where to find the sudo packge, should be a local file or a uri
 #
+# [*package_provider_override*]
+#   Override the default package provider
+#
 # === Examples
 #
 #  class { sysdoc::package
@@ -33,6 +36,7 @@ class sudo::package(
   $package = '',
   $package_ensure = present,
   $package_source = '',
+  $package_provider_override = '',
   $package_admin_file = '',
   $ldap_enable = false,
 ) {
@@ -58,9 +62,10 @@ class sudo::package(
   case $::osfamily {
     'AIX': {
       class { 'sudo::package::aix':
-        package        => $package,
-        package_source => $package_source,
-        package_ensure => $package_ensure,
+        package                   => $package,
+        package_source            => $package_source,
+        package_ensure            => $package_ensure,
+        package_provider_override => $package_provider_override,
       }
     }
     'Darwin': {}
