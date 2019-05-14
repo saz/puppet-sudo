@@ -131,9 +131,10 @@ describe 'sudo' do
 
         it do
           is_expected.to contain_class('sudo::package').with(
-            'package'        => 'sudo',
-            'package_ensure' => param_hash[:package_ensure],
-            'package_source' => 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.9-6.aix53.lam.rpm'
+            'package'                   => 'sudo',
+            'package_ensure'            => param_hash[:package_ensure],
+            'package_source'            => 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.9-6.aix53.lam.rpm',
+            'package_provider_override' => param_hash[:package_provider_override]
           )
         end
       end
