@@ -29,7 +29,7 @@ describe 'sudo::package::aix' do
     {
       :package                   => 'sudo',
       :package_ensure            => 'present',
-      :package_source            => ''
+      :package_source            => undef
       :package_provider_override => 'yum'
     }
   end
@@ -43,7 +43,7 @@ describe 'sudo::package::aix' do
   it do
     is_expected.to contain_package('sudo').with(
       'ensure'   => 'present',
-      'source'   => '',
+      'source'   => undef,
       'provider' => 'yum'
     )
   end
