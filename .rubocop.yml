@@ -1,6 +1,6 @@
 require: rubocop-rspec
 AllCops:
-  TargetRubyVersion: 2.2
+  TargetRubyVersion: 2.3
   Include:
     - ./**/*.rb
   Exclude:
@@ -11,7 +11,7 @@ AllCops:
     - spec/fixtures/**/*
     - Gemfile
     - Rakefile
-Lint/ConditionPosition:
+Layout/ConditionPosition:
   Enabled: true
 
 Lint/ElseLayout:
@@ -73,13 +73,13 @@ Lint/AmbiguousRegexpLiteral:
 Security/Eval:
   Enabled: true
 
-Lint/BlockAlignment:
+Layout/BlockAlignment:
   Enabled: true
 
-Lint/DefEndAlignment:
+Layout/DefEndAlignment:
   Enabled: true
 
-Lint/EndAlignment:
+Layout/EndAlignment:
   Enabled: true
 
 Lint/DeprecatedClassMethods:
@@ -176,7 +176,7 @@ Style/WhenThen:
 Style/WordArray:
   Enabled: true
 
-Style/UnneededPercentQ:
+Style/RedundantPercentQ:
   Enabled: true
 
 Layout/Tab:
@@ -198,9 +198,6 @@ Layout/SpaceInsideParens:
   Enabled: true
 
 Layout/LeadingCommentSpace:
-  Enabled: true
-
-Layout/SpaceBeforeFirstArg:
   Enabled: true
 
 Layout/SpaceAfterColon:
@@ -270,10 +267,10 @@ Style/EachWithObject:
 Layout/EmptyLineBetweenDefs:
   Enabled: true
 
-Layout/IndentArray:
+Layout/IndentFirstArrayElement:
   Enabled: true
 
-Layout/IndentHash:
+Layout/IndentFirstHashElement:
   Enabled: true
 
 Layout/IndentationConsistency:
@@ -491,13 +488,7 @@ Metrics/BlockLength:
 Metrics/PerceivedComplexity:
   Enabled: False
 
-Lint/UselessAssignment:
-  Enabled: true
-
 Layout/ClosingParenthesisIndentation:
-  Enabled: false
-
-Metrics/BlockLength:
   Enabled: false
 
 # RSpec

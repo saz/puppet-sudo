@@ -191,7 +191,7 @@ class sudo::params {
           $config_file_group = 'root'
           $config_dir_keepme = false
         }
-        'Archlinux': {
+        /^(Archlinux|Manjarolinux)$/: {
           $package = 'sudo'
           $package_ldap = $package
           $package_ensure = 'present'
