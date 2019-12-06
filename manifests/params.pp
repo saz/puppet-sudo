@@ -51,6 +51,7 @@ class sudo::params {
         /^5/    => "${content_base}sudoers.rhel5.erb",
         /^6/    => "${content_base}sudoers.rhel6.erb",
         /^7/    => "${content_base}sudoers.rhel7.erb",
+        /^8/    => "${content_base}sudoers.rhel8.erb",
         default => "${content_base}sudoers.rhel6.erb",
         }
       $config_file_group = 'root'
