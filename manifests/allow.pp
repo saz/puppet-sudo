@@ -41,6 +41,11 @@
 #     add_groups is ignored at EVERY level of the hierarchy.
 #     Default: undef
 #
+#   [*nopasswd*]
+#     Users created in this config file will be able to execute sudo commands
+#     without providing a password.
+#     Default: false
+#
 # Actions:
 #   Creates file in sudoers.d that permits specific users and groups to sudo.
 #
@@ -52,6 +57,7 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class sudo::allow(
+  Boolean $nopasswd = false,
   $add_users = [],
   $add_groups = [],
   $replace_users = undef,

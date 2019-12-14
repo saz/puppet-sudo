@@ -3,11 +3,11 @@
 <%# We can prevent excess newlines by using a special "-%" closing tag -%>
 <%- unless @users.nil? -%>
 <% @users.each do |user| -%>
-<%= user %> ALL=(ALL) ALL
+<%= user %> ALL=(ALL) <%- if ! @nopasswd.nil? and @nopasswd -%>NOPASSWD: <% end %>ALL
 <% end -%>
 <%- end -%>
 <%- unless @groups.nil? -%>
 <% @groups.each do |group| -%>
-%%<%= group %> ALL=(ALL) ALL
+%%<%= group %> ALL=(ALL) <%- if ! @nopasswd.nil? and @nopasswd -%>NOPASSWD: <% end %>ALL
 <% end -%>
 <%- end -%>
