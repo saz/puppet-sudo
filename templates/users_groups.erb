@@ -1,9 +1,13 @@
 # This file is managed by Puppet. All changes will be reverted
 # on the next Puppet run. Avoid making changes here.
 <%# We can prevent excess newlines by using a special "-%" closing tag -%>
+<%- unless @users.nil? -%>
 <% @users.each do |user| -%>
 <%= user %> ALL=(ALL) ALL
 <% end -%>
+<%- end -%>
+<%- unless @groups.nil? -%>
 <% @groups.each do |group| -%>
 %%<%= group %> ALL=(ALL) ALL
 <% end -%>
+<%- end -%>
