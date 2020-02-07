@@ -58,8 +58,14 @@ define sudo::conf(
     $sudo_config_dir => $sudo_config_dir
   }
 
+  # Append suffix
+  if $sudo::suffix {
+    $_name_suffix = "${name}${sudo::suffix}"
+  } else {
+    $_name_suffix = $name
+  }
   # sudo skip file name that contain a "."
-  $dname = regsubst($name, '\.', '-', 'G')
+  $dname = regsubst($_name_suffix, '\.', '-', 'G')
 
   if size("x${priority}") == 2 {
     $priority_real = "0${priority}"
