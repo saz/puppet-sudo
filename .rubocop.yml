@@ -26,7 +26,7 @@ Lint/UselessComparison:
 Lint/EnsureReturn:
   Enabled: true
 
-Lint/HandleExceptions:
+Lint/SuppressedException:
   Enabled: true
 
 Lint/ShadowingOuterLocalVariable:
@@ -94,7 +94,7 @@ Lint/ParenthesesAsGroupedExpression:
 Lint/RescueException:
   Enabled: true
 
-Lint/StringConversionInInterpolation:
+Lint/RedundantStringCoercion:
   Enabled: true
 
 Lint/UnusedBlockArgument:
@@ -121,13 +121,13 @@ Naming/AccessorMethodName:
 Style/Alias:
   Enabled: true
 
-Layout/AlignArray:
+Layout/ArrayAlignment:
   Enabled: true
 
-Layout/AlignHash:
+Layout/HashAlignment:
   Enabled: true
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   Enabled: true
 
 Metrics/BlockNesting:
@@ -185,7 +185,7 @@ Layout/Tab:
 Layout/SpaceBeforeSemicolon:
   Enabled: true
 
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
   Enabled: true
 
 Layout/SpaceInsideBlockBraces:
@@ -267,10 +267,10 @@ Style/EachWithObject:
 Layout/EmptyLineBetweenDefs:
   Enabled: true
 
-Layout/IndentFirstArrayElement:
+Layout/FirstArrayElementIndentation:
   Enabled: true
 
-Layout/IndentFirstHashElement:
+Layout/FirstHashElementIndentation:
   Enabled: true
 
 Layout/IndentationConsistency:
@@ -289,7 +289,7 @@ Style/EmptyLiteral:
   Enabled: true
 
 # Configuration parameters: AllowURI, URISchemes.
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 Style/MethodDefParentheses:
