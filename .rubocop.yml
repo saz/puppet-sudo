@@ -1,6 +1,6 @@
 require: rubocop-rspec
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.2
   Include:
     - ./**/*.rb
   Exclude:
@@ -506,3 +506,6 @@ RSpec/NestedGroups:
 
 RSpec/MultipleExpectations:
   Max: 2
+
+RSpec/NamedSubject:
+  Enabled: false
