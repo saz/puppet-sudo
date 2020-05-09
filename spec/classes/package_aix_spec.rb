@@ -5,7 +5,7 @@ describe 'sudo::package::aix' do
       {
         :package        => 'sudo',
         :package_ensure => 'present',
-        :package_source => 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.9-6.aix53.lam.rpm'
+        :package_source => 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.27-1.aix53.rpm'
       }
     end
 
@@ -18,7 +18,7 @@ describe 'sudo::package::aix' do
     it do
       is_expected.to contain_package('sudo').with(
         'ensure'   => 'present',
-        'source'   => 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.9-6.aix53.lam.rpm',
+        'source'   => 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.27-1.aix53.rpm',
         'provider' => 'rpm'
       )
     end

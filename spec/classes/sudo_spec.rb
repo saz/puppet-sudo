@@ -133,7 +133,7 @@ describe 'sudo' do
           is_expected.to contain_class('sudo::package').with(
             'package'        => 'sudo',
             'package_ensure' => param_hash[:package_ensure],
-            'package_source' => 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.9-6.aix53.lam.rpm'
+            'package_source' => 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.27-1.aix53.rpm'
           )
         end
       end
