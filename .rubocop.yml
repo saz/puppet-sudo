@@ -11,7 +11,7 @@ AllCops:
     - spec/fixtures/**/*
     - Gemfile
     - Rakefile
-Lint/ConditionPosition:
+Layout/ConditionPosition:
   Enabled: true
 
 Lint/ElseLayout:
@@ -26,7 +26,7 @@ Lint/UselessComparison:
 Lint/EnsureReturn:
   Enabled: true
 
-Lint/HandleExceptions:
+Lint/SuppressedException:
   Enabled: true
 
 Lint/ShadowingOuterLocalVariable:
@@ -73,13 +73,13 @@ Lint/AmbiguousRegexpLiteral:
 Security/Eval:
   Enabled: true
 
-Lint/BlockAlignment:
+Layout/BlockAlignment:
   Enabled: true
 
-Lint/DefEndAlignment:
+Layout/DefEndAlignment:
   Enabled: true
 
-Lint/EndAlignment:
+Layout/EndAlignment:
   Enabled: true
 
 Lint/DeprecatedClassMethods:
@@ -94,7 +94,7 @@ Lint/ParenthesesAsGroupedExpression:
 Lint/RescueException:
   Enabled: true
 
-Lint/StringConversionInInterpolation:
+Lint/RedundantStringCoercion:
   Enabled: true
 
 Lint/UnusedBlockArgument:
@@ -121,13 +121,13 @@ Naming/AccessorMethodName:
 Style/Alias:
   Enabled: true
 
-Layout/AlignArray:
+Layout/ArrayAlignment:
   Enabled: true
 
-Layout/AlignHash:
+Layout/HashAlignment:
   Enabled: true
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   Enabled: true
 
 Metrics/BlockNesting:
@@ -176,7 +176,7 @@ Style/WhenThen:
 Style/WordArray:
   Enabled: true
 
-Style/UnneededPercentQ:
+Style/RedundantPercentQ:
   Enabled: true
 
 Layout/Tab:
@@ -185,7 +185,7 @@ Layout/Tab:
 Layout/SpaceBeforeSemicolon:
   Enabled: true
 
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
   Enabled: true
 
 Layout/SpaceInsideBlockBraces:
@@ -198,9 +198,6 @@ Layout/SpaceInsideParens:
   Enabled: true
 
 Layout/LeadingCommentSpace:
-  Enabled: true
-
-Layout/SpaceBeforeFirstArg:
   Enabled: true
 
 Layout/SpaceAfterColon:
@@ -270,10 +267,10 @@ Style/EachWithObject:
 Layout/EmptyLineBetweenDefs:
   Enabled: true
 
-Layout/IndentArray:
+Layout/FirstArrayElementIndentation:
   Enabled: true
 
-Layout/IndentHash:
+Layout/FirstHashElementIndentation:
   Enabled: true
 
 Layout/IndentationConsistency:
@@ -292,7 +289,7 @@ Style/EmptyLiteral:
   Enabled: true
 
 # Configuration parameters: AllowURI, URISchemes.
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 Style/MethodDefParentheses:
@@ -491,13 +488,7 @@ Metrics/BlockLength:
 Metrics/PerceivedComplexity:
   Enabled: False
 
-Lint/UselessAssignment:
-  Enabled: true
-
 Layout/ClosingParenthesisIndentation:
-  Enabled: false
-
-Metrics/BlockLength:
   Enabled: false
 
 # RSpec
@@ -515,3 +506,6 @@ RSpec/NestedGroups:
 
 RSpec/MultipleExpectations:
   Max: 2
+
+RSpec/NamedSubject:
+  Enabled: false
