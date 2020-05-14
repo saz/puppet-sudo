@@ -104,10 +104,10 @@ root	ALL=(ALL) 	ALL
 # %sys ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS
 
 ## Allows people in group wheel to run all commands
-# %wheel	ALL=(ALL)	ALL
+<% if @disable_wheel -%>#<% end -%> %wheel	ALL=(ALL)	ALL
 
 ## Same thing without a password
-# %wheel	ALL=(ALL)	NOPASSWD: ALL
+<% if @disable_wheel_nopasswd -%>#<% end -%> %wheel	ALL=(ALL)	NOPASSWD: ALL
 
 ## Allows members of the users group to mount and unmount the 
 ## cdrom as root

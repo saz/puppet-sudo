@@ -90,6 +90,16 @@
 #     Array of additional command to discard in sudo log.
 #     Default: undef
 #
+#   [*disable_wheel*]
+#     Boolean to disable usually enabled setting to enable people in 
+#     group wheel to run all commands
+#     Default: false
+#
+#   [*disable_wheel_nopasswd*]
+#     Boolean to disable the usually disable setting that does the 
+#     same thing without a password
+#     Default: true
+#
 #   [*configs*]
 #     A hash of sudo::conf's
 #     Default: {}
@@ -106,28 +116,30 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class sudo (
-  Boolean                                   $enable              = true,
-  Optional[String]                          $package             = $sudo::params::package,
-  Optional[String]                          $package_ldap        = $sudo::params::package_ldap,
-  String                                    $package_ensure      = $sudo::params::package_ensure,
-  Optional[String]                          $package_source      = $sudo::params::package_source,
-  Optional[String]                          $package_admin_file  = $sudo::params::package_admin_file,
-  Boolean                                   $purge               = true,
-  Optional[Variant[String, Array[String]]]  $purge_ignore        = undef,
-  String                                    $config_file         = $sudo::params::config_file,
-  Boolean                                   $config_file_replace = true,
-  String                                    $config_file_mode    = $sudo::params::config_file_mode,
-  String                                    $config_dir          = $sudo::params::config_dir,
-  String                                    $config_dir_mode     = $sudo::params::config_dir_mode,
-  Optional[Array[String]]                   $extra_include_dirs  = undef,
-  String                                    $content             = $sudo::params::content,
-  Boolean                                   $ldap_enable         = false,
-  Boolean                                   $delete_on_error     = true,
-  Boolean                                   $validate_single     = false,
-  Boolean                                   $config_dir_keepme   = $sudo::params::config_dir_keepme,
-  Boolean                                   $use_sudoreplay      = false,
-  Optional[Array[String]]                   $sudoreplay_discard  = undef,
-  Hash                                      $configs             = {},
+  Boolean                                   $enable                 = true,
+  Optional[String]                          $package                = $sudo::params::package,
+  Optional[String]                          $package_ldap           = $sudo::params::package_ldap,
+  String                                    $package_ensure         = $sudo::params::package_ensure,
+  Optional[String]                          $package_source         = $sudo::params::package_source,
+  Optional[String]                          $package_admin_file     = $sudo::params::package_admin_file,
+  Boolean                                   $purge                  = true,
+  Optional[Variant[String, Array[String]]]  $purge_ignore           = undef,
+  String                                    $config_file            = $sudo::params::config_file,
+  Boolean                                   $config_file_replace    = true,
+  String                                    $config_file_mode       = $sudo::params::config_file_mode,
+  String                                    $config_dir             = $sudo::params::config_dir,
+  String                                    $config_dir_mode        = $sudo::params::config_dir_mode,
+  Optional[Array[String]]                   $extra_include_dirs     = undef,
+  String                                    $content                = $sudo::params::content,
+  Boolean                                   $ldap_enable            = false,
+  Boolean                                   $delete_on_error        = true,
+  Boolean                                   $validate_single        = false,
+  Boolean                                   $config_dir_keepme      = $sudo::params::config_dir_keepme,
+  Boolean                                   $use_sudoreplay         = false,
+  Optional[Array[String]]                   $sudoreplay_discard     = undef,
+  Boolean                                   $disable_wheel          = $sudo::params::disable_wheel,
+  Boolean                                   $disable_wheel_nopasswd = $sudo::params::disable_wheel_nopasswd,
+  Hash                                      $configs                = {},
 ) inherits sudo::params {
 
 

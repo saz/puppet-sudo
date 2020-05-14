@@ -85,10 +85,10 @@ Defaults!<%= command %> !log_output
 root ALL=(ALL) ALL
 
 ## Uncomment to allow members of group wheel to execute any command
-# %wheel ALL=(ALL) ALL
+<% if @disable_wheel -%>#<% end -%> %wheel ALL=(ALL) ALL
 
 ## Same thing without a password
-# %wheel ALL=(ALL) NOPASSWD: ALL
+<% if @disable_wheel_nopasswd -%>#<% end -%> %wheel ALL=(ALL) NOPASSWD: ALL
 
 ## Read drop-in files
 ## (the '#' here does not indicate a comment)
