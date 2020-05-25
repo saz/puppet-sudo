@@ -204,4 +204,31 @@ describe 'sudo::conf', :type => :define do
       )
     end
   end
+
+  describe 'when adding a sudo entry with a suffix _foobar' do
+    let :pre_condition do
+      'class{"sudo": suffix => "_foobar"}'
+    end
+
+    let :params do
+      {
+        ensure:          'absent',
+        priority:        10,
+        content:         '%admins ALL=(ALL) NOPASSWD: ALL',
+        sudo_config_dir: '/etc/sudoers.d',
+      }
+    end
+
+    it do
+      is_expected.to contain_file("#{filename}_foobar").with(
+        ensure:  'absent',
+        content: "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
+        owner:   'root',
+        group:   'root',
+        path:    "#{file_path}_foobar",
+        mode:    '0440'
+      )
+    end
+  end
+
 end

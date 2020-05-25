@@ -44,6 +44,9 @@
 #     Files to exclude from purging in sudoers.d directory
 #     Default: undef
 #
+#   [*suffix*]
+#     Adds a custom suffix to all files created in sudoers.d directory.
+#
 #   [*config_file*]
 #     Main configuration file.
 #     Only set this, if your platform is not supported or you know,
@@ -114,6 +117,7 @@ class sudo (
   Optional[String]                          $package_admin_file  = $sudo::params::package_admin_file,
   Boolean                                   $purge               = true,
   Optional[Variant[String, Array[String]]]  $purge_ignore        = undef,
+  Optional[String]                          $suffix              = undef,
   String                                    $config_file         = $sudo::params::config_file,
   Boolean                                   $config_file_replace = true,
   String                                    $config_file_mode    = $sudo::params::config_file_mode,
