@@ -11,3 +11,11 @@ Facter.add(:sudoversion) do
     end
   end
 end
+
+Facter.add(:sudoversion) do
+  confine osfamily: :windows
+  # Windows does not know about (normal) sudo
+  setcode do
+    ''
+  end
+end
