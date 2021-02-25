@@ -64,8 +64,16 @@ define sudo::conf (
   } else {
     $_name_suffix = $name
   }
+
   # sudo skip file name that contain a "."
   $dname = regsubst($_name_suffix, '\.', '-', 'G')
+
+  # Prepend prefix
+  if $sudo::prefix {
+    $_name_prefix = $sudo::prefix
+  }  else {
+    $_name_prefix = ''
+  }
 
   if size("x${priority}") == 2 {
     $priority_real = "0${priority}"
@@ -77,7 +85,7 @@ define sudo::conf (
   if $sudo_file_name != undef {
     $cur_file = "${sudo_config_dir_real}/${sudo_file_name}"
   } else {
-    $cur_file = "${sudo_config_dir_real}/${priority_real}_${dname}"
+    $cur_file = "${sudo_config_dir_real}/${_name_prefix}${priority_real}_${dname}"
   }
 
   # replace whitespace in file name
