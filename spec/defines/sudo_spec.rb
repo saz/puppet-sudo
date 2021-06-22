@@ -1,15 +1,20 @@
 require 'spec_helper'
-describe 'sudo::conf', :type => :define do
+describe 'sudo::conf', type: :define do
   let(:title)    { 'admins' }
   let(:filename) { '10_admins' }
   let(:file_path) { '/etc/sudoers.d/10_admins' }
 
   let :facts do
     {
+      os: {
+        'family'  => 'Debian',
+        'name'    => 'Debian',
+        'release' => {
+          'full'  => '7.0',
+          'major' => '7',
+        },
+      },
       lsbdistcodename:           'wheezy',
-      operatingsystemmajrelease: '7',
-      operatingsystem:           'Debian',
-      osfamily:                  'Debian',
       puppetversion:             '3.7.0'
     }
   end
@@ -107,8 +112,8 @@ describe 'sudo::conf', :type => :define do
     end
 
     it do
-      is_expected.to contain_sudo__conf('admins hq').with(:priority => params[:priority],
-                                                          :content  => params[:content])
+      is_expected.to contain_sudo__conf('admins hq').with(priority: params[:priority],
+                                                          content: params[:content])
     end
 
     it do
@@ -230,5 +235,4 @@ describe 'sudo::conf', :type => :define do
       )
     end
   end
-
 end
