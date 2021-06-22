@@ -29,16 +29,15 @@
 #
 # Copyright 2013 Toni Schmidbauer
 #
-class sudo::package(
+class sudo::package (
   $package = '',
   $package_ensure = present,
   $package_source = '',
   $package_admin_file = '',
   $ldap_enable = false,
 ) {
-
   if $ldap_enable == true {
-    case $::osfamily {
+    case $facts['os']['family'] {
       'Gentoo': {
         if defined( 'portage' ) {
           Class['sudo'] -> Class['portage']
@@ -51,11 +50,11 @@ class sudo::package(
           fail ('portage package needed to define ldap use on sudo')
         }
       }
-      default: { }
+      default: {}
     }
   }
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'AIX': {
       class { 'sudo::package::aix':
         package        => $package,
@@ -74,7 +73,11 @@ class sudo::package(
     }
     default: {
       if $package != '' {
-        ensure_packages([$package], {'ensure' => $package_ensure})
+        ensure_packages([
+            $package,
+          ], {
+            'ensure' => $package_ensure,
+        })
       }
     }
   }

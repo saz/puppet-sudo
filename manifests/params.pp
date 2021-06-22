@@ -5,16 +5,16 @@ class sudo::params {
   $config_file_mode = '0440'
   $config_dir_mode  = '0550'
 
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian': {
-      case $::operatingsystem {
+      case $facts['os']['name'] {
         'Ubuntu': {
           $content = "${content_base}sudoers.ubuntu.erb"
         }
         default: {
-          if (versioncmp($::operatingsystemmajrelease, '7') >= 0) or
-            ($::operatingsystemmajrelease =~ /\/sid/) or
-            ($::operatingsystemmajrelease =~ /Kali/) {
+          if (versioncmp($facts['os']['release']['major'], '7') >= 0) or
+          ($facts['os']['release']['major'] =~ /\/sid/) or
+          ($facts['os']['release']['major'] =~ /Kali/) {
             $content = "${content_base}sudoers.debian.erb"
           } else {
             $content = "${content_base}sudoers.olddebian.erb"
@@ -39,7 +39,7 @@ class sudo::params {
       # rhel 5.0 to 5.4 use sudo 1.6.9 which does not support
       # includedir, so we have to make sure sudo 1.7 (comes with rhel
       # 5.5) is installed.
-      $package_ensure = $::operatingsystemrelease ? {
+      $package_ensure = $facts['os']['release']['full'] ? {
         /^5.[01234]$/ => 'latest',
         default      => 'present',
       }
@@ -47,13 +47,13 @@ class sudo::params {
       $package_admin_file = ''
       $config_file = '/etc/sudoers'
       $config_dir = '/etc/sudoers.d'
-      $content = $::operatingsystemrelease ? {
+      $content = $facts['os']['release']['full'] ? {
         /^5/    => "${content_base}sudoers.rhel5.erb",
         /^6/    => "${content_base}sudoers.rhel6.erb",
         /^7/    => "${content_base}sudoers.rhel7.erb",
         /^8/    => "${content_base}sudoers.rhel8.erb",
         default => "${content_base}sudoers.rhel8.erb",
-        }
+      }
       $config_file_group = 'root'
       $config_dir_keepme = false
     }
@@ -70,7 +70,7 @@ class sudo::params {
       $config_dir_keepme = false
     }
     'Solaris': {
-      case $::operatingsystem {
+      case $facts['os']['name'] {
         'OmniOS': {
           $package = 'sudo'
           $package_ldap = undef
@@ -113,7 +113,7 @@ class sudo::params {
               $package = 'TCMsudo'
               $package_ldap = undef
               $package_ensure = 'present'
-              $package_source = "http://www.sudo.ws/sudo/dist/packages/Solaris/10/TCMsudo-1.8.9p5-${::hardwareisa}.pkg.gz"
+              $package_source = "http://www.sudo.ws/sudo/dist/packages/Solaris/10/TCMsudo-1.8.9p5-${facts['os']['hardware']}.pkg.gz"
               $package_admin_file = '/var/sadm/install/admin/puppet'
               $config_file = '/etc/sudoers'
               $config_dir = '/etc/sudoers.d'
@@ -122,7 +122,7 @@ class sudo::params {
               $config_dir_keepme = false
             }
             default: {
-              fail("Unsupported platform: ${::osfamily}/${::operatingsystem}/${::kernelrelease}")
+              fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}/${::kernelrelease}")
             }
           }
         }
@@ -181,7 +181,7 @@ class sudo::params {
       $config_dir_keepme = false
     }
     default: {
-      case $::operatingsystem {
+      case $facts['os']['name'] {
         'Gentoo': {
           $package = 'sudo'
           $package_ldap = $package
@@ -208,7 +208,7 @@ class sudo::params {
           $package_ensure = 'present'
           $config_file = '/etc/sudoers'
           $config_dir = '/etc/sudoers.d'
-          $content = $::operatingsystemrelease ? {
+          $content = $facts['os']['release']['full'] ? {
             /^5/    => "${content_base}sudoers.rhel5.erb",
             /^6/    => "${content_base}sudoers.rhel6.erb",
             default => "${content_base}sudoers.rhel6.erb",
@@ -217,7 +217,7 @@ class sudo::params {
           $config_dir_keepme = false
         }
         default: {
-          fail("Unsupported platform: ${::osfamily}/${::operatingsystem}")
+          fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}")
         }
       }
       $package_source = ''

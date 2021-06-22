@@ -51,7 +51,7 @@
 #   }
 #
 # [Remember: No empty lines between comments and class definition]
-class sudo::allow(
+class sudo::allow (
   $add_users = [],
   $add_groups = [],
   $replace_users = undef,
