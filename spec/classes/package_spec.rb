@@ -3,14 +3,16 @@ describe 'sudo::package' do
   describe 'on supported osfamily: RedHat' do
     let :params do
       {
-        :package        => 'sudo',
-        :package_ensure => 'present'
+        package: 'sudo',
+        package_ensure: 'present'
       }
     end
 
     let :facts do
       {
-        :osfamily => 'RedHat'
+        os: {
+          'family'  => 'RedHat',
+        },
       }
     end
 
@@ -22,14 +24,16 @@ describe 'sudo::package' do
   describe 'on supported osfamily: OpenBSD 5.8' do
     let :params do
       {
-        :package        => 'sudo',
-        :package_ensure => 'present'
+        package: 'sudo',
+        package_ensure: 'present'
       }
     end
     let :facts do
       {
-        :osfamily      => 'OpenBSD',
-        :kernelversion => '5.8'
+        os: {
+          'family'  => 'OpenBSD',
+        },
+        kernelversion: '5.8'
       }
     end
 
@@ -41,8 +45,10 @@ describe 'sudo::package' do
   describe 'on supported osfamily: OpenBSD 5.7' do
     let :facts do
       {
-        :osfamily      => 'OpenBSD',
-        :kernelversion => '5.7'
+        os: {
+          'family'  => 'OpenBSD',
+        },
+        kernelversion: '5.7'
       }
     end
 
@@ -54,15 +60,17 @@ describe 'sudo::package' do
   describe 'on supported osfamily: AIX' do
     let :params do
       {
-        :package        => 'sudo',
-        :package_ensure => 'present',
-        :package_source => 'http://www.oss4aix.org/compatible/aix53/sudo-1.8.7-1.aix5.1.ppc.rpm'
+        package: 'sudo',
+        package_ensure: 'present',
+        package_source: 'http://www.oss4aix.org/compatible/aix53/sudo-1.8.7-1.aix5.1.ppc.rpm'
       }
     end
 
     let :facts do
       {
-        :osfamily => 'AIX'
+        os: {
+          'family'  => 'AIX',
+        },
       }
     end
 
