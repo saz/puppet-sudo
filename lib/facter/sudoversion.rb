@@ -1,5 +1,8 @@
 require 'puppet'
 Facter.add(:sudoversion) do
+  confine :os do |os|
+    os['family'] != 'windows'
+  end
   setcode do
     if Facter::Util::Resolution.which('sudo')
       sudoversion = Facter::Util::Resolution.exec('sudo -V 2>&1')

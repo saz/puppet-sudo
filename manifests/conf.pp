@@ -37,7 +37,7 @@
 #   }
 #
 # [Remember: No empty lines between comments and class definition]
-define sudo::conf(
+define sudo::conf (
   $ensure           = present,
   $priority         = 10,
   $content          = undef,
@@ -83,7 +83,7 @@ define sudo::conf(
   # replace whitespace in file name
   $cur_file_real = regsubst($cur_file, '\s+', '_', 'G')
 
-  if $::osfamily == 'RedHat' {
+  if $facts['os']['family'] == 'RedHat' {
     if (versioncmp($::sudoversion, '1.7.2p1') < 0) {
       warning("Found sudo with version ${::sudoversion}, but at least version 1.7.2p1 is required!")
     }
@@ -135,7 +135,7 @@ define sudo::conf(
     validate_cmd => $validate_cmd_real,
   }
 
-  exec {"sudo-syntax-check for file ${cur_file}":
+  exec { "sudo-syntax-check for file ${cur_file}":
     command     => "visudo -c || ${delete_cmd}",
     refreshonly => true,
     path        => $sudo_syntax_path,

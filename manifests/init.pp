@@ -140,8 +140,6 @@ class sudo (
   Optional[Array[String]]                   $sudoreplay_discard  = undef,
   Hash                                      $configs             = {},
 ) inherits sudo::params {
-
-
   case $enable {
     true: {
       $dir_ensure  = 'directory'
@@ -173,7 +171,10 @@ class sudo (
       package_source     => $package_source,
       package_admin_file => $package_admin_file,
       ldap_enable        => $ldap_enable,
-      before             => [ File[$config_file], File[$config_dir] ],
+      before             => [
+        File[$config_file],
+        File[$config_dir],
+      ],
     }
   }
 
@@ -208,11 +209,5 @@ class sudo (
     sudo::conf { $config_name:
       * => $config,
     }
-  }
-
-  if $package_real {
-    anchor { 'sudo::begin': }
-    -> Class['sudo::package']
-    -> anchor { 'sudo::end': }
   }
 }
