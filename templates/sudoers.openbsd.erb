@@ -48,12 +48,14 @@ Defaults!<%= command %> !log_output
 # User privilege specification
 root	ALL=(ALL) SETENV: ALL
 
+<% if @wheel_config == 'password' %>
 # Uncomment to allow people in group wheel to run all commands
 # and set environment variables.
-# %wheel	ALL=(ALL) SETENV: ALL
-
+%wheel	ALL=(ALL) SETENV: ALL
+<% elsif @wheel_config == 'nopassword' %>
 # Same thing without a password
-# %wheel	ALL=(ALL) NOPASSWD: SETENV: ALL
+%wheel	ALL=(ALL) NOPASSWD: SETENV: ALL
+<% end %>
 
 # Samples
 # %users  ALL=/sbin/mount /cdrom,/sbin/umount /cdrom
