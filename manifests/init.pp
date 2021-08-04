@@ -85,6 +85,12 @@
 #     if a file already exist.
 #     Default: false
 #
+#   [*wheel_config*]
+#     How to configure the wheel group in /etc/sudoers
+#     Options are either not to configure it it, configure it prompting for password,
+#     or configuring it without password prompt.
+#     Default: 'absent' (don't configure it at all)
+#
 #   [*use_sudoreplay*]
 #     Boolean to enable the usage of sudoreplay.
 #     Default: false
@@ -130,6 +136,7 @@ class sudo (
   Boolean                                   $validate_single     = false,
   Boolean                                   $config_dir_keepme   = $sudo::params::config_dir_keepme,
   Boolean                                   $use_sudoreplay      = false,
+  Enum['absent','password','nopassword']    $wheel_config        = 'absent',
   Optional[Array[String]]                   $sudoreplay_discard  = undef,
   Hash                                      $configs             = {},
 ) inherits sudo::params {
