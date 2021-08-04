@@ -33,12 +33,11 @@
 # Copyright 2013 Toni Schmidbauer
 #
 class sudo::package::solaris (
-  $package = '',
+  $package            = '',
   $package_source     = '',
   $package_ensure     = 'present',
   $package_admin_file = '',
-  ) {
-
+) {
   case $::kernelrelease {
     '5.11': {
       package { $package:
@@ -50,7 +49,9 @@ class sudo::package::solaris (
         ensure          => $package_ensure,
         source          => $package_source,
         adminfile       => $package_admin_file,
-        install_options => ['-G', ],
+        install_options => [
+          '-G',
+        ],
       }
     }
     default: {

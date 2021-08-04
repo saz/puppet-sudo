@@ -48,6 +48,9 @@
 #     Files to exclude from purging in sudoers.d directory
 #     Default: undef
 #
+#   [*suffix*]
+#     Adds a custom suffix to all files created in sudoers.d directory.
+#
 #   [*config_file*]
 #     Main configuration file.
 #     Only set this, if your platform is not supported or you know,
@@ -86,6 +89,12 @@
 #     if a file already exist.
 #     Default: false
 #
+#   [*wheel_config*]
+#     How to configure the wheel group in /etc/sudoers
+#     Options are either not to configure it it, configure it prompting for password,
+#     or configuring it without password prompt.
+#     Default: 'absent' (don't configure it at all)
+#
 #   [*use_sudoreplay*]
 #     Boolean to enable the usage of sudoreplay.
 #     Default: false
@@ -119,6 +128,7 @@ class sudo (
   Optional[String]                          $package_admin_file        = $sudo::params::package_admin_file,
   Boolean                                   $purge                     = true,
   Optional[Variant[String, Array[String]]]  $purge_ignore              = undef,
+  Optional[String]                          $suffix                    = undef,
   String                                    $config_file               = $sudo::params::config_file,
   Boolean                                   $config_file_replace       = true,
   String                                    $config_file_mode          = $sudo::params::config_file_mode,
@@ -131,11 +141,10 @@ class sudo (
   Boolean                                   $validate_single           = false,
   Boolean                                   $config_dir_keepme         = $sudo::params::config_dir_keepme,
   Boolean                                   $use_sudoreplay            = false,
+  Enum['absent','password','nopassword']    $wheel_config              = 'absent',
   Optional[Array[String]]                   $sudoreplay_discard        = undef,
   Hash                                      $configs                   = {},
 ) inherits sudo::params {
-
-
   case $enable {
     true: {
       $dir_ensure  = 'directory'
@@ -168,7 +177,10 @@ class sudo (
       package_provider_override => $package_provider_override,
       package_admin_file        => $package_admin_file,
       ldap_enable               => $ldap_enable,
-      before                    => [ File[$config_file], File[$config_dir] ],
+      before                    => [
+        File[$config_file],
+        File[$config_dir],
+      ],
     }
   }
 
@@ -203,11 +215,5 @@ class sudo (
     sudo::conf { $config_name:
       * => $config,
     }
-  }
-
-  if $package_real {
-    anchor { 'sudo::begin': }
-    -> Class['sudo::package']
-    -> anchor { 'sudo::end': }
   }
 }

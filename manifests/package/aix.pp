@@ -39,11 +39,10 @@ class sudo::package::aix (
   $package_source = '',
   $package_ensure = 'present',
   $package_provider_override = '',
-  ) {
-
-    package { $package:
-      ensure   => $package_ensure,
-      source   => $package_source,
-      provider => $package_provider_override,
-    }
+) {
+  package { $package:
+    ensure   => $package_ensure,
+    source   => $package_source,
+    provider => $package_provider_override,
+  }
 }

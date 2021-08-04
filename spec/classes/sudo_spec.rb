@@ -2,23 +2,23 @@ require 'spec_helper'
 describe 'sudo' do
   let :default_params do
     {
-      :enable              => true,
-      :package_ensure      => 'present',
-      :purge               => true,
-      :config_file_replace => true
+      enable: true,
+      package_ensure: 'present',
+      purge: true,
+      config_file_replace: true
     }
   end
 
   [{},
    {
-     :package_ensure      => 'present',
-     :purge               => false,
-     :config_file_replace => false
+     package_ensure: 'present',
+     purge: false,
+     config_file_replace: false
    },
    {
-     :package_ensure      => 'latest',
-     :purge               => true,
-     :config_file_replace => false
+     package_ensure: 'latest',
+     purge: true,
+     config_file_replace: false
    }].each do |param_set|
     describe "when #{param_set == {} ? 'using default' : 'specifying'} class parameters" do
       let :param_hash do
@@ -32,11 +32,15 @@ describe 'sudo' do
       %w[Debian Redhat].each do |osfamily|
         let :facts do
           {
-            :operatingsystem           => osfamily,
-            :operatingsystemrelease    => '7.0',
-            :operatingsystemmajrelease => '7',
-            :osfamily                  => osfamily,
-            :puppetversion             => '3.7.0'
+            os: {
+              'family'  => osfamily,
+              'name'    => osfamily,
+              'release' => {
+                'full'  => '7.0',
+                'major' => '7',
+              },
+            },
+            puppetversion: '3.7.0'
           }
         end
 
@@ -76,10 +80,15 @@ describe 'sudo' do
       describe 'on RedHat 5.4' do
         let :facts do
           {
-            :osfamily                  => 'RedHat',
-            :operatingsystemrelease    => '5.4',
-            :operatingsystemmajrelease => '5',
-            :puppetversion             => '3.7.0'
+            os: {
+              'family'  => 'RedHat',
+              'name'    => 'RedHat',
+              'release' => {
+                'full'  => '5.4',
+                'major' => '5',
+              },
+            },
+            puppetversion: '3.7.0'
           }
         end
 
@@ -101,8 +110,10 @@ describe 'sudo' do
       describe 'on supported osfamily: AIX' do
         let :facts do
           {
-            :osfamily      => 'AIX',
-            :puppetversion => '3.7.0'
+            os: {
+              'family' => 'AIX',
+            },
+            puppetversion: '3.7.0'
           }
         end
 
@@ -142,11 +153,13 @@ describe 'sudo' do
       describe 'on supported osfamily: Solaris 10' do
         let :facts do
           {
-            :operatingsystem => 'Solaris',
-            :osfamily        => 'Solaris',
-            :kernelrelease   => '5.10',
-            :puppetversion   => '3.7.0',
-            :hardwareisa     => 'i386'
+            os: {
+              'family'   => 'Solaris',
+              'name'     => 'Solaris',
+              'hardware' => 'i386',
+            },
+            kernelrelease: '5.10',
+            puppetversion: '3.7.0',
           }
         end
 
@@ -185,14 +198,14 @@ describe 'sudo' do
         context 'when package is set' do
           let :params do
             {
-              :package => 'mysudo'
+              package: 'mysudo'
             }
           end
 
           it do
             is_expected.to contain_class('sudo::package').with(
               'package' => 'mysudo'
-              )
+            )
           end
         end
       end
@@ -200,10 +213,12 @@ describe 'sudo' do
       describe 'on supported osfamily: Solaris 11' do
         let :facts do
           {
-            :operatingsystem => 'Solaris',
-            :osfamily        => 'Solaris',
-            :kernelrelease   => '5.11',
-            :puppetversion   => '3.7.0'
+            os: {
+              'family' => 'Solaris',
+              'name'   => 'Solaris',
+            },
+            kernelrelease: '5.11',
+            puppetversion: '3.7.0'
           }
         end
 

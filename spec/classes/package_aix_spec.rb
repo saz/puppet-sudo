@@ -3,16 +3,16 @@ describe 'sudo::package::aix' do
   describe 'on supported osfamily: AIX' do
     let :params do
       {
-        :package_provider_override => 'rpm'
         :package                   => 'sudo',
         :package_ensure            => 'present',
-        :package_source            => 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.27-1.aix53.rpm'
+        :package_source            => 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.27-1.aix53.rpm',
+        :package_provider_override => 'rpm'
       }
     end
 
     let :facts do
       {
-        :osfamily => 'AIX'
+        osfamily: 'AIX'
       }
     end
 

@@ -1,24 +1,18 @@
-require 'puppetlabs_spec_helper/module_spec_helper'
+# This file is managed via modulesync
+# https://github.com/voxpupuli/modulesync
+# https://github.com/voxpupuli/modulesync_config
 
-RSpec.configure do |c|
-  c.include PuppetlabsSpec::Files
+# puppetlabs_spec_helper will set up coverage if the env variable is set.
+# We want to do this if lib exists and it hasn't been explicitly set.
+ENV['COVERAGE'] ||= 'yes' if Dir.exist?(File.expand_path('../../lib', __FILE__))
 
-  c.before do
-    # Ensure that we don't accidentally cache facts and environment
-    # between test cases.
-    Facter.clear
-    Facter.clear_messages
+require 'voxpupuli/test/spec_helper'
 
-    # Store any environment variables away to be restored later
-    @old_env = {}
-    ENV.each_key { |k| @old_env[k] = ENV[k] }
-
-    if Gem::Version.new(`puppet --version`) >= Gem::Version.new('3.5')
-      Puppet.settings[:strict_variables] = true
+if File.exist?(File.join(__dir__, 'default_module_facts.yml'))
+  facts = YAML.safe_load(File.read(File.join(__dir__, 'default_module_facts.yml')))
+  if facts
+    facts.each do |name, value|
+      add_custom_fact name.to_sym, value
     end
-  end
-
-  c.after do
-    PuppetlabsSpec::Files.cleanup
   end
 end

@@ -45,6 +45,19 @@ If this is not what you're expecting, set `purge` and/or `config_file_replace` t
     }
 ```
 
+#### Selective Purge of sudoers.d Directory
+A combination of `suffix` and `purge_ignore` can be used to purge only files that puppet previously created.
+If `suffix` is specified all puppet created sudoers.d entries will have this suffix apprended to
+the thier file name. A ruby glob can be used as `purge_ignore` to ignore all files that do not have
+this suffix.
+
+```puppet
+    class{'sudo':
+      suffix => '_puppet',
+      purge_ignore => '*[!_puppet]',
+    }
+```
+
 #### Leave current sudo config as it is
 ```puppet
     class { 'sudo':
@@ -177,7 +190,7 @@ sudo::configs:
 
 ##### Set a custom name for the sudoers file
 
-In some edge cases, the automatically generated sudoers file name is insufficient. For example, when an application generates a sudoers file with a fixed file name, using this class with the purge option enabled will always delete the custom file and adding it manually will generate a file with the right content, but the wrong name. To solve this, you can use the ```sudo_file_name``` option to manually set the desired file name. 
+In some edge cases, the automatically generated sudoers file name is insufficient. For example, when an application generates a sudoers file with a fixed file name, using this class with the purge option enabled will always delete the custom file and adding it manually will generate a file with the right content, but the wrong name. To solve this, you can use the ```sudo_file_name``` option to manually set the desired file name.
 
 ```puppet
 sudo::conf { "foreman-proxy":
