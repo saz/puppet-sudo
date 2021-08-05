@@ -97,7 +97,7 @@ Defaults!<%= command %> !log_output
 #
 # Defaults   env_keep += "HOME"
 
-Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin
+Defaults    secure_path = <%= @secure_path %>
 
 ## Next comes the main part: which users can run what software on 
 ## which machines (the sudoers file can be shared between multiple

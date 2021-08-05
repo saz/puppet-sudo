@@ -9,7 +9,7 @@
 #
 Defaults	env_reset
 Defaults	mail_badpass
-Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin:/snap/bin"
+Defaults	secure_path="<%= @secure_path %>"
 
 <% if @use_sudoreplay %>
 Defaults log_output

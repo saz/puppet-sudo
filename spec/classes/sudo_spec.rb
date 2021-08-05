@@ -254,4 +254,22 @@ describe 'sudo' do
       end
     end
   end
+
+  describe 'on osfamily Debian' do
+    let :facts do
+      {
+        os: {
+          'family'  => 'Debian',
+          'name'    => 'Debian',
+          'release' => {
+            'full'  => '7.0',
+            'major' => '7',
+          },
+        },
+        puppetversion: '3.7.0'
+      }
+    end
+
+    it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\ssecure_path="\/usr\/local\/sbin:\/usr\/local\/bin:\/usr\/sbin:\/usr\/bin:\/sbin:\/bin:\/opt\/puppetlabs\/bin"$}) }
+  end
 end
