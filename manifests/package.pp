@@ -68,6 +68,7 @@ class sudo::package (
         package_source     => $package_source,
         package_ensure     => $package_ensure,
         package_admin_file => $package_admin_file,
+        package_provider   => $package_provider,
       }
     }
     default: {
@@ -75,7 +76,8 @@ class sudo::package (
         ensure_packages([
             $package,
           ], {
-            'ensure' => $package_ensure,
+            'ensure'  => $package_ensure,
+            'provider => $package_provider,
         })
       }
     }
