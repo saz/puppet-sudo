@@ -16,8 +16,8 @@
 # [*package_source*]
 #   Where to find the sudo packge, should be a local file or a uri
 #
-# [*package_provider_override*]
-#   Override the default package provider
+# [*package_provider*]
+#   Set package provider
 #
 # === Examples
 #
@@ -35,14 +35,14 @@
 # Copyright 2013 Toni Schmidbauer
 #
 class sudo::package::aix (
-  $package = '',
-  $package_source = '',
-  $package_ensure = 'present',
-  $package_provider_override = '',
+  $package          = '',
+  $package_source   = '',
+  $package_ensure   = 'present',
+  $package_provider = undef,
 ) {
   package { $package:
     ensure   => $package_ensure,
     source   => $package_source,
-    provider => $package_provider_override,
+    provider => $package_provider,
   }
 }

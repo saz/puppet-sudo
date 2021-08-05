@@ -1,5 +1,3 @@
-#class sudo::params
-#Set the paramters for the sudo module
 class sudo::params {
   $content_base     = "${module_name}/"
   $config_file_mode = '0440'
@@ -21,15 +19,16 @@ class sudo::params {
           }
         }
       }
-      $package = 'sudo'
-      $package_ldap = 'sudo-ldap'
-      $package_ensure    = 'present'
-      $package_source    = ''
+      $package            = 'sudo'
+      $package_ldap       = 'sudo-ldap'
+      $package_ensure     = 'present'
+      $package_source     = ''
       $package_admin_file = ''
-      $config_file       = '/etc/sudoers'
-      $config_dir        = '/etc/sudoers.d'
-      $config_file_group = 'root'
-      $config_dir_keepme = false
+      $config_file        = '/etc/sudoers'
+      $config_dir         = '/etc/sudoers.d'
+      $config_file_group  = 'root'
+      $config_dir_keepme  = false
+      $package_provider   = ''
     }
     'RedHat': {
       $package = 'sudo'
@@ -39,14 +38,14 @@ class sudo::params {
       # rhel 5.0 to 5.4 use sudo 1.6.9 which does not support
       # includedir, so we have to make sure sudo 1.7 (comes with rhel
       # 5.5) is installed.
-      $package_ensure = $facts['os']['release']['full'] ? {
+      $package_ensure     = $facts['os']['release']['full'] ? {
         /^5.[01234]$/ => 'latest',
-        default      => 'present',
+        default       => 'present',
       }
-      $package_source = ''
+      $package_source     = ''
       $package_admin_file = ''
-      $config_file = '/etc/sudoers'
-      $config_dir = '/etc/sudoers.d'
+      $config_file        = '/etc/sudoers'
+      $config_dir         = '/etc/sudoers.d'
       $content = $facts['os']['release']['full'] ? {
         /^5/    => "${content_base}sudoers.rhel5.erb",
         /^6/    => "${content_base}sudoers.rhel6.erb",
@@ -54,72 +53,78 @@ class sudo::params {
         /^8/    => "${content_base}sudoers.rhel8.erb",
         default => "${content_base}sudoers.rhel8.erb",
       }
-      $config_file_group = 'root'
-      $config_dir_keepme = false
+      $config_file_group  = 'root'
+      $config_dir_keepme  = false
+      $package_provider   = ''
     }
     'Suse': {
-      $package = 'sudo'
-      $package_ldap = $package
-      $package_ensure = 'present'
-      $package_source = ''
+      $package            = 'sudo'
+      $package_ldap       = $package
+      $package_ensure     = 'present'
+      $package_source     = ''
       $package_admin_file = ''
-      $config_file = '/etc/sudoers'
-      $config_dir = '/etc/sudoers.d'
-      $content = "${content_base}sudoers.suse.erb"
-      $config_file_group = 'root'
-      $config_dir_keepme = false
+      $config_file        = '/etc/sudoers'
+      $config_dir         = '/etc/sudoers.d'
+      $content            = "${content_base}sudoers.suse.erb"
+      $config_file_group  = 'root'
+      $config_dir_keepme  = false
+      $package_provider   = ''
     }
     'Solaris': {
       case $facts['os']['name'] {
         'OmniOS': {
-          $package = 'sudo'
-          $package_ldap = undef
-          $package_ensure = 'present'
-          $package_source = ''
+          $package            = 'sudo'
+          $package_ldap       = undef
+          $package_ensure     = 'present'
+          $package_source     = ''
           $package_admin_file = ''
-          $config_file = '/etc/sudoers'
-          $config_dir = '/etc/sudoers.d'
-          $content = "${content_base}sudoers.omnios.erb"
-          $config_file_group = 'root'
-          $config_dir_keepme = false
+          $config_file        = '/etc/sudoers'
+          $config_dir         = '/etc/sudoers.d'
+          $content            = "${content_base}sudoers.omnios.erb"
+          $config_file_group  = 'root'
+          $config_dir_keepme  = false
+          $package_provider   = ''
         }
         'SmartOS': {
-          $package = 'sudo'
-          $package_ldap = undef
-          $package_ensure = 'present'
-          $package_source = ''
+          $package            = 'sudo'
+          $package_ldap       = undef
+          $package_ensure     = 'present'
+          $package_source     = ''
           $package_admin_file = ''
-          $config_file = '/opt/local/etc/sudoers'
-          $config_dir = '/opt/local/etc/sudoers.d'
-          $content = "${content_base}sudoers.smartos.erb"
-          $config_file_group = 'root'
-          $config_dir_keepme = false
+          $config_file        = '/opt/local/etc/sudoers'
+          $config_dir         = '/opt/local/etc/sudoers.d'
+          $content            = "${content_base}sudoers.smartos.erb"
+          $config_file_group  = 'root'
+          $config_dir_keepme  = false
+          $package_provider   = ''
         }
         default: {
           case $::kernelrelease {
             '5.11': {
-              $package = 'pkg://solaris/security/sudo'
-              $package_ldap = undef
-              $package_ensure = 'present'
-              $package_source = ''
+              $package            = 'pkg://solaris/security/sudo'
+              $package_ldap       = undef
+              $package_ensure     = 'present'
+              $package_source     = ''
               $package_admin_file = ''
-              $config_file = '/etc/sudoers'
-              $config_dir = '/etc/sudoers.d'
-              $content = "${content_base}sudoers.solaris.erb"
-              $config_file_group = 'root'
-              $config_dir_keepme = false
+              $config_file        = '/etc/sudoers'
+              $config_dir         = '/etc/sudoers.d'
+              $content            = "${content_base}sudoers.solaris.erb"
+              $config_file_group  = 'root'
+              $config_dir_keepme  = false
+              $package_provider   = ''
             }
             '5.10': {
-              $package = 'TCMsudo'
-              $package_ldap = undef
-              $package_ensure = 'present'
-              $package_source = "http://www.sudo.ws/sudo/dist/packages/Solaris/10/TCMsudo-1.8.9p5-${facts['os']['hardware']}.pkg.gz"
+              $package            = 'TCMsudo'
+              $package_ldap       = undef
+              $package_ensure     = 'present'
+              $package_source     = "http://www.sudo.ws/sudo/dist/packages/Solaris/10/TCMsudo-1.8.9p5-${facts['os']['hardware']}.pkg.gz"
               $package_admin_file = '/var/sadm/install/admin/puppet'
-              $config_file = '/etc/sudoers'
-              $config_dir = '/etc/sudoers.d'
-              $content = "${content_base}sudoers.solaris.erb"
-              $config_file_group = 'root'
-              $config_dir_keepme = false
+              $config_file        = '/etc/sudoers'
+              $config_dir         = '/etc/sudoers.d'
+              $content            = "${content_base}sudoers.solaris.erb"
+              $config_file_group  = 'root'
+              $config_dir_keepme  = false
+              $package_provider   = ''
             }
             default: {
               fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}/${::kernelrelease}")
@@ -129,16 +134,17 @@ class sudo::params {
       }
     }
     'FreeBSD': {
-      $package = 'security/sudo'
-      $package_ldap = undef
-      $package_ensure = 'present'
-      $package_source = ''
+      $package            = 'security/sudo'
+      $package_ldap       = undef
+      $package_ensure     = 'present'
+      $package_source     = ''
       $package_admin_file = ''
-      $config_file = '/usr/local/etc/sudoers'
-      $config_dir = '/usr/local/etc/sudoers.d'
-      $content = "${content_base}sudoers.freebsd.erb"
-      $config_file_group = 'wheel'
-      $config_dir_keepme = true
+      $config_file        = '/usr/local/etc/sudoers'
+      $config_dir         = '/usr/local/etc/sudoers.d'
+      $content            = "${content_base}sudoers.freebsd.erb"
+      $config_file_group  = 'wheel'
+      $config_dir_keepme  = true
+      $package_provider   = ''
     }
     'OpenBSD': {
       if (versioncmp($::kernelversion, '5.8') < 0) {
@@ -146,76 +152,87 @@ class sudo::params {
       } else {
         $package = 'sudo'
       }
-      $package_ldap = undef
-      $package_ensure = 'present'
-      $package_source = ''
+      $package_ldap       = undef
+      $package_ensure     = 'present'
+      $package_source     = ''
       $package_admin_file = ''
-      $config_file = '/etc/sudoers'
-      $config_dir = '/etc/sudoers.d'
-      $content = "${content_base}sudoers.openbsd.erb"
-      $config_file_group = 'wheel'
-      $config_dir_keepme = false
+      $config_file        = '/etc/sudoers'
+      $config_dir         = '/etc/sudoers.d'
+      $content            = "${content_base}sudoers.openbsd.erb"
+      $config_file_group  = 'wheel'
+      $config_dir_keepme  = false
+      $package_provider   = ''
     }
     'AIX': {
-      $package = 'sudo'
-      $package_ldap = undef
-      $package_ensure = 'present'
-      $package_provider_override = 'rpm'
-      $package_source = 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.27-1.aix53.rpm'
+      $package            = 'sudo'
+      $package_ldap       = undef
+      $package_ensure     = 'present'
+      $package_source     = 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.27-1.aix53.rpm'
       $package_admin_file = ''
-      $config_file = '/etc/sudoers'
-      $config_dir = '/etc/sudoers.d'
-      $content = "${content_base}sudoers.aix.erb"
-      $config_file_group = 'system'
-      $config_dir_keepme = false
+      $config_file        = '/etc/sudoers'
+      $config_dir         = '/etc/sudoers.d'
+      $content            = "${content_base}sudoers.aix.erb"
+      $config_file_group  = 'system'
+      $config_dir_keepme  = false
+      $package_provider   = 'rpm'
     }
     'Darwin': {
-      $package = undef
-      $package_ldap = undef
-      $package_ensure = 'present'
-      $package_source = ''
+      $package            = undef
+      $package_ldap       = undef
+      $package_ensure     = 'present'
+      $package_source     = ''
       $package_admin_file = ''
-      $config_file = '/etc/sudoers'
-      $config_dir = '/etc/sudoers.d'
-      $content = "${content_base}sudoers.darwin.erb"
-      $config_file_group = 'wheel'
-      $config_dir_keepme = false
+      $config_file        = '/etc/sudoers'
+      $config_dir         = '/etc/sudoers.d'
+      $content            = "${content_base}sudoers.darwin.erb"
+      $config_file_group  = 'wheel'
+      $config_dir_keepme  = false
+      $package_provider   = ''
     }
     default: {
       case $facts['os']['name'] {
         'Gentoo': {
-          $package = 'sudo'
-          $package_ldap = $package
-          $package_ensure = 'present'
-          $config_file = '/etc/sudoers'
-          $config_dir = '/etc/sudoers.d'
-          $content = "${content_base}sudoers.gentoo.erb"
-          $config_file_group = 'root'
-          $config_dir_keepme = false
+          $package            = 'sudo'
+          $package_ldap       = $package
+          $package_ensure     = 'present'
+          $package_source     = ''
+          $package_admin_file = ''
+          $config_file        = '/etc/sudoers'
+          $config_dir         = '/etc/sudoers.d'
+          $content            = "${content_base}sudoers.gentoo.erb"
+          $config_file_group  = 'root'
+          $config_dir_keepme  = false
+          $package_provider   = ''
         }
         /^(Arch|Manjaro)(.{0}|linux)$/: {
-          $package = 'sudo'
-          $package_ldap = $package
-          $package_ensure = 'present'
-          $config_file = '/etc/sudoers'
-          $config_dir = '/etc/sudoers.d'
-          $content = "${content_base}sudoers.archlinux.erb"
-          $config_file_group = 'root'
-          $config_dir_keepme = false
+          $package            = 'sudo'
+          $package_ldap       = $package
+          $package_ensure     = 'present'
+          $package_source     = ''
+          $package_admin_file = ''
+          $config_file        = '/etc/sudoers'
+          $config_dir         = '/etc/sudoers.d'
+          $content            = "${content_base}sudoers.archlinux.erb"
+          $config_file_group  = 'root'
+          $config_dir_keepme  = false
+          $package_provider   = ''
         }
         'Amazon': {
-          $package = 'sudo'
-          $package_ldap = $package
-          $package_ensure = 'present'
-          $config_file = '/etc/sudoers'
-          $config_dir = '/etc/sudoers.d'
-          $content = $facts['os']['release']['full'] ? {
+          $package            = 'sudo'
+          $package_ldap       = $package
+          $package_ensure     = 'present'
+          $package_source     = ''
+          $package_admin_file = ''
+          $config_file        = '/etc/sudoers'
+          $config_dir         = '/etc/sudoers.d'
+          $content            = $facts['os']['release']['full'] ? {
             /^5/    => "${content_base}sudoers.rhel5.erb",
             /^6/    => "${content_base}sudoers.rhel6.erb",
             default => "${content_base}sudoers.rhel6.erb",
           }
-          $config_file_group = 'root'
-          $config_dir_keepme = false
+          $config_file_group  = 'root'
+          $config_dir_keepme  = false
+          $package_provider   = ''
         }
         default: {
           fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}")
