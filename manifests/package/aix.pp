@@ -16,6 +16,9 @@
 # [*package_source*]
 #   Where to find the sudo packge, should be a local file or a uri
 #
+# [*package_provider*]
+#   Set package provider
+#
 # === Examples
 #
 #  class { sudo::package::aix:
@@ -32,13 +35,14 @@
 # Copyright 2013 Toni Schmidbauer
 #
 class sudo::package::aix (
-  $package = '',
-  $package_source = '',
-  $package_ensure = 'present',
+  $package          = '',
+  $package_source   = '',
+  $package_ensure   = 'present',
+  $package_provider = undef,
 ) {
   package { $package:
     ensure   => $package_ensure,
     source   => $package_source,
-    provider => rpm,
+    provider => $package_provider,
   }
 }

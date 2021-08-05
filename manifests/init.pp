@@ -28,6 +28,10 @@
 #     Default: AIX: perzl.org
 #              Solaris: www.sudo.ws
 #
+#   [*package_provider*]
+#     Allows you to set a package provider.
+#     Default: AIX: rpm
+#
 #   [*package_admin_file*]
 #     Where to find a Solaris 10 package admin file for
 #     an unattended installation. We do not supply a default file, so
@@ -120,6 +124,7 @@ class sudo (
   Optional[String]                          $package_ldap        = $sudo::params::package_ldap,
   String                                    $package_ensure      = $sudo::params::package_ensure,
   Optional[String]                          $package_source      = $sudo::params::package_source,
+  Optional[String]                          $package_provider    = $sudo::params::package_provider,
   Optional[String]                          $package_admin_file  = $sudo::params::package_admin_file,
   Boolean                                   $purge               = true,
   Optional[Variant[String, Array[String]]]  $purge_ignore        = undef,
@@ -169,6 +174,7 @@ class sudo (
       package            => $package_real,
       package_ensure     => $package_ensure,
       package_source     => $package_source,
+      package_provider   => $package_provider,
       package_admin_file => $package_admin_file,
       ldap_enable        => $ldap_enable,
       before             => [
