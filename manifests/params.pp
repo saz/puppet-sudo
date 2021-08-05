@@ -31,7 +31,7 @@ class sudo::params {
       $config_dir         = '/etc/sudoers.d'
       $config_file_group  = 'root'
       $config_dir_keepme  = false
-      $package_provider   = ''
+      $package_provider   = undef
     }
     'RedHat': {
       $package = 'sudo'
@@ -73,7 +73,7 @@ class sudo::params {
       }
       $config_file_group  = 'root'
       $config_dir_keepme  = false
-      $package_provider   = ''
+      $package_provider   = undef
     }
     'Suse': {
       $package            = 'sudo'
@@ -87,7 +87,7 @@ class sudo::params {
       $secure_path        = '/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin'
       $config_file_group  = 'root'
       $config_dir_keepme  = false
-      $package_provider   = ''
+      $package_provider   = undef
     }
     'Solaris': {
       case $facts['os']['name'] {
@@ -103,7 +103,7 @@ class sudo::params {
           $secure_path        = undef
           $config_file_group  = 'root'
           $config_dir_keepme  = false
-          $package_provider   = ''
+          $package_provider   = undef
         }
         'SmartOS': {
           $package            = 'sudo'
@@ -117,7 +117,7 @@ class sudo::params {
           $secure_path        = undef
           $config_file_group  = 'root'
           $config_dir_keepme  = false
-          $package_provider   = ''
+          $package_provider   = undef
         }
         default: {
           case $::kernelrelease {
@@ -133,7 +133,7 @@ class sudo::params {
               $secure_path        = undef
               $config_file_group  = 'root'
               $config_dir_keepme  = false
-              $package_provider   = ''
+              $package_provider   = undef
             }
             '5.10': {
               $package            = 'TCMsudo'
@@ -147,7 +147,7 @@ class sudo::params {
               $secure_path        = undef
               $config_file_group  = 'root'
               $config_dir_keepme  = false
-              $package_provider   = ''
+              $package_provider   = undef
             }
             default: {
               fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}/${::kernelrelease}")
@@ -168,7 +168,7 @@ class sudo::params {
       $secure_path        = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin'
       $config_file_group  = 'wheel'
       $config_dir_keepme  = true
-      $package_provider   = ''
+      $package_provider   = undef
     }
     'OpenBSD': {
       if (versioncmp($::kernelversion, '5.8') < 0) {
@@ -185,7 +185,7 @@ class sudo::params {
       $content            = "${content_base}sudoers.openbsd.erb"
       $config_file_group  = 'wheel'
       $config_dir_keepme  = false
-      $package_provider   = ''
+      $package_provider   = undef
     }
     'AIX': {
       $package            = 'sudo'
@@ -213,7 +213,7 @@ class sudo::params {
       $secure_path        = undef
       $config_file_group  = 'wheel'
       $config_dir_keepme  = false
-      $package_provider   = ''
+      $package_provider   = undef
     }
     default: {
       case $facts['os']['name'] {
@@ -229,7 +229,7 @@ class sudo::params {
           $secure_path        = undef
           $config_file_group  = 'root'
           $config_dir_keepme  = false
-          $package_provider   = ''
+          $package_provider   = undef
         }
         /^(Arch|Manjaro)(.{0}|linux)$/: {
           $package            = 'sudo'
@@ -243,7 +243,7 @@ class sudo::params {
           $secure_path        = undef
           $config_file_group  = 'root'
           $config_dir_keepme  = false
-          $package_provider   = ''
+          $package_provider   = undef
         }
         'Amazon': {
           $package            = 'sudo'
@@ -269,7 +269,7 @@ class sudo::params {
           }
           $config_file_group  = 'root'
           $config_dir_keepme  = false
-          $package_provider   = ''
+          $package_provider   = undef
         }
         default: {
           fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}")
