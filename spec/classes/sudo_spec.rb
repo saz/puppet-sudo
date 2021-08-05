@@ -271,5 +271,15 @@ describe 'sudo' do
     end
 
     it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\ssecure_path="\/usr\/local\/sbin:\/usr\/local\/bin:\/usr\/sbin:\/usr\/bin:\/sbin:\/bin:\/opt\/puppetlabs\/bin"$}) }
+
+    context 'secure_path is set' do
+      let :params do
+        {
+          secure_path: 'SecurePathHere'
+        }
+      end
+
+      it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\ssecure_path="SecurePathHere"$}) }
+    end
   end
 end

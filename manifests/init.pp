@@ -41,9 +41,8 @@
 #     Default: /var/sadm/install/admin/puppet
 #
 #   [*secure_path*]
-#     The secure_path variable in sudoers. The new default is secure, where the old is not.
-#     The old default is: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin
-#     Default: /sbin:/usr/sbin:/bin:/usr/bin
+#     The secure_path variable in sudoers.
+#     Default: auto-set, platform specific
 #
 #   [*purge*]
 #     Whether or not to purge sudoers.d directory
@@ -141,6 +140,7 @@ class sudo (
   String                                    $config_dir_mode     = $sudo::params::config_dir_mode,
   Optional[Array[String]]                   $extra_include_dirs  = undef,
   String                                    $content             = $sudo::params::content,
+  Optional[String]                          $secure_path         = $sudo::params::secure_path,
   Boolean                                   $ldap_enable         = false,
   Boolean                                   $delete_on_error     = true,
   Boolean                                   $validate_single     = false,
