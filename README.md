@@ -1,5 +1,6 @@
-# puppet-sudo [![Build Status](https://secure.travis-ci.org/saz/puppet-sudo.png)](http://travis-ci.org/saz/puppet-sudo)
-https://github.com/saz/puppet-sudo
+# sudo module for Puppet
+
+[![Build Status](https://github.com/saz/puppet-sudo/workflows/CI/badge.svg)](https://github.com/saz/puppet-sudo/actions?query=workflow%3ACI)
 
 Manage sudo configuration via Puppet
 
