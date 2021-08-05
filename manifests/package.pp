@@ -76,8 +76,8 @@ class sudo::package (
         ensure_packages([
             $package,
           ], {
-            'ensure'  => $package_ensure,
-            'provider => $package_provider,
+            'ensure'   => $package_ensure,
+            'provider' => $package_provider,
         })
       }
     }
