@@ -17,7 +17,7 @@ describe 'sudo::package' do
     end
 
     it do
-      is_expected.to contain_package('sudo').with('ensure' => 'present')
+      is_expected.to contain_package('sudo').with('ensure' => 'installed')
     end
   end
 
@@ -38,7 +38,7 @@ describe 'sudo::package' do
     end
 
     it do
-      is_expected.to contain_package('sudo').with('ensure' => 'present')
+      is_expected.to contain_package('sudo').with('ensure' => 'installed')
     end
   end
 
