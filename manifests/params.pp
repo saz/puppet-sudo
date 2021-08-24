@@ -275,8 +275,6 @@ class sudo::params {
           fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}")
         }
       }
-      $package_source = ''
-      $package_admin_file = ''
     }
   }
 }
