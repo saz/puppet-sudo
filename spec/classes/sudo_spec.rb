@@ -13,6 +13,41 @@ describe 'sudo' do
       context 'with all defaults' do
         it { is_expected.to compile.with_all_deps }
       end
+
+      unless os =~ %r{^(debian|ubuntu)} then
+        context 'wheel_config is absent' do
+          let :params do
+            {
+              wheel_config: 'absent'
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^# %wheel\s+ALL=\(ALL\)\s+ALL$}) }
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^# %wheel\s+ALL=\(ALL\)\s+NOPASSWD:\s+ALL$}) }
+        end
+
+        context 'wheel_config is password' do
+          let :params do
+            {
+              wheel_config: 'password'
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^%wheel\s+ALL=\(ALL\)\s+ALL$}) }
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^# %wheel\s+ALL=\(ALL\)\s+NOPASSWD:\s+ALL$}) }
+        end
+
+        context 'wheel_config is nopassword' do
+          let :params do
+            {
+              wheel_config: 'nopassword'
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^# %wheel\s+ALL=\(ALL\)\s+ALL$}) }
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^%wheel\s+ALL=\(ALL\)\s+NOPASSWD:\s+ALL$}) }
+        end
+      end
     end
   end
 

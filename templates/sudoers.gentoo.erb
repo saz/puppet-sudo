@@ -84,13 +84,13 @@ Defaults!<%= command %> !log_output
 ##
 root ALL=(ALL) ALL
 
-<% if @wheel_config == 'password' %>
 ## Uncomment to allow members of group wheel to execute any command
+<%- if @wheel_config != 'password' %># <% end -%>
 %wheel ALL=(ALL) ALL
-<% elsif @wheel_config == 'nopassword' %>
+
 ## Same thing without a password
+<%- if @wheel_config != 'nopassword' %># <% end -%>
 %wheel ALL=(ALL) NOPASSWD: ALL
-<% end %>
 
 ## Uncomment to allow members of group sudo to execute any command
 # %sudo	ALL=(ALL) ALL
