@@ -32,6 +32,7 @@ class sudo::params {
       $config_file_group  = 'root'
       $config_dir_keepme  = false
       $package_provider   = undef
+      $wheel_config       = 'absent'
     }
     'RedHat': {
       $package = 'sudo'
@@ -51,24 +52,29 @@ class sudo::params {
       $config_dir         = '/etc/sudoers.d'
       case $facts['os']['release']['full'] {
         /^5/: {
-          $content     = "${content_base}sudoers.rhel5.erb"
-          $secure_path = undef
+          $content      = "${content_base}sudoers.rhel5.erb"
+          $secure_path  = undef
+          $wheel_config = 'absent'
         }
         /^6/: {
-          $content     = "${content_base}sudoers.rhel6.erb"
-          $secure_path = '/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin'
+          $content      = "${content_base}sudoers.rhel6.erb"
+          $secure_path  = '/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin'
+          $wheel_config = 'absent'
         }
         /^7/: {
-          $content     = "${content_base}sudoers.rhel7.erb"
-          $secure_path = '/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
+          $content      = "${content_base}sudoers.rhel7.erb"
+          $secure_path  = '/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
+          $wheel_config = 'password'
         }
         /^8/: {
-          $content     = "${content_base}sudoers.rhel8.erb"
-          $secure_path = '/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
+          $content      = "${content_base}sudoers.rhel8.erb"
+          $secure_path  = '/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
+          $wheel_config = 'password'
         }
         default: {
           $content     = "${content_base}sudoers.rhel8.erb"
           $secure_path = '/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
+          $wheel_config = 'password'
         }
       }
       $config_file_group  = 'root'
@@ -88,6 +94,7 @@ class sudo::params {
       $config_file_group  = 'root'
       $config_dir_keepme  = false
       $package_provider   = undef
+      $wheel_config       = 'absent'
     }
     'Solaris': {
       case $facts['os']['name'] {
@@ -104,6 +111,7 @@ class sudo::params {
           $config_file_group  = 'root'
           $config_dir_keepme  = false
           $package_provider   = undef
+          $wheel_config       = 'absent'
         }
         'SmartOS': {
           $package            = 'sudo'
@@ -118,6 +126,7 @@ class sudo::params {
           $config_file_group  = 'root'
           $config_dir_keepme  = false
           $package_provider   = undef
+          $wheel_config       = 'absent'
         }
         default: {
           case $::kernelrelease {
@@ -134,6 +143,7 @@ class sudo::params {
               $config_file_group  = 'root'
               $config_dir_keepme  = false
               $package_provider   = undef
+              $wheel_config       = 'absent'
             }
             '5.10': {
               $package            = 'TCMsudo'
@@ -148,6 +158,7 @@ class sudo::params {
               $config_file_group  = 'root'
               $config_dir_keepme  = false
               $package_provider   = undef
+              $wheel_config       = 'absent'
             }
             default: {
               fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}/${::kernelrelease}")
@@ -169,6 +180,7 @@ class sudo::params {
       $config_file_group  = 'wheel'
       $config_dir_keepme  = true
       $package_provider   = undef
+      $wheel_config       = 'absent'
     }
     'OpenBSD': {
       if (versioncmp($::kernelversion, '5.8') < 0) {
@@ -186,6 +198,7 @@ class sudo::params {
       $config_file_group  = 'wheel'
       $config_dir_keepme  = false
       $package_provider   = undef
+      $wheel_config       = 'absent'
     }
     'AIX': {
       $package            = 'sudo'
@@ -200,6 +213,7 @@ class sudo::params {
       $config_file_group  = 'system'
       $config_dir_keepme  = false
       $package_provider   = 'rpm'
+      $wheel_config       = 'absent'
     }
     'Darwin': {
       $package            = undef
@@ -214,6 +228,7 @@ class sudo::params {
       $config_file_group  = 'wheel'
       $config_dir_keepme  = false
       $package_provider   = undef
+      $wheel_config       = 'absent'
     }
     default: {
       case $facts['os']['name'] {
@@ -230,6 +245,7 @@ class sudo::params {
           $config_file_group  = 'root'
           $config_dir_keepme  = false
           $package_provider   = undef
+          $wheel_config       = 'absent'
         }
         /^(Arch|Manjaro)(.{0}|linux)$/: {
           $package            = 'sudo'
@@ -244,6 +260,7 @@ class sudo::params {
           $config_file_group  = 'root'
           $config_dir_keepme  = false
           $package_provider   = undef
+          $wheel_config       = 'absent'
         }
         'Amazon': {
           $package            = 'sudo'
@@ -270,6 +287,7 @@ class sudo::params {
           $config_file_group  = 'root'
           $config_dir_keepme  = false
           $package_provider   = undef
+          $wheel_config       = 'absent'
         }
         default: {
           fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}")

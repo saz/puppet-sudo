@@ -146,7 +146,7 @@ class sudo (
   Boolean                                   $validate_single     = false,
   Boolean                                   $config_dir_keepme   = $sudo::params::config_dir_keepme,
   Boolean                                   $use_sudoreplay      = false,
-  Enum['absent','password','nopassword']    $wheel_config        = 'absent',
+  Enum['absent','password','nopassword']    $wheel_config        = $sudo::params::wheel_config,
   Optional[Array[String]]                   $sudoreplay_discard  = undef,
   Hash                                      $configs             = {},
 ) inherits sudo::params {
