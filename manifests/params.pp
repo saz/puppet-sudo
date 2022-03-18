@@ -183,7 +183,7 @@ class sudo::params {
       $wheel_config       = 'absent'
     }
     'OpenBSD': {
-      if (versioncmp($::kernelversion, '5.8') < 0) {
+      if (versioncmp("$::kernelversion", '5.8') < 0) {
         $package = undef
       } else {
         $package = 'sudo'

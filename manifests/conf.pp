@@ -84,7 +84,7 @@ define sudo::conf (
   $cur_file_real = regsubst($cur_file, '\s+', '_', 'G')
 
   if $facts['os']['family'] == 'RedHat' {
-    if (versioncmp($::sudoversion, '1.7.2p1') < 0) {
+    if (versioncmp("$::sudoversion", '1.7.2p1') < 0) {
       warning("Found sudo with version ${::sudoversion}, but at least version 1.7.2p1 is required!")
     }
   }
