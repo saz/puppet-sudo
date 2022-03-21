@@ -14,7 +14,7 @@ describe 'sudo' do
         it { is_expected.to compile.with_all_deps }
       end
 
-      unless os =~ %r{^(debian|ubuntu)} then
+      unless os =~ %r{^(debian|ubuntu)}
         context 'wheel_config is absent' do
           let :params do
             {
