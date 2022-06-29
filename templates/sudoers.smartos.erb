@@ -55,6 +55,12 @@
 # Defaults!/usr/bin/sudoreplay !log_output
 # Defaults!/usr/local/bin/sudoreplay !log_output
 # Defaults!/sbin/reboot !log_output
+<% @defaults.sort.each do |k,v| -%>
+Defaults    <%= k -%>
+<% if (!v.nil? and v != '')-%>
+<%= "=#{v}" -%>
+<% end %>
+<% end -%>
 
 <% if @use_sudoreplay %>
 Defaults log_output

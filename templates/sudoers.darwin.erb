@@ -16,7 +16,12 @@
 # Cmnd alias specification
 
 # Defaults specification
-Defaults	env_reset
+<% @defaults.sort.each do |k,v| -%>
+Defaults    <%= k -%>
+<% if (!v.nil? and v != '')-%>
+<%= "=#{v}" -%>
+<% end %>
+<% end -%>
 Defaults	env_keep += "BLOCKSIZE"
 Defaults	env_keep += "COLORFGBG COLORTERM"
 Defaults	env_keep += "__CF_USER_TEXT_ENCODING"
@@ -29,6 +34,7 @@ Defaults	env_keep += "TZ"
 Defaults	env_keep += "DISPLAY XAUTHORIZATION XAUTHORITY"
 Defaults	env_keep += "EDITOR VISUAL"
 Defaults	env_keep += "HOME MAIL"
+
 
 <% if @use_sudoreplay %>
 Defaults log_output

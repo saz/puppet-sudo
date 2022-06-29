@@ -14,7 +14,7 @@ describe 'sudo' do
         it { is_expected.to compile.with_all_deps }
       end
 
-      unless os =~ %r{^(debian|ubuntu)} then
+      unless os =~ %r{^(debian|ubuntu)}
         context 'wheel_config is absent' do
           let :params do
             {
@@ -47,6 +47,36 @@ describe 'sudo' do
           it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^# %wheel\s+ALL=\(ALL\)\s+ALL$}) }
           it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^%wheel\s+ALL=\(ALL\)\s+NOPASSWD:\s+ALL$}) }
         end
+      end
+
+      unless os =~ %r{^(gentoo|archlinux-rolling)}
+        context 'env_reset default is set' do
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+env_reset$}) }
+        end
+      end
+
+      if os =~ %r{^(debian|ubuntu)}
+        context 'mail_badpass default is set' do
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+mail_badpass$}) }
+        end
+      end
+
+      if os =~ %r{^(redhat)}
+        context '!visiblepw default is set' do
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+!visiblepw$}) }
+        end
+      end
+
+      context 'Modify passwd_tries default' do
+        let :params do
+          {
+            defaults: {
+              passwd_tries: '5',
+            }
+          }
+        end
+
+        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+passwd_tries=5$}) }
       end
     end
   end

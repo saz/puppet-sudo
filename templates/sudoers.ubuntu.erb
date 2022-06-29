@@ -7,8 +7,12 @@
 #
 # See the man page for details on how to write a sudoers file.
 #
-Defaults	env_reset
-Defaults	mail_badpass
+<% @defaults.sort.each do |k,v| -%>
+Defaults    <%= k -%>
+<% if (!v.nil? and v != '')-%>
+<%= "=#{v}" -%>
+<% end %>
+<% end -%>
 Defaults	secure_path="<%= @secure_path %>"
 
 <% if @use_sudoreplay %>

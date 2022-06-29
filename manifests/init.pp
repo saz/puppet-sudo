@@ -149,6 +149,7 @@ class sudo (
   Enum['absent','password','nopassword']    $wheel_config        = $sudo::params::wheel_config,
   Optional[Array[String]]                   $sudoreplay_discard  = undef,
   Hash                                      $configs             = {},
+  Hash                                      $defaults            = {}, #$sudo::params::defaults,
 ) inherits sudo::params {
   case $enable {
     true: {

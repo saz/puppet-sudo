@@ -32,6 +32,12 @@ Defaults:%wsrc env_keep +="SUBPACKAGE WRKOBJDIR SUDO_PORT_V1"
 
 # Uncomment to preserve the environment for users in group wheel
 #Defaults:%wheel !env_reset
+<% @defaults.sort.each do |k,v| -%>
+Defaults    <%= k -%>
+<% if (!v.nil? and v != '')-%>
+<%= "=#{v}" -%>
+<% end %>
+<% end -%>
 
 <% if @use_sudoreplay %>
 Defaults log_output

@@ -189,6 +189,19 @@ sudo::configs:
         'template'  : "mymodule/bill.erb"
 ```
 
+##### Override sudoers defaults
+
+You can modify `Default_Entry` lines by passing a `Hash` to `sudo::defaults`, where the key is `Defaults` parameter name (see `man 5 sudoers` for more details):
+
+```yaml
+sudo::defaults:
+    lecture: always
+    badpass_message: "Password is wrong, please try again"
+    passwd_tries: 5
+    insults:
+    mailto: root@example.com
+```
+
 ##### Set a custom name for the sudoers file
 
 In some edge cases, the automatically generated sudoers file name is insufficient. For example, when an application generates a sudoers file with a fixed file name, using this class with the purge option enabled will always delete the custom file and adding it manually will generate a file with the right content, but the wrong name. To solve this, you can use the ```sudo_file_name``` option to manually set the desired file name.
