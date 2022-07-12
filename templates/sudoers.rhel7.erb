@@ -70,6 +70,15 @@ Defaults    <%= k -%>
 <% end %>
 <% end -%>
 Defaults    always_set_home
+Defaults    match_group_by_gid
+
+# Prior to version 1.8.15, groups listed in sudoers that were
+# found in the system group database were passed to the group
+# plugin, if any. Starting with 1.8.15, only groups of the fo
+# %:group are resolved via the group plugin by default.
+# We enable always_query_group_plugin to restore old behavior
+# Disable this option for new behavior.
+Defaults    always_query_group_plugin
 
 Defaults    env_keep =  "COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS"
 Defaults    env_keep += "MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE"
