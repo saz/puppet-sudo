@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 describe 'sudo' do
   let :node do
@@ -5,7 +7,7 @@ describe 'sudo' do
   end
 
   on_supported_os.each do |os, os_facts|
-    context "on #{os} " do
+    context "on #{os}" do
       let :facts do
         os_facts
       end
@@ -14,7 +16,7 @@ describe 'sudo' do
         it { is_expected.to compile.with_all_deps }
       end
 
-      unless os =~ %r{^(debian|ubuntu)} then
+      unless os =~ %r{^(debian|ubuntu)}
         context 'wheel_config is absent' do
           let :params do
             {
@@ -322,7 +324,7 @@ describe 'sudo' do
         }
       end
 
-      it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\ssecure_path="\/usr\/local\/sbin:\/usr\/local\/bin:\/usr\/sbin:\/usr\/bin:\/sbin:\/bin:\/opt\/puppetlabs\/bin"$}) }
+      it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\ssecure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin"$}) }
 
       context 'secure_path is set' do
         let :params do

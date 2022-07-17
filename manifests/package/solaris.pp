@@ -39,7 +39,7 @@ class sudo::package::solaris (
   $package_admin_file = '',
   $package_provider   = undef,
 ) {
-  case $::kernelrelease {
+  case $facts['kernelrelease'] {
     '5.11': {
       package { $package:
         ensure   => $package_ensure,
@@ -58,7 +58,7 @@ class sudo::package::solaris (
       }
     }
     default: {
-      fail("Unsupported Solaris kernelrelease ${::kernelrelease}!")
+      fail("Unsupported Solaris kernelrelease ${facts['kernelrelease']}!")
     }
   }
 }

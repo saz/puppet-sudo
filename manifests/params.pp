@@ -129,7 +129,7 @@ class sudo::params {
           $wheel_config       = 'absent'
         }
         default: {
-          case $::kernelrelease {
+          case $facts['kernelrelease'] {
             '5.11': {
               $package            = 'pkg://solaris/security/sudo'
               $package_ldap       = undef
@@ -161,7 +161,7 @@ class sudo::params {
               $wheel_config       = 'absent'
             }
             default: {
-              fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}/${::kernelrelease}")
+              fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}/${facts['kernelrelease']}")
             }
           }
         }
@@ -183,7 +183,7 @@ class sudo::params {
       $wheel_config       = 'absent'
     }
     'OpenBSD': {
-      if (versioncmp($::kernelversion, '5.8') < 0) {
+      if (versioncmp($facts['kernelversion'], '5.8') < 0) {
         $package = undef
       } else {
         $package = 'sudo'

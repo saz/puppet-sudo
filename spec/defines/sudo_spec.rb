@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 describe 'sudo::conf', type: :define do
   let(:title)    { 'admins' }
@@ -14,8 +16,8 @@ describe 'sudo::conf', type: :define do
           'major' => '7',
         },
       },
-      lsbdistcodename:           'wheezy',
-      puppetversion:             '3.7.0'
+      lsbdistcodename: 'wheezy',
+      puppetversion: '3.7.0'
     }
   end
 
@@ -175,12 +177,12 @@ describe 'sudo::conf', type: :define do
 
     it do
       is_expected.to contain_file(filename).with(
-        ensure:   'absent',
-        content:  "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
-        owner:    'root',
-        group:    'root',
-        path:     file_path,
-        mode:    '0440'
+        ensure: 'absent',
+        content: "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
+        owner: 'root',
+        group: 'root',
+        path: file_path,
+        mode: '0440'
       )
     end
   end
@@ -200,12 +202,12 @@ describe 'sudo::conf', type: :define do
 
     it do
       is_expected.to contain_file(filename).with(
-        ensure:   'present',
-        content:  "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n%wheel ALL=(ALL) NOPASSWD: ALL\n",
-        owner:    'root',
-        group:    'root',
-        path:     file_path,
-        mode:     '0440'
+        ensure: 'present',
+        content: "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n%wheel ALL=(ALL) NOPASSWD: ALL\n",
+        owner: 'root',
+        group: 'root',
+        path: file_path,
+        mode: '0440'
       )
     end
   end

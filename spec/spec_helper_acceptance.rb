@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is completely managed via modulesync
 require 'voxpupuli/acceptance/spec_helper_acceptance'
 

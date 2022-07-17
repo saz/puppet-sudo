@@ -76,6 +76,13 @@
     },
     {
       "operatingsystem": "Suse"
+    },
+    {
+      "operatingsystem": "Solaris",
+      "operatingsystemrelease": [
+        "10",
+	"11"
+      ]
     }
   ],
   "dependencies": [
