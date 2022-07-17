@@ -220,7 +220,7 @@ describe 'sudo::conf', type: :define do
         ensure:          'absent',
         priority:        10,
         content:         '%admins ALL=(ALL) NOPASSWD: ALL',
-        sudo_config_dir: '/etc/sudoers.d',
+        sudo_config_dir: '/etc/sudoers.d'
       }
     end
 
@@ -231,6 +231,58 @@ describe 'sudo::conf', type: :define do
         owner:   'root',
         group:   'root',
         path:    "#{file_path}_foobar",
+        mode:    '0440'
+      )
+    end
+  end
+
+  describe 'when adding a sudo entry with a prefix alpha_' do
+    let :pre_condition do
+      'class{"sudo": prefix => "alpha_"}'
+    end
+
+    let :params do
+      {
+        ensure:          'absent',
+        priority:        10,
+        content:         '%admins ALL=(ALL) NOPASSWD: ALL',
+        sudo_config_dir: '/etc/sudoers.d'
+      }
+    end
+
+    it do
+      is_expected.to contain_file(filename.to_s).with(
+        ensure:  'absent',
+        content: "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
+        owner:   'root',
+        group:   'root',
+        path:    '/etc/sudoers.d/alpha_10_admins',
+        mode:    '0440'
+      )
+    end
+  end
+
+  describe 'when adding a sudo entry with a prefix _alpha and suffix _beta' do
+    let :pre_condition do
+      'class{"sudo": prefix => "alpha_", suffix => "_beta"}'
+    end
+
+    let :params do
+      {
+        ensure:          'absent',
+        priority:        10,
+        content:         '%admins ALL=(ALL) NOPASSWD: ALL',
+        sudo_config_dir: '/etc/sudoers.d'
+      }
+    end
+
+    it do
+      is_expected.to contain_file("#{filename}_beta").with(
+        ensure:  'absent',
+        content: "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
+        owner:   'root',
+        group:   'root',
+        path:    '/etc/sudoers.d/alpha_10_admins_beta',
         mode:    '0440'
       )
     end

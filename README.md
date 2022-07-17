@@ -47,9 +47,10 @@ If this is not what you're expecting, set `purge` and/or `config_file_replace` t
 ```
 
 #### Selective Purge of sudoers.d Directory
-A combination of `suffix` and `purge_ignore` can be used to purge only files that puppet previously created.
+A combination of `prefix`, `suffix` and `purge_ignore` can be used to purge only files that puppet previously created.
 If `suffix` is specified all puppet created sudoers.d entries will have this suffix apprended to
-the thier file name. A ruby glob can be used as `purge_ignore` to ignore all files that do not have
+the thier file name. If `prefix` is specified all puppet created sudoers.d entries will have this prefix
+prepended. A ruby glob can be used as `ignore` to ignore all files that do not have
 this suffix.
 
 ```puppet
@@ -58,6 +59,17 @@ this suffix.
       purge_ignore => '*[!_puppet]',
     }
 ```
+
+or
+
+```puppet
+    class{'sudo':
+      prefix => 'puppet_',
+      purge_ignore => '[!puppet_]*',
+    }
+```
+
+Due to limitations in ruby glob the prefix and ignore is recommended.
 
 #### Leave current sudo config as it is
 ```puppet

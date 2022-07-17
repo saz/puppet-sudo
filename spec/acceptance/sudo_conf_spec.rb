@@ -55,6 +55,10 @@ describe 'sudo::conf class' do
       its(:exit_status) { is_expected.to eq 0 }
     end
 
+    describe command('chmod 0440 /etc/sudoers.d/file-from-rpm') do
+      its(:exit_status) { is_expected.to eq 0 }
+    end
+
     it 'create a puppet managed file' do
       pp = <<-PP
       class {'sudo':
@@ -86,6 +90,10 @@ describe 'sudo::conf class' do
       its(:exit_status) { is_expected.to eq 0 }
     end
 
+    describe command('chmod 0440 /etc/sudoers.d/file-from-rpm') do
+      its(:exit_status) { is_expected.to eq 0 }
+    end
+
     it 'without a puppet managed file' do
       pp = <<-PP
       class {'sudo':
@@ -99,6 +107,71 @@ describe 'sudo::conf class' do
     end
 
     describe file('/etc/sudoers.d/10_janedoe_nopasswd_puppet') do
+      it { is_expected.not_to exist }
+    end
+
+    describe file('/etc/sudoers.d/file-from-rpm') do
+      it { is_expected.to exist }
+    end
+  end
+
+  context 'with ignore and prefix specified managed file' do
+    describe command('touch /etc/sudoers.d/file-from-rpm') do
+      its(:exit_status) { is_expected.to eq 0 }
+    end
+
+    describe command('chmod 0440 /etc/sudoers.d/file-from-rpm') do
+      its(:exit_status) { is_expected.to eq 0 }
+    end
+
+    it 'create a puppet managed file' do
+      pp = <<-PP
+      class {'sudo':
+        prefix       => 'puppet_',
+        purge_ignore => '[!puppet_]*',
+      }
+      sudo::conf { 'janedoe_nopasswd':
+        content => "janedoe ALL=(ALL) NOPASSWD: ALL\n"
+      }
+      PP
+
+      # Run it twice and test for idempotency
+      apply_manifest(pp, catch_failures: true)
+      expect(apply_manifest(pp, catch_failures: true).exit_code).to be_zero
+    end
+
+    describe file('/etc/sudoers.d/puppet_10_janedoe_nopasswd') do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'janedoe ALL=(ALL) NOPASSWD: ALL' }
+    end
+
+    describe file('/etc/sudoers.d/file-from-rpm') do
+      it { is_expected.to exist }
+    end
+  end
+
+  context 'with ignore and prefix specified without managed file' do
+    describe command('touch /etc/sudoers.d/file-from-rpm') do
+      its(:exit_status) { is_expected.to eq 0 }
+    end
+
+    describe command('chmod 0440 /etc/sudoers.d/file-from-rpm') do
+      its(:exit_status) { is_expected.to eq 0 }
+    end
+
+    it 'without a puppet managed file' do
+      pp = <<-PP
+      class {'sudo':
+        prefix       => '_puppet_',
+        purge_ignore => '[!puppet_]*',
+      }
+      PP
+      # Run it twice and test for idempotency
+      apply_manifest(pp, catch_failures: true)
+      expect(apply_manifest(pp, catch_failures: true).exit_code).to be_zero
+    end
+
+    describe file('/etc/sudoers.d/puppet_10_janedoe_nopasswd') do
       it { is_expected.not_to exist }
     end
 
