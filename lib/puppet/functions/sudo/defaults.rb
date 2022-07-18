@@ -42,7 +42,11 @@ Puppet::Functions.create_function(:'sudo::defaults') do
       operator = '='
       operator = config['operator'] if config.key? 'operator'
 
-      entry.concat("#{operator}#{config['value']}") if config.key? 'value'
+      if config.key? 'value'
+        val = config['value'].is_a?(String) ? "\"#{config['value']}\"" : config['value']
+
+        entry.concat("#{operator}#{val}")
+      end
     end
 
     entry.concat("\n")

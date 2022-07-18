@@ -93,7 +93,21 @@ describe 'sudo' do
           }
         end
 
-        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+env_keep\+=SOME_VAR$}) }
+        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+env_keep\+="SOME_VAR"$}) }
+      end
+
+      context 'Escape strings' do
+        let :params do
+          {
+            defaults: {
+              badpass_message: {
+                value: 'Password is wrong, please try again',
+              }
+            }
+          }
+        end
+
+        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+badpass_message="Password is wrong, please try again"$}) }
       end
     end
   end
