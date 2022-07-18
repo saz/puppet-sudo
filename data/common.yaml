@@ -1,5 +1,0 @@
----
-lookup_options:
-  sudo::defaults:
-    merge:
-      strategy: deep
