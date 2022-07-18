@@ -22,16 +22,12 @@
 Puppet::Functions.create_function(:'sudo::defaults') do
   def defaults(*args)
     res = ''
-    unless args.nil?
-      args.each do |tuple|
-        if tuple.size == 2
-          res.concat(defaults_entry(tuple[0], tuple[1]))
-        else
-          raise "Unsupported number of arguments #{args.size}: #{args.inspect}"
-        end
-      end
-    else
-      raise "Unsupported number of arguments #{args.size}: #{args.inspect}"
+    raise "Unsupported number of arguments #{args.size}: #{args.inspect}" if args.nil?
+
+    args.each do |tuple|
+      raise "Unsupported number of arguments #{args.size}: #{args.inspect}" unless tuple.size == 2
+
+      res.concat(defaults_entry(tuple[0], tuple[1]))
     end
 
     res
@@ -41,20 +37,13 @@ Puppet::Functions.create_function(:'sudo::defaults') do
     entry = "Defaults\t#{key}"
 
     unless config.nil?
-      if config.key? 'list'
-        entry.concat("#{config['list']}")
-      end
+      entry.concat((config['list']).to_s) if config.key? 'list'
 
       operator = '='
-      if config.key? 'operator'
-        operator = config['operator']
-      end
+      operator = config['operator'] if config.key? 'operator'
 
-      if config.key? 'value'
-        entry.concat("#{operator}#{config['value']}")
-      end
+      entry.concat("#{operator}#{config['value']}") if config.key? 'value'
     end
-
 
     entry.concat("\n")
   end
