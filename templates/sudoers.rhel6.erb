@@ -60,7 +60,6 @@ Defaults   !visiblepw
 # Preserving HOME has security implications since many programs
 # use it when searching for configuration files. 
 #
-<%= scope.call_function('sudo::defaults', @defaults) -%>
 
 Defaults    always_set_home
 
@@ -124,3 +123,4 @@ root	ALL=(ALL) 	ALL
 <% @extra_include_dirs.each do |include_dir| -%>
 #includedir <%= include_dir %>
 <% end if @extra_include_dirs -%>
+<%= scope.call_function('sudo::defaults', @defaults) -%>

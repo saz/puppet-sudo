@@ -7,7 +7,6 @@
 #
 # See the man page for details on how to write a sudoers file.
 #
-<%= scope.call_function('sudo::defaults', @defaults) -%>
 Defaults	secure_path="<%= @secure_path %>"
 
 <% if @use_sudoreplay %>
@@ -41,3 +40,4 @@ root	ALL=(ALL:ALL) ALL
 <% @extra_include_dirs.each do |include_dir| -%>
 #includedir <%= include_dir %>
 <% end if @extra_include_dirs -%>
+<%= scope.call_function('sudo::defaults', @defaults) -%>

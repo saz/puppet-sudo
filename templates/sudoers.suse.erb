@@ -57,7 +57,6 @@ Defaults !insults
 # Defaults log_output
 # Defaults!/usr/bin/sudoreplay !log_output
 # Defaults!/sbin/reboot !log_output
-<%= scope.call_function('sudo::defaults', @defaults) -%>
 
 <% if @use_sudoreplay %>
 Defaults log_output
@@ -99,3 +98,4 @@ root ALL=(ALL) ALL
 <% @extra_include_dirs.each do |include_dir| -%>
 #includedir <%= include_dir %>
 <% end if @extra_include_dirs -%>
+<%= scope.call_function('sudo::defaults', @defaults) -%>

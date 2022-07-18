@@ -32,7 +32,6 @@ Defaults:%wsrc env_keep +="SUBPACKAGE WRKOBJDIR SUDO_PORT_V1"
 
 # Uncomment to preserve the environment for users in group wheel
 #Defaults:%wheel !env_reset
-<%= scope.call_function('sudo::defaults', @defaults) -%>
 
 <% if @use_sudoreplay %>
 Defaults log_output
@@ -68,3 +67,4 @@ root	ALL=(ALL) SETENV: ALL
 <% @extra_include_dirs.each do |include_dir| -%>
 #includedir <%= include_dir %>
 <% end if @extra_include_dirs -%>
+<%= scope.call_function('sudo::defaults', @defaults) -%>
