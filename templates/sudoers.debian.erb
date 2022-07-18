@@ -1,11 +1,6 @@
 # file managed by puppet (unless config_file_replace=false)
 #
-<% @defaults.sort.each do |k,v| -%>
-Defaults    <%= k -%>
-<% if (!v.nil? and v != '')-%>
-<%= "=#{v}" -%>
-<% end %>
-<% end -%>
+<%= scope.call_function('sudo::defaults', @defaults) -%>
 Defaults	secure_path="<%= @secure_path %>"
 
 <% if @use_sudoreplay %>

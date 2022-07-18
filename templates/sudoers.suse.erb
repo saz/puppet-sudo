@@ -57,12 +57,7 @@ Defaults !insults
 # Defaults log_output
 # Defaults!/usr/bin/sudoreplay !log_output
 # Defaults!/sbin/reboot !log_output
-<% @defaults.sort.each do |k,v| -%>
-Defaults    <%= k -%>
-<% if (!v.nil? and v != '')-%>
-<%= "=#{v}" -%>
-<% end %>
-<% end -%>
+<%= scope.call_function('sudo::defaults', @defaults) -%>
 
 <% if @use_sudoreplay %>
 Defaults log_output

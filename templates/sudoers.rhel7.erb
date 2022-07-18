@@ -63,12 +63,7 @@ Defaults   !visiblepw
 # this option is only effective for configurations where either
 # env_reset is disabled or HOME is present in the env_keep list.
 #
-<% @defaults.sort.each do |k,v| -%>
-Defaults    <%= k -%>
-<% if (!v.nil? and v != '')-%>
-<%= "=#{v}" -%>
-<% end %>
-<% end -%>
+<%= scope.call_function('sudo::defaults', @defaults) -%>
 Defaults    always_set_home
 Defaults    match_group_by_gid
 

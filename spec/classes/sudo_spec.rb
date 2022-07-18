@@ -71,12 +71,29 @@ describe 'sudo' do
         let :params do
           {
             defaults: {
-              passwd_tries: '5',
+              passwd_tries: {
+                value: 5,
+              }
             }
           }
         end
 
         it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+passwd_tries=5$}) }
+      end
+
+      context 'Modify env_keep default' do
+        let :params do
+          {
+            defaults: {
+              env_keep: {
+                operator: '+=',
+                value: 'SOME_VAR',
+              }
+            }
+          }
+        end
+
+        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+env_keep\+=SOME_VAR$}) }
       end
     end
   end

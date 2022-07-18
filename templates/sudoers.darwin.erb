@@ -16,12 +16,7 @@
 # Cmnd alias specification
 
 # Defaults specification
-<% @defaults.sort.each do |k,v| -%>
-Defaults    <%= k -%>
-<% if (!v.nil? and v != '')-%>
-<%= "=#{v}" -%>
-<% end %>
-<% end -%>
+<%= scope.call_function('sudo::defaults', @defaults) -%>
 Defaults	env_keep += "BLOCKSIZE"
 Defaults	env_keep += "COLORFGBG COLORTERM"
 Defaults	env_keep += "__CF_USER_TEXT_ENCODING"

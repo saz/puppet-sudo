@@ -60,12 +60,7 @@ Defaults   !visiblepw
 # Preserving HOME has security implications since many programs
 # use it when searching for configuration files. 
 #
-<% @defaults.sort.each do |k,v| -%>
-Defaults    <%= k -%>
-<% if (!v.nil? and v != '')-%>
-<%= "=#{v}" -%>
-<% end %>
-<% end -%>
+<%= scope.call_function('sudo::defaults', @defaults) -%>
 
 Defaults    always_set_home
 

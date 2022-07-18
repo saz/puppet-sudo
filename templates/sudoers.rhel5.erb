@@ -56,12 +56,7 @@
 #
 Defaults   !visiblepw
 
-<% @defaults.sort.each do |k,v| -%>
-Defaults    <%= k -%>
-<% if (!v.nil? and v != '')-%>
-<%= "=#{v}" -%>
-<% end %>
-<% end -%>
+<%= scope.call_function('sudo::defaults', @defaults) -%>
 
 Defaults    env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR \
                         LS_COLORS MAIL PS1 PS2 QTDIR USERNAME \

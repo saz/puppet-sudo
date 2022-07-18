@@ -195,11 +195,15 @@ You can modify `Default_Entry` lines by passing a `Hash` to `sudo::defaults`, wh
 
 ```yaml
 sudo::defaults:
-    lecture: always
-    badpass_message: "Password is wrong, please try again"
-    passwd_tries: 5
+    lecture:
+      value: always
+    badpass_message:
+      value: "Password is wrong, please try again"
+    passwd_tries:
+      value: 5
     insults:
-    mailto: root@example.com
+    mailto:
+      value: root@example.com
 ```
 
 ##### Set a custom name for the sudoers file

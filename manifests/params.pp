@@ -174,7 +174,9 @@ class sudo::params {
           }
         }
       }
-      $defaults = {}
+      $defaults           = {
+        'env_reset' => undef,
+      }
     }
     'FreeBSD': {
       $package            = 'security/sudo'
