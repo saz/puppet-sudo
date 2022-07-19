@@ -1,57 +1,50 @@
-# == Class: sudo::package::solaris
+# @summary
+#   install sudo under solaris 10/11.
 #
-# install sudo under solaris 10/11.
-#
-# === Parameters
-#
-# Document parameters here.
-#
-# [*package*]
+# @param package
 #   The name of the sudo package to be installed
 #
-# [*package_ensure*]
+# @param package_ensure
 #   Ensure if present or absent
 #
-# [*package_source*]
+# @param package_source
 #   Where to find the sudo packge, should be a local file or a uri
 #
-# [*package_admin_file*]
+# @param package_admin_file
 #   Solaris 10 package admin file for unattended installation
 #
-# === Examples
-#
+# @example
 #  class { sudo::package::solaris:
 #    package => 'sudo',
 #  }
 #
-# === Authors
+# @author
+#   Toni Schmidbauer <toni@stderr.at>
 #
-# Toni Schmidbauer <toni@stderr.at>
-#
-# === Copyright
-#
-# Copyright 2013 Toni Schmidbauer
-#
+# @api private
 class sudo::package::solaris (
-  $package            = '',
-  $package_source     = '',
-  $package_ensure     = 'present',
-  $package_admin_file = '',
-  $package_provider   = undef,
+  Optional[String[1]] $package            = undef,
+  Optional[String[1]] $package_source     = undef,
+  String[1]           $package_ensure     = 'present',
+  Optional[String[1]] $package_admin_file = undef,
+  Optional[String[1]] $package_provider   = undef,
 ) {
+  $package_defaults = {
+    ensure   => $package_ensure,
+    provider => $package_provider,
+  }
+
   case $facts['kernelrelease'] {
     '5.11': {
       package { $package:
-        ensure   => $package_ensure,
-        provider => $package_provider,
+        * => $package_defaults,
       }
     }
     '5.10': {
       package { $package:
-        ensure          => $package_ensure,
+        *               => $package_defaults,
         source          => $package_source,
         adminfile       => $package_admin_file,
-        provider        => $package_provider,
         install_options => [
           '-G',
         ],

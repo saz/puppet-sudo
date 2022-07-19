@@ -124,7 +124,6 @@
 # Sample Usage:
 #   class { 'sudo': }
 #
-# [Remember: No empty lines between comments and class definition]
 class sudo (
   Boolean                                   $enable              = true,
   Optional[String]                          $package             = $sudo::params::package,

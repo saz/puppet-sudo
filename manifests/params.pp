@@ -1,3 +1,7 @@
+# @summary
+#   Params class for the sudo module
+#
+# @api private
 class sudo::params {
   $content_base     = "${module_name}/"
   $config_file_mode = '0440'
@@ -25,8 +29,8 @@ class sudo::params {
       $package            = 'sudo'
       $package_ldap       = 'sudo-ldap'
       $package_ensure     = 'present'
-      $package_source     = ''
-      $package_admin_file = ''
+      $package_source     = undef
+      $package_admin_file = undef
       $config_file        = '/etc/sudoers'
       $config_dir         = '/etc/sudoers.d'
       $config_file_group  = 'root'
@@ -46,8 +50,8 @@ class sudo::params {
         /^5.[01234]$/ => 'latest',
         default       => 'present',
       }
-      $package_source     = ''
-      $package_admin_file = ''
+      $package_source     = undef
+      $package_admin_file = undef
       $config_file        = '/etc/sudoers'
       $config_dir         = '/etc/sudoers.d'
       case $facts['os']['release']['full'] {
@@ -85,8 +89,8 @@ class sudo::params {
       $package            = 'sudo'
       $package_ldap       = $package
       $package_ensure     = 'present'
-      $package_source     = ''
-      $package_admin_file = ''
+      $package_source     = undef
+      $package_admin_file = undef
       $config_file        = '/etc/sudoers'
       $config_dir         = '/etc/sudoers.d'
       $content            = "${content_base}sudoers.suse.erb"
@@ -102,8 +106,8 @@ class sudo::params {
           $package            = 'sudo'
           $package_ldap       = undef
           $package_ensure     = 'present'
-          $package_source     = ''
-          $package_admin_file = ''
+          $package_source     = undef
+          $package_admin_file = undef
           $config_file        = '/etc/sudoers'
           $config_dir         = '/etc/sudoers.d'
           $content            = "${content_base}sudoers.omnios.erb"
@@ -117,8 +121,8 @@ class sudo::params {
           $package            = 'sudo'
           $package_ldap       = undef
           $package_ensure     = 'present'
-          $package_source     = ''
-          $package_admin_file = ''
+          $package_source     = undef
+          $package_admin_file = undef
           $config_file        = '/opt/local/etc/sudoers'
           $config_dir         = '/opt/local/etc/sudoers.d'
           $content            = "${content_base}sudoers.smartos.erb"
@@ -134,8 +138,8 @@ class sudo::params {
               $package            = 'pkg://solaris/security/sudo'
               $package_ldap       = undef
               $package_ensure     = 'present'
-              $package_source     = ''
-              $package_admin_file = ''
+              $package_source     = undef
+              $package_admin_file = undef
               $config_file        = '/etc/sudoers'
               $config_dir         = '/etc/sudoers.d'
               $content            = "${content_base}sudoers.solaris.erb"
@@ -171,8 +175,8 @@ class sudo::params {
       $package            = 'security/sudo'
       $package_ldap       = undef
       $package_ensure     = 'present'
-      $package_source     = ''
-      $package_admin_file = ''
+      $package_source     = undef
+      $package_admin_file = undef
       $config_file        = '/usr/local/etc/sudoers'
       $config_dir         = '/usr/local/etc/sudoers.d'
       $content            = "${content_base}sudoers.freebsd.erb"
@@ -190,8 +194,8 @@ class sudo::params {
       }
       $package_ldap       = undef
       $package_ensure     = 'present'
-      $package_source     = ''
-      $package_admin_file = ''
+      $package_source     = undef
+      $package_admin_file = undef
       $config_file        = '/etc/sudoers'
       $config_dir         = '/etc/sudoers.d'
       $content            = "${content_base}sudoers.openbsd.erb"
@@ -205,7 +209,7 @@ class sudo::params {
       $package_ldap       = undef
       $package_ensure     = 'present'
       $package_source     = 'http://www.sudo.ws/sudo/dist/packages/AIX/5.3/sudo-1.8.27-1.aix53.rpm'
-      $package_admin_file = ''
+      $package_admin_file = undef
       $config_file        = '/etc/sudoers'
       $config_dir         = '/etc/sudoers.d'
       $content            = "${content_base}sudoers.aix.erb"
@@ -219,8 +223,8 @@ class sudo::params {
       $package            = undef
       $package_ldap       = undef
       $package_ensure     = 'present'
-      $package_source     = ''
-      $package_admin_file = ''
+      $package_source     = undef
+      $package_admin_file = undef
       $config_file        = '/etc/sudoers'
       $config_dir         = '/etc/sudoers.d'
       $content            = "${content_base}sudoers.darwin.erb"
@@ -236,8 +240,8 @@ class sudo::params {
           $package            = 'sudo'
           $package_ldap       = $package
           $package_ensure     = 'present'
-          $package_source     = ''
-          $package_admin_file = ''
+          $package_source     = undef
+          $package_admin_file = undef
           $config_file        = '/etc/sudoers'
           $config_dir         = '/etc/sudoers.d'
           $content            = "${content_base}sudoers.gentoo.erb"
@@ -251,8 +255,8 @@ class sudo::params {
           $package            = 'sudo'
           $package_ldap       = $package
           $package_ensure     = 'present'
-          $package_source     = ''
-          $package_admin_file = ''
+          $package_source     = undef
+          $package_admin_file = undef
           $config_file        = '/etc/sudoers'
           $config_dir         = '/etc/sudoers.d'
           $content            = "${content_base}sudoers.archlinux.erb"
@@ -266,8 +270,8 @@ class sudo::params {
           $package            = 'sudo'
           $package_ldap       = $package
           $package_ensure     = 'present'
-          $package_source     = ''
-          $package_admin_file = ''
+          $package_source     = undef
+          $package_admin_file = undef
           $config_file        = '/etc/sudoers'
           $config_dir         = '/etc/sudoers.d'
           case $facts['os']['release']['full'] {
