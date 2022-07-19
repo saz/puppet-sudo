@@ -260,6 +260,9 @@ describe 'sudo' do
               is_expected.to contain_class('sudo::package').with(
                 'package' => 'mysudo'
               )
+              is_expected.to contain_package('mysudo').with(
+                'ensure' => 'present'
+              )
             end
           end
         end

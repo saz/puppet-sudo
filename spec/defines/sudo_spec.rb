@@ -242,6 +242,7 @@ describe 'sudo::conf', type: :define do
         path:    "#{file_path}_foobar",
         mode:    '0440'
       )
+      is_expected.to contain_exec('sudo-syntax-check for file /etc/sudoers.d/10_admins_foobar')
     end
   end
 
@@ -270,6 +271,7 @@ describe 'sudo::conf', type: :define do
         path:    '/etc/sudoers.d/alpha_10_admins',
         mode:    '0440'
       )
+      is_expected.to contain_exec('sudo-syntax-check for file /etc/sudoers.d/alpha_10_admins')
     end
   end
 
@@ -298,6 +300,7 @@ describe 'sudo::conf', type: :define do
         path:    '/etc/sudoers.d/alpha_10_admins_beta',
         mode:    '0440'
       )
+      is_expected.to contain_exec('sudo-syntax-check for file /etc/sudoers.d/alpha_10_admins_beta')
     end
   end
 end
