@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 # Formats sudoers defaults config see https://linux.die.net/man/5/sudoers
 #
 #     Default_Type ::= 'Defaults' |
