@@ -14,6 +14,59 @@ describe 'sudo' do
 
       context 'with all defaults' do
         it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_file('/etc/sudoers') }
+      end
+
+      context 'with content_template and content_string set' do
+        let :params do
+          {
+            content_template: 'sudo/sudoers.ubuntu.erb',
+            content_string: 'some string'
+          }
+        end
+
+        it { is_expected.to compile.and_raise_error(%r{'content_template' and 'content_string' are mutually exclusive}) }
+      end
+
+      context 'with deprecated content and content_string set' do
+        let :params do
+          {
+            content: 'sudo/sudoers.ubuntu.erb',
+            content_string: 'some string'
+          }
+        end
+
+        it { is_expected.to compile.and_raise_error(%r{'content' \(deprecated\) and 'content_string' are mutually exclusive}) }
+      end
+
+      context 'with deprecated content set' do
+        let :params do
+          {
+            content: 'sudo/sudoers.ubuntu.erb'
+          }
+        end
+
+        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{.*Defaults\s+env_reset.*}) }
+      end
+
+      context 'with content_string set' do
+        let :params do
+          {
+            content_string: 'just a string'
+          }
+        end
+
+        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^just a string$}) }
+      end
+
+      context 'with content_template set' do
+        let :params do
+          {
+            content_template: 'sudo/sudoers.ubuntu.erb'
+          }
+        end
+
+        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{.*Defaults\s+env_reset.*}) }
       end
 
       unless os =~ %r{^(debian|ubuntu)}
