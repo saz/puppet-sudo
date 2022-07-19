@@ -66,7 +66,7 @@ describe 'sudo' do
           }
         end
 
-        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{.*Defaults\s+env_reset.*}) }
+        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{.*#\s+Host\s+alias\s+specification.*}) }
       end
 
       unless os =~ %r{^(debian|ubuntu)}
