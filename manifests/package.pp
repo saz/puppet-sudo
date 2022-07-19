@@ -1,38 +1,37 @@
 # == Class: sudo::package
 #
-# Installs the sudo package on various platforms.
+# @summary
+#   Installs the sudo package on various platforms.
 #
-# === Parameters
-#
-# Document parameters here.
-#
-# [*package*]
+# @param package
 #   The name of the sudo package to be installed
 #
-# [*package_ensure*]
+# @param package_ensure
 #   Ensure if present or absent
 #
-# [*package_source*]
+# @param package_source
 #   Where to find the sudo packge, should be a local file or a uri
 #
-# [*package_provider*]
+# @param package_provider
 #   Set package provider
 #
-# === Authors
+# @param package_admin_file
+#   Solaris 10 package admin file for unattended installation
 #
-# Toni Schmidbauer <toni@stderr.at>
+# @param ldap_enable
+#   Set ldap use flag for sudo package
 #
-# === Copyright
+# @author
+#   Toni Schmidbauer <toni@stderr.at>
 #
-# Copyright 2013 Toni Schmidbauer
-#
+# @api private
 class sudo::package (
-  $package            = '',
-  $package_ensure     = present,
-  $package_source     = '',
-  $package_provider   = undef,
-  $package_admin_file = '',
-  $ldap_enable        = false,
+  Optional[String[1]] $package            = undef,
+  String[1]           $package_ensure     = present,
+  Optional[String[1]] $package_source     = undef,
+  Optional[String[1]] $package_provider   = undef,
+  Optional[String[1]] $package_admin_file = undef,
+  Boolean             $ldap_enable        = false,
 ) {
   if $ldap_enable == true {
     case $facts['os']['family'] {
@@ -52,33 +51,28 @@ class sudo::package (
     }
   }
 
+  $package_defaults = {
+    ensure   => $package_ensure,
+    provider => $package_provider,
+  }
   case $facts['os']['family'] {
+    'Darwin': {}
     'AIX': {
       class { 'sudo::package::aix':
-        package          => $package,
-        package_source   => $package_source,
-        package_ensure   => $package_ensure,
-        package_provider => $package_provider,
+        package        => $package,
+        package_source => $package_source,
       }
     }
-    'Darwin': {}
     'Solaris': {
       class { 'sudo::package::solaris':
         package            => $package,
         package_source     => $package_source,
-        package_ensure     => $package_ensure,
         package_admin_file => $package_admin_file,
-        package_provider   => $package_provider,
       }
     }
     default: {
-      if $package != '' {
-        ensure_packages([
-            $package,
-          ], {
-            'ensure'   => $package_ensure,
-            'provider' => $package_provider,
-        })
+      if $package {
+        ensure_packages([$package], $package_defaults)
       }
     }
   }

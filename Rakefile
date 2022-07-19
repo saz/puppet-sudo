@@ -1,7 +1,7 @@
 # Managed by modulesync - DO NOT EDIT
 # https://voxpupuli.org/docs/updating-files-managed-with-modulesync/
 
-# Attempt to load voxupuli-test (which pulls in puppetlabs_spec_helper),
+# Attempt to load voxpupuli-test (which pulls in puppetlabs_spec_helper),
 # otherwise attempt to load it directly.
 begin
   require 'voxpupuli/test/rake'
@@ -51,7 +51,7 @@ begin
     config.future_release = "v#{metadata.version}" if metadata.version =~ /^\d+\.\d+.\d+$/
     config.header = "# Changelog\n\nAll notable changes to this project will be documented in this file.\nEach new release typically also includes the latest modulesync defaults.\nThese should not affect the functionality of the module."
     config.exclude_labels = %w{duplicate question invalid wontfix wont-fix modulesync skip-changelog}
-    config.user = 'saz'
+    config.user = 'voxpupuli'
     config.project = metadata.metadata['name']
   end
 
