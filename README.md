@@ -4,10 +4,6 @@
 
 Manage sudo configuration via Puppet
 
-### Supported Puppet versions
-* Puppet >= 4
-* Last version supporting Puppet 3: v4.2.0
-
 ### Supported OS
 Some family and some specific os are supported by this module
 * debian osfamily (debian, ubuntu, kali, ...)
@@ -21,9 +17,6 @@ Some family and some specific os are supported by this module
 * gentoo operating system
 * archlinux operating system
 * amazon operating system
-
-### Gittip
-[![Support via Gittip](https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png)](https://www.gittip.com/saz/)
 
 ## Usage
 
@@ -87,7 +80,7 @@ On Gentoo there is also the needing to include [puppet portage module by Gentoo]
 
 ```puppet
     class { 'sudo':
-      ldap_enable         => true,
+      ldap_enable => true,
     }
 ```
 
