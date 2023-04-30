@@ -103,13 +103,13 @@ root	ALL=(ALL) 	ALL
 ## service management apps and more.
 # %sys ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS
 
-<% if @wheel_config == 'password' %>
 ## Allows people in group wheel to run all commands
+<%- if @wheel_config != 'password' %># <% end -%>
 %wheel	ALL=(ALL)	ALL
-<% elsif @wheel_config == 'nopassword' %>
+
 ## Same thing without a password
+<%- if @wheel_config != 'nopassword' %># <% end -%>
 %wheel	ALL=(ALL)	NOPASSWD: ALL
-<% end %>
 
 ## Allows members of the users group to mount and unmount the 
 ## cdrom as root

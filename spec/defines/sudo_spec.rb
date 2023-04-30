@@ -1,9 +1,7 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 describe 'sudo::conf', type: :define do
-  let(:title)    { 'admins' }
-  let(:filename) { '10_admins' }
-  let(:file_path) { '/etc/sudoers.d/10_admins' }
-
   let :facts do
     {
       os: {
@@ -14,8 +12,8 @@ describe 'sudo::conf', type: :define do
           'major' => '7',
         },
       },
-      lsbdistcodename:           'wheezy',
-      puppetversion:             '3.7.0'
+      lsbdistcodename: 'wheezy',
+      puppetversion: '3.7.0'
     }
   end
 
@@ -28,6 +26,10 @@ describe 'sudo::conf', type: :define do
   end
 
   describe 'when creating a sudo entry' do
+    let(:title)    { 'admins' }
+    let(:filename) { '10_admins' }
+    let(:file_path) { '/etc/sudoers.d/10_admins' }
+
     it do
       is_expected.to contain_sudo__conf('admins').with(
         priority: params[:priority],
@@ -58,6 +60,7 @@ describe 'sudo::conf', type: :define do
   end
 
   describe 'when creating a sudo entry with single number priority' do
+    let(:title)    { 'admins' }
     let(:filename) { '05_admins' }
     let(:file_path) { '/etc/sudoers.d/05_admins' }
 
@@ -139,6 +142,9 @@ describe 'sudo::conf', type: :define do
   end
 
   describe 'when removing an sudo entry' do
+    let(:title) { 'admins' }
+    let(:file_path) { '/etc/sudoers.d/10_admins' }
+
     let :params do
       {
         ensure:          'absent',
@@ -149,7 +155,7 @@ describe 'sudo::conf', type: :define do
     end
 
     it do
-      is_expected.to contain_file(filename).with(
+      is_expected.to contain_file('10_admins').with(
         ensure:  'absent',
         content: "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
         owner:   'root',
@@ -161,6 +167,9 @@ describe 'sudo::conf', type: :define do
   end
 
   describe 'when removing an sudo entry with single number priority' do
+    let(:title) { 'admins' }
+    let(:file_path) { '/etc/sudoers.d/05_admins' }
+
     let :params do
       {
         ensure:          'absent',
@@ -170,22 +179,22 @@ describe 'sudo::conf', type: :define do
       }
     end
 
-    let(:filename) { '05_admins' }
-    let(:file_path) { '/etc/sudoers.d/05_admins' }
-
     it do
-      is_expected.to contain_file(filename).with(
-        ensure:   'absent',
-        content:  "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
-        owner:    'root',
-        group:    'root',
-        path:     file_path,
-        mode:    '0440'
+      is_expected.to contain_file('05_admins').with(
+        ensure: 'absent',
+        content: "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
+        owner: 'root',
+        group: 'root',
+        path: file_path,
+        mode: '0440'
       )
     end
   end
 
   describe 'when adding a sudo entry with array content' do
+    let(:title) { 'admins' }
+    let(:file_path) { '/etc/sudoers.d/10_admins' }
+
     let :params do
       {
         content: [
@@ -195,17 +204,14 @@ describe 'sudo::conf', type: :define do
       }
     end
 
-    let(:filename) { '10_admins' }
-    let(:file_path) { '/etc/sudoers.d/10_admins' }
-
     it do
-      is_expected.to contain_file(filename).with(
-        ensure:   'present',
-        content:  "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n%wheel ALL=(ALL) NOPASSWD: ALL\n",
-        owner:    'root',
-        group:    'root',
-        path:     file_path,
-        mode:     '0440'
+      is_expected.to contain_file('10_admins').with(
+        ensure: 'present',
+        content: "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n%wheel ALL=(ALL) NOPASSWD: ALL\n",
+        owner: 'root',
+        group: 'root',
+        path: file_path,
+        mode: '0440'
       )
     end
   end
@@ -220,12 +226,15 @@ describe 'sudo::conf', type: :define do
         ensure:          'absent',
         priority:        10,
         content:         '%admins ALL=(ALL) NOPASSWD: ALL',
-        sudo_config_dir: '/etc/sudoers.d',
+        sudo_config_dir: '/etc/sudoers.d'
       }
     end
 
+    let(:title) { 'admins' }
+    let(:file_path) { '/etc/sudoers.d/10_admins' }
+
     it do
-      is_expected.to contain_file("#{filename}_foobar").with(
+      is_expected.to contain_file('10_admins_foobar').with(
         ensure:  'absent',
         content: "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
         owner:   'root',
@@ -233,6 +242,65 @@ describe 'sudo::conf', type: :define do
         path:    "#{file_path}_foobar",
         mode:    '0440'
       )
+      is_expected.to contain_exec('sudo-syntax-check for file /etc/sudoers.d/10_admins_foobar')
+    end
+  end
+
+  describe 'when adding a sudo entry with a prefix alpha_' do
+    let :pre_condition do
+      'class{"sudo": prefix => "alpha_"}'
+    end
+
+    let :params do
+      {
+        ensure:          'absent',
+        priority:        10,
+        content:         '%admins ALL=(ALL) NOPASSWD: ALL',
+        sudo_config_dir: '/etc/sudoers.d'
+      }
+    end
+
+    let(:title) { 'admins' }
+
+    it do
+      is_expected.to contain_file('10_admins').with(
+        ensure:  'absent',
+        content: "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
+        owner:   'root',
+        group:   'root',
+        path:    '/etc/sudoers.d/alpha_10_admins',
+        mode:    '0440'
+      )
+      is_expected.to contain_exec('sudo-syntax-check for file /etc/sudoers.d/alpha_10_admins')
+    end
+  end
+
+  describe 'when adding a sudo entry with a prefix _alpha and suffix _beta' do
+    let :pre_condition do
+      'class{"sudo": prefix => "alpha_", suffix => "_beta"}'
+    end
+
+    let :params do
+      {
+        ensure:          'absent',
+        priority:        10,
+        content:         '%admins ALL=(ALL) NOPASSWD: ALL',
+        sudo_config_dir: '/etc/sudoers.d'
+      }
+    end
+
+    let(:title) { 'admins' }
+
+    it do
+      is_expected.to contain_file('10_admins_beta').with(
+        ensure:  'absent',
+        content: "# This file is managed by Puppet; changes may be overwritten\n%admins ALL=(ALL) NOPASSWD: ALL\n",
+        owner:   'root',
+        group:   'root',
+        path:    '/etc/sudoers.d/alpha_10_admins_beta',
+        mode:    '0440'
+      )
+      is_expected.to contain_exec('sudo-syntax-check for file /etc/sudoers.d/alpha_10_admins_beta')
     end
   end
 end

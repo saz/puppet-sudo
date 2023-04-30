@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 describe 'sudo::package::aix' do
   describe 'on supported osfamily: AIX' do
@@ -30,7 +32,6 @@ describe 'sudo::package::aix' do
       {
         package: 'sudo',
         package_ensure: 'present',
-        package_source: :undef,
         package_provider: 'yum'
       }
     end
@@ -44,7 +45,6 @@ describe 'sudo::package::aix' do
     it do
       is_expected.to contain_package('sudo').with(
         'ensure'   => 'present',
-        'source'   => '',
         'provider' => 'yum'
       )
     end

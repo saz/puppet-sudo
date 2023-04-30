@@ -1,44 +1,34 @@
-# == Class: sudo::package::aix
+# @summary
+#   Install the perzl.org sudo package. It also requires the openldap
+#   rpm. so we add a dependencies to the ldap module.
 #
-# Install the perzl.org sudo package. It also requires the openldap
-# rpm. so we add a dependencies to the ldap module.
-#
-# === Parameters
-#
-# Document parameters here.
-#
-# [*package*]
+# @param package
 #   The name of the sudo package to be installed
 #
-# [*package_ensure*]
+# @param package_ensure
 #   Ensure if present or absent
 #
-# [*package_source*]
+# @param package_source
 #   Where to find the sudo packge, should be a local file or a uri
 #
-# [*package_provider*]
+# @param package_provider
 #   Set package provider
 #
-# === Examples
-#
+# @example
 #  class { sudo::package::aix:
 #    package => 'sudo',
 #    package_source 'http://myaixpkgserver/pkgs/aix/sudo-1.8.6p7-1.aix5.1.ppc.rpm'',
 #  }
 #
-# === Authors
+# @author
+#   Toni Schmidbauer <toni@stderr.at>
 #
-# Toni Schmidbauer <toni@stderr.at>
-#
-# === Copyright
-#
-# Copyright 2013 Toni Schmidbauer
-#
+# @api private
 class sudo::package::aix (
-  $package          = '',
-  $package_source   = '',
-  $package_ensure   = 'present',
-  $package_provider = undef,
+  Optional[String[1]] $package          = undef,
+  Optional[String[1]] $package_source   = undef,
+  String[1]           $package_ensure   = present,
+  Optional[String[1]] $package_provider = undef,
 ) {
   package { $package:
     ensure   => $package_ensure,
