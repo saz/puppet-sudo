@@ -7,7 +7,7 @@ group :test do
   gem 'voxpupuli-test', '~> 5.4',   :require => false
   gem 'coveralls',                  :require => false
   gem 'simplecov-console',          :require => false
-  gem 'puppet_metadata', '~> 1.0',  :require => false
+  gem 'puppet_metadata', '~> 2.0',  :require => false
 end
 
 group :development do
@@ -21,14 +21,14 @@ end
 
 group :release do
   gem 'github_changelog_generator', '>= 1.16.1',  :require => false if RUBY_VERSION >= '2.5'
-  gem 'voxpupuli-release', '>= 1.2.0',            :require => false
-  gem 'puppet-strings', '>= 2.2',                 :require => false
+  gem 'voxpupuli-release', '~> 2.0',              :require => false
+  gem 'faraday-retry', '~> 2.1',                  :require => false if RUBY_VERSION >= '2.6'
 end
 
 gem 'rake', :require => false
 gem 'facter', ENV['FACTER_GEM_VERSION'], :require => false, :groups => [:test]
 
-puppetversion = ENV['PUPPET_GEM_VERSION'] || '>= 6.0'
+puppetversion = ENV['PUPPET_GEM_VERSION'] || '~> 7.24'
 gem 'puppet', puppetversion, :require => false, :groups => [:test]
 
 # vim: syntax=ruby
