@@ -51,10 +51,6 @@ class sudo::package (
     }
   }
 
-  $package_defaults = {
-    ensure   => $package_ensure,
-    provider => $package_provider,
-  }
   case $facts['os']['family'] {
     'Darwin': {}
     'AIX': {
@@ -72,7 +68,10 @@ class sudo::package (
     }
     default: {
       if $package {
-        ensure_packages([$package], $package_defaults)
+        package { $package:
+          ensure   => $package_ensure,
+          provider => $package_provider,
+        }
       }
     }
   }
