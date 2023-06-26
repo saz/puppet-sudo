@@ -9,7 +9,7 @@
 #### Public Classes
 
 * [`sudo`](#sudo): This module manages sudo
-* [`sudo::allow`](#sudoallow): Creates a file in sudoers.d that permits specific users and groups to sudo.
+* [`sudo::allow`](#sudo--allow): Creates a file in sudoers.d that permits specific users and groups to sudo.
 
 #### Private Classes
 
@@ -21,7 +21,7 @@ rpm. so we add a dependencies to the ldap module.
 
 ### Defined types
 
-* [`sudo::conf`](#sudoconf): Manages sudo configuration snippets
+* [`sudo::conf`](#sudo--conf): Manages sudo configuration snippets
 
 ## Classes
 
@@ -41,45 +41,45 @@ class { 'sudo': }
 
 The following parameters are available in the `sudo` class:
 
-* [`enable`](#enable)
-* [`package`](#package)
-* [`package_ldap`](#package_ldap)
-* [`package_ensure`](#package_ensure)
-* [`package_source`](#package_source)
-* [`package_provider`](#package_provider)
-* [`package_admin_file`](#package_admin_file)
-* [`purge`](#purge)
-* [`purge_ignore`](#purge_ignore)
-* [`suffix`](#suffix)
-* [`prefix`](#prefix)
-* [`config_file`](#config_file)
-* [`config_file_replace`](#config_file_replace)
-* [`config_file_mode`](#config_file_mode)
-* [`config_dir`](#config_dir)
-* [`config_dir_mode`](#config_dir_mode)
-* [`extra_include_dirs`](#extra_include_dirs)
-* [`content`](#content)
-* [`content_template`](#content_template)
-* [`content_string`](#content_string)
-* [`secure_path`](#secure_path)
-* [`ldap_enable`](#ldap_enable)
-* [`delete_on_error`](#delete_on_error)
-* [`validate_single`](#validate_single)
-* [`config_dir_keepme`](#config_dir_keepme)
-* [`use_sudoreplay`](#use_sudoreplay)
-* [`wheel_config`](#wheel_config)
-* [`sudoreplay_discard`](#sudoreplay_discard)
-* [`configs`](#configs)
+* [`enable`](#-sudo--enable)
+* [`package`](#-sudo--package)
+* [`package_ldap`](#-sudo--package_ldap)
+* [`package_ensure`](#-sudo--package_ensure)
+* [`package_source`](#-sudo--package_source)
+* [`package_provider`](#-sudo--package_provider)
+* [`package_admin_file`](#-sudo--package_admin_file)
+* [`purge`](#-sudo--purge)
+* [`purge_ignore`](#-sudo--purge_ignore)
+* [`suffix`](#-sudo--suffix)
+* [`prefix`](#-sudo--prefix)
+* [`config_file`](#-sudo--config_file)
+* [`config_file_replace`](#-sudo--config_file_replace)
+* [`config_file_mode`](#-sudo--config_file_mode)
+* [`config_dir`](#-sudo--config_dir)
+* [`config_dir_mode`](#-sudo--config_dir_mode)
+* [`extra_include_dirs`](#-sudo--extra_include_dirs)
+* [`content`](#-sudo--content)
+* [`content_template`](#-sudo--content_template)
+* [`content_string`](#-sudo--content_string)
+* [`secure_path`](#-sudo--secure_path)
+* [`ldap_enable`](#-sudo--ldap_enable)
+* [`delete_on_error`](#-sudo--delete_on_error)
+* [`validate_single`](#-sudo--validate_single)
+* [`config_dir_keepme`](#-sudo--config_dir_keepme)
+* [`use_sudoreplay`](#-sudo--use_sudoreplay)
+* [`wheel_config`](#-sudo--wheel_config)
+* [`sudoreplay_discard`](#-sudo--sudoreplay_discard)
+* [`configs`](#-sudo--configs)
 
-##### <a name="enable"></a>`enable`
+##### <a name="-sudo--enable"></a>`enable`
 
 Data type: `Boolean`
 
 Ensure if present or absent.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="package"></a>`package`
+##### <a name="-sudo--package"></a>`package`
 
 Data type: `Optional[String[1]]`
 
@@ -89,7 +89,7 @@ what you're doing.
 
 Default value: `$sudo::params::package`
 
-##### <a name="package_ldap"></a>`package_ldap`
+##### <a name="-sudo--package_ldap"></a>`package_ldap`
 
 Data type: `Optional[String[1]]`
 
@@ -97,7 +97,7 @@ Name of the package with ldap support, if ldap_enable is set.
 
 Default value: `$sudo::params::package_ldap`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-sudo--package_ensure"></a>`package_ensure`
 
 Data type: `String[1]`
 
@@ -105,7 +105,7 @@ Allows you to ensure a particular version of a package
 
 Default value: `$sudo::params::package_ensure`
 
-##### <a name="package_source"></a>`package_source`
+##### <a name="-sudo--package_source"></a>`package_source`
 
 Data type: `Optional[String[1]]`
 
@@ -115,7 +115,7 @@ know, what you're doing.
 
 Default value: `$sudo::params::package_source`
 
-##### <a name="package_provider"></a>`package_provider`
+##### <a name="-sudo--package_provider"></a>`package_provider`
 
 Data type: `Optional[String[1]]`
 
@@ -123,7 +123,7 @@ Allows you to set a package provider.
 
 Default value: `$sudo::params::package_provider`
 
-##### <a name="package_admin_file"></a>`package_admin_file`
+##### <a name="-sudo--package_admin_file"></a>`package_admin_file`
 
 Data type: `Optional[String[1]]`
 
@@ -133,39 +133,39 @@ this has to be staged separately and is required on Solaris 10.
 
 Default value: `$sudo::params::package_admin_file`
 
-##### <a name="purge"></a>`purge`
+##### <a name="-sudo--purge"></a>`purge`
 
 Data type: `Boolean`
 
 Whether or not to purge sudoers.d directory
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="purge_ignore"></a>`purge_ignore`
+##### <a name="-sudo--purge_ignore"></a>`purge_ignore`
 
 Data type: `Optional[Variant[String[1], Array[String[1]]]]`
 
 Files to exclude from purging in sudoers.d directory
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="suffix"></a>`suffix`
+##### <a name="-sudo--suffix"></a>`suffix`
 
 Data type: `Optional[String[1]]`
 
 Adds a custom suffix to all files created in sudoers.d directory.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="prefix"></a>`prefix`
+##### <a name="-sudo--prefix"></a>`prefix`
 
 Data type: `Optional[Pattern[/^[^.]+$/]]`
 
 Adds a custom prefix to all files created in sudoers.d directory.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="config_file"></a>`config_file`
+##### <a name="-sudo--config_file"></a>`config_file`
 
 Data type: `String[1]`
 
@@ -175,15 +175,15 @@ what you're doing.
 
 Default value: `$sudo::params::config_file`
 
-##### <a name="config_file_replace"></a>`config_file_replace`
+##### <a name="-sudo--config_file_replace"></a>`config_file_replace`
 
 Data type: `Boolean`
 
 Wether or not the config file should be replaced.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="config_file_mode"></a>`config_file_mode`
+##### <a name="-sudo--config_file_mode"></a>`config_file_mode`
 
 Data type: `String[1]`
 
@@ -191,7 +191,7 @@ The mode to set on the config file.
 
 Default value: `$sudo::params::config_file_mode`
 
-##### <a name="config_dir"></a>`config_dir`
+##### <a name="-sudo--config_dir"></a>`config_dir`
 
 Data type: `String[1]`
 
@@ -200,7 +200,7 @@ includedir stanza in sudoers file
 
 Default value: `$sudo::params::config_dir`
 
-##### <a name="config_dir_mode"></a>`config_dir_mode`
+##### <a name="-sudo--config_dir_mode"></a>`config_dir_mode`
 
 Data type: `String[1]`
 
@@ -208,24 +208,24 @@ The mode to set for the config directory.
 
 Default value: `$sudo::params::config_dir_mode`
 
-##### <a name="extra_include_dirs"></a>`extra_include_dirs`
+##### <a name="-sudo--extra_include_dirs"></a>`extra_include_dirs`
 
 Data type: `Optional[Array[String[1]]]`
 
 Array of additional directories containing sudo snippets
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="content"></a>`content`
+##### <a name="-sudo--content"></a>`content`
 
 Data type: `Optional[String[1]]`
 
 Alternate content template file location
 *Deprecated*, use *content_template* instead.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="content_template"></a>`content_template`
+##### <a name="-sudo--content_template"></a>`content_template`
 
 Data type: `Optional[String[1]]`
 
@@ -235,9 +235,9 @@ what you're doing.
 Note: some parameters won't work, if default template isn't
 used
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="content_string"></a>`content_string`
+##### <a name="-sudo--content_string"></a>`content_string`
 
 Data type: `Optional[String[1]]`
 
@@ -245,9 +245,9 @@ Alternate config file content string
 Note: some parameters won't work, if default template isn't
 used
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="secure_path"></a>`secure_path`
+##### <a name="-sudo--secure_path"></a>`secure_path`
 
 Data type: `Optional[String[1]]`
 
@@ -255,15 +255,15 @@ The secure_path variable in sudoers.
 
 Default value: `$sudo::params::secure_path`
 
-##### <a name="ldap_enable"></a>`ldap_enable`
+##### <a name="-sudo--ldap_enable"></a>`ldap_enable`
 
 Data type: `Boolean`
 
 Enable ldap support on the package
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="delete_on_error"></a>`delete_on_error`
+##### <a name="-sudo--delete_on_error"></a>`delete_on_error`
 
 Data type: `Boolean`
 
@@ -272,9 +272,9 @@ during a complete visudo -c run. If false it will just return
 an error and will add a comment to the sudoers configuration so
 that the resource will be checked at the following run.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="validate_single"></a>`validate_single`
+##### <a name="-sudo--validate_single"></a>`validate_single`
 
 Data type: `Boolean`
 
@@ -282,9 +282,9 @@ Do a validate on the "single" file in the sudoers.d directory.
 If the validate fail the file will not be saved or changed
 if a file already exist.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="config_dir_keepme"></a>`config_dir_keepme`
+##### <a name="-sudo--config_dir_keepme"></a>`config_dir_keepme`
 
 Data type: `Boolean`
 
@@ -292,15 +292,15 @@ Add a .keep-me file to the config dir
 
 Default value: `$sudo::params::config_dir_keepme`
 
-##### <a name="use_sudoreplay"></a>`use_sudoreplay`
+##### <a name="-sudo--use_sudoreplay"></a>`use_sudoreplay`
 
 Data type: `Boolean`
 
 Boolean to enable the usage of sudoreplay.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="wheel_config"></a>`wheel_config`
+##### <a name="-sudo--wheel_config"></a>`wheel_config`
 
 Data type: `Enum['absent','password','nopassword']`
 
@@ -310,15 +310,15 @@ or configuring it without password prompt.
 
 Default value: `$sudo::params::wheel_config`
 
-##### <a name="sudoreplay_discard"></a>`sudoreplay_discard`
+##### <a name="-sudo--sudoreplay_discard"></a>`sudoreplay_discard`
 
 Data type: `Optional[Array[String[1]]]`
 
 Array of additional command to discard in sudo log.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="configs"></a>`configs`
+##### <a name="-sudo--configs"></a>`configs`
 
 Data type: `Hash`
 
@@ -326,7 +326,7 @@ A hash of sudo::conf's
 
 Default value: `{}`
 
-### <a name="sudoallow"></a>`sudo::allow`
+### <a name="sudo--allow"></a>`sudo::allow`
 
 This class allows you to take complete advantage of automatic parameter
 lookup using a Hiera database. Providing a singleton class that accepts
@@ -353,12 +353,12 @@ class { 'sudo::allow':
 
 The following parameters are available in the `sudo::allow` class:
 
-* [`add_users`](#add_users)
-* [`add_groups`](#add_groups)
-* [`replace_users`](#replace_users)
-* [`replace_groups`](#replace_groups)
+* [`add_users`](#-sudo--allow--add_users)
+* [`add_groups`](#-sudo--allow--add_groups)
+* [`replace_users`](#-sudo--allow--replace_users)
+* [`replace_groups`](#-sudo--allow--replace_groups)
 
-##### <a name="add_users"></a>`add_users`
+##### <a name="-sudo--allow--add_users"></a>`add_users`
 
 Data type: `Array`
 
@@ -368,7 +368,7 @@ of unique values.
 
 Default value: `[]`
 
-##### <a name="add_groups"></a>`add_groups`
+##### <a name="-sudo--allow--add_groups"></a>`add_groups`
 
 Data type: `Array`
 
@@ -378,7 +378,7 @@ of unique values.
 
 Default value: `[]`
 
-##### <a name="replace_users"></a>`replace_users`
+##### <a name="-sudo--allow--replace_users"></a>`replace_users`
 
 Data type: `Optional[Array]`
 
@@ -388,9 +388,9 @@ be ignored. With Hiera, a standard priority lookup is used. Note that
 if replace_users is specified at ANY level of the hierarchy, then
 add_users is ignored at EVERY level of the hierarchy.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="replace_groups"></a>`replace_groups`
+##### <a name="-sudo--allow--replace_groups"></a>`replace_groups`
 
 Data type: `Optional[Array]`
 
@@ -400,11 +400,11 @@ be ignored. With Hiera, a standard priority lookup is used. Note that
 if replace_groups is specified at ANY level of the hierarchy, then
 add_groups is ignored at EVERY level of the hierarchy.
 
-Default value: ``undef``
+Default value: `undef`
 
 ## Defined types
 
-### <a name="sudoconf"></a>`sudo::conf`
+### <a name="sudo--conf"></a>`sudo::conf`
 
 Define: sudo::conf
 
@@ -422,16 +422,16 @@ sudo::conf { 'admins':
 
 The following parameters are available in the `sudo::conf` defined type:
 
-* [`ensure`](#ensure)
-* [`priority`](#priority)
-* [`content`](#content)
-* [`source`](#source)
-* [`template`](#template)
-* [`sudo_config_dir`](#sudo_config_dir)
-* [`sudo_file_name`](#sudo_file_name)
-* [`sudo_syntax_path`](#sudo_syntax_path)
+* [`ensure`](#-sudo--conf--ensure)
+* [`priority`](#-sudo--conf--priority)
+* [`content`](#-sudo--conf--content)
+* [`source`](#-sudo--conf--source)
+* [`template`](#-sudo--conf--template)
+* [`sudo_config_dir`](#-sudo--conf--sudo_config_dir)
+* [`sudo_file_name`](#-sudo--conf--sudo_file_name)
+* [`sudo_syntax_path`](#-sudo--conf--sudo_syntax_path)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-sudo--conf--ensure"></a>`ensure`
 
 Data type: `Any`
 
@@ -439,7 +439,7 @@ Ensure if present or absent
 
 Default value: `present`
 
-##### <a name="priority"></a>`priority`
+##### <a name="-sudo--conf--priority"></a>`priority`
 
 Data type: `Any`
 
@@ -447,31 +447,31 @@ Prefix file name with $priority
 
 Default value: `10`
 
-##### <a name="content"></a>`content`
+##### <a name="-sudo--conf--content"></a>`content`
 
 Data type: `Any`
 
 Content of configuration snippet
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="source"></a>`source`
+##### <a name="-sudo--conf--source"></a>`source`
 
 Data type: `Any`
 
 Source of configuration snippet
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="template"></a>`template`
+##### <a name="-sudo--conf--template"></a>`template`
 
 Data type: `Any`
 
 Path of a template file
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="sudo_config_dir"></a>`sudo_config_dir`
+##### <a name="-sudo--conf--sudo_config_dir"></a>`sudo_config_dir`
 
 Data type: `Any`
 
@@ -479,17 +479,17 @@ Where to place configuration snippets.
 Only set this, if your platform is not supported or
 you know, what you're doing.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="sudo_file_name"></a>`sudo_file_name`
+##### <a name="-sudo--conf--sudo_file_name"></a>`sudo_file_name`
 
 Data type: `Any`
 
 Set a custom file name for the snippet
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="sudo_syntax_path"></a>`sudo_syntax_path`
+##### <a name="-sudo--conf--sudo_syntax_path"></a>`sudo_syntax_path`
 
 Data type: `Any`
 
