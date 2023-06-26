@@ -37,7 +37,7 @@ describe 'sudo::package' do
       else
         let(:params) { { 'package' => 'sudo' } }
 
-        it { is_expected.to contain_package('sudo').with('ensure' => 'installed') }
+        it { is_expected.to contain_package('sudo').with('ensure' => 'present') }
       end
     end
   end
