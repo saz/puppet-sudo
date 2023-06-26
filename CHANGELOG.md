@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [8.0.0]
+### Breaking changes
+- drop support for puppet6 (#295)
+- replace ensure_packages() with package (#295)
+### Removed
+- stdlib is no longer a dependency, as the only usage (ensure_packages) was removed
+- Drop EoL Debian 9 (#294)
+### Added
+- add data types and doc strings to most manifests (#285)
+- Add puppet 8 support (#294)
+- add some newer OS releaseas (#295)
+- Add prefix parameter to prefix all sudoers.d entries (#261)
+### Fixed
+- Restore format and behavior prior to adding wheel_config parameter (#278)
+
 ## [7.0.2]
 ### Added
 - Allow stdlib < 9.0.0
