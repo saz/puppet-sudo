@@ -72,7 +72,9 @@ class sudo::package (
     }
     default: {
       if $package {
-        ensure_packages([$package], $package_defaults)
+        package { $package:
+          * => $package_defaults,
+        }
       }
     }
   }
