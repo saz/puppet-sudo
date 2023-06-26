@@ -12,13 +12,17 @@
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
-        "7"
+        "7",
+        "8",
+        "9"
       ]
     },
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
-        "7"
+        "7",
+        "8",
+        "9"
       ]
     },
     {
@@ -36,14 +40,16 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-	"10"
+	"10",
+	"11"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "18.04",
-	"20.04"
+	"20.04",
+	"22.04"
       ]
     },
     {
