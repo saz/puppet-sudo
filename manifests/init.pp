@@ -108,6 +108,13 @@
 # @param sudoreplay_discard
 #   Array of additional command to discard in sudo log.
 #
+# @param maxseq
+#   Integer to over-ride the default value of maxseq.
+#   The maximum sequence number that will be substituted for the “%{seq}”
+#   escape in the I/O log file
+#   The default value is 2176782336.
+#   Available for RHEL7 and RHEL8
+#
 # @param configs
 #   A hash of sudo::conf's
 #
