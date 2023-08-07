@@ -68,7 +68,8 @@ The following parameters are available in the `sudo` class:
 * [`config_dir_keepme`](#-sudo--config_dir_keepme)
 * [`use_sudoreplay`](#-sudo--use_sudoreplay)
 * [`wheel_config`](#-sudo--wheel_config)
-* [`sudoreplay_discard`](#-sudo--sudoreplay_discard)
+* [`sudoreplay_discard`](#-sudo--sudoreplay_discard)]
+* [`maxseq`](#-sudo--maxseq)]
 * [`configs`](#-sudo--configs)
 
 ##### <a name="-sudo--enable"></a>`enable`
@@ -315,6 +316,14 @@ Default value: `$sudo::params::wheel_config`
 Data type: `Optional[Array[String[1]]]`
 
 Array of additional command to discard in sudo log.
+
+Default value: `undef`
+
+##### <a name="-sudo--maxseq"></a>`maxseq`
+
+Data type: `Optional[Integer[1]]`
+
+Integer of value to over-ride maxseq in sudo conf.
 
 Default value: `undef`
 
