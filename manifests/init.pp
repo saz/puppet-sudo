@@ -143,6 +143,7 @@ class sudo (
   Boolean                                        $use_sudoreplay      = false,
   Enum['absent','password','nopassword']         $wheel_config        = $sudo::params::wheel_config,
   Optional[Array[String[1]]]                     $sudoreplay_discard  = undef,
+  Optional[Integer[1]]                           $maxseq              = undef,
   Hash                                           $configs             = {},
 ) inherits sudo::params {
   case $enable {
