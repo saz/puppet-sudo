@@ -82,7 +82,10 @@ Defaults!<%= command %> !log_output
 <% end -%>
 <% end -%>
 
-#
+<% if @maxseq %>
+Defaults    maxseq = <%= @maxseq %>
+<% end -%>
+
 # Adding HOME to env_keep may enable a user to run unrestricted
 # commands via sudo.
 #
