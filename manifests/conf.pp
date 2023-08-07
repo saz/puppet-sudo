@@ -141,7 +141,7 @@ define sudo::conf (
   }
 
   exec { "sudo-syntax-check for file ${cur_file}":
-    command     => "visudo -c -f ${cur_file_real} || ${delete_cmd}",
+    command     => "visudo -c || ${delete_cmd}",
     refreshonly => true,
     path        => $sudo_syntax_path,
   }
