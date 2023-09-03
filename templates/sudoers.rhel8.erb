@@ -74,7 +74,6 @@ Defaults    match_group_by_gid
 # Disable this option for new behavior.
 Defaults    always_query_group_plugin
 
-Defaults    env_reset
 Defaults    env_keep =  "COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS"
 Defaults    env_keep += "MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE"
 Defaults    env_keep += "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES"
@@ -135,3 +134,4 @@ root	ALL=(ALL) 	ALL
 <% @extra_include_dirs.each do |include_dir| -%>
 #includedir <%= include_dir %>
 <% end if @extra_include_dirs -%>
+<%= scope.call_function('sudo::defaults', @defaults) -%>

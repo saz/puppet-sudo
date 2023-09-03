@@ -64,8 +64,16 @@ Defaults   !visiblepw
 # env_reset is disabled or HOME is present in the env_keep list.
 #
 Defaults    always_set_home
+Defaults    match_group_by_gid
 
-Defaults    env_reset
+# Prior to version 1.8.15, groups listed in sudoers that were
+# found in the system group database were passed to the group
+# plugin, if any. Starting with 1.8.15, only groups of the fo
+# %:group are resolved via the group plugin by default.
+# We enable always_query_group_plugin to restore old behavior
+# Disable this option for new behavior.
+Defaults    always_query_group_plugin
+
 Defaults    env_keep =  "COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS"
 Defaults    env_keep += "MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE"
 Defaults    env_keep += "LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES"
@@ -126,3 +134,4 @@ root	ALL=(ALL) 	ALL
 <% @extra_include_dirs.each do |include_dir| -%>
 #includedir <%= include_dir %>
 <% end if @extra_include_dirs -%>
+<%= scope.call_function('sudo::defaults', @defaults) -%>
