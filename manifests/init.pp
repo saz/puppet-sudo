@@ -9,6 +9,9 @@
 #   Only set this, if your platform is not supported or you know,
 #   what you're doing.
 #
+# @param package_manage
+#   Whether or not to manage the sudo package.
+#
 # @param package_ldap
 #   Name of the package with ldap support, if ldap_enable is set.
 #
@@ -117,6 +120,7 @@
 class sudo (
   Boolean                                        $enable              = true,
   Optional[String[1]]                            $package             = $sudo::params::package,
+  Boolean                                        $package_manage      = true,
   Optional[String[1]]                            $package_ldap        = $sudo::params::package_ldap,
   String[1]                                      $package_ensure      = $sudo::params::package_ensure,
   Optional[String[1]]                            $package_source      = $sudo::params::package_source,
@@ -169,7 +173,7 @@ class sudo (
     }
     default: { fail('no $ldap_enable is set') }
   }
-  if $package_real {
+  if $package_real and $package_manage {
     class { 'sudo::package':
       package            => $package_real,
       package_ensure     => $package_ensure,
