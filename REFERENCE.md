@@ -43,6 +43,7 @@ The following parameters are available in the `sudo` class:
 
 * [`enable`](#-sudo--enable)
 * [`package`](#-sudo--package)
+* [`package_manage`](#-sudo--package_manage)
 * [`package_ldap`](#-sudo--package_ldap)
 * [`package_ensure`](#-sudo--package_ensure)
 * [`package_source`](#-sudo--package_source)
@@ -88,6 +89,14 @@ Only set this, if your platform is not supported or you know,
 what you're doing.
 
 Default value: `$sudo::params::package`
+
+##### <a name="-sudo--package_manage"></a>`package_manage`
+
+Data type: `Boolean`
+
+Whether or not to manage the sudo package.
+
+Default value: `true`
 
 ##### <a name="-sudo--package_ldap"></a>`package_ldap`
 
