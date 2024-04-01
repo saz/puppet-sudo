@@ -427,6 +427,7 @@ The following parameters are available in the `sudo::conf` defined type:
 * [`content`](#-sudo--conf--content)
 * [`source`](#-sudo--conf--source)
 * [`template`](#-sudo--conf--template)
+* [`template_epp`](#-sudo--conf--template_epp)
 * [`sudo_config_dir`](#-sudo--conf--sudo_config_dir)
 * [`sudo_file_name`](#-sudo--conf--sudo_file_name)
 * [`sudo_syntax_path`](#-sudo--conf--sudo_syntax_path)
@@ -467,7 +468,15 @@ Default value: `undef`
 
 Data type: `Any`
 
-Path of a template file
+Path of a erb template file or epp template file without parameters
+
+Default value: `undef`
+
+##### <a name="-sudo--conf--template_epp"></a>`template_epp`
+
+Data type: `Any`
+
+Path of an epp template and associated template parameters
 
 Default value: `undef`
 

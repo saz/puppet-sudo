@@ -194,6 +194,45 @@ sudo::configs:
         'template'  : "mymodule/bill.erb"
 ```
 
+##### Using templates for sudo allocations
+The `template` meta-parameter supports both erb and epp templates. If the filename specified as the template ends with ".epp" then the puppet `epp` function will be used to interpret the template. If the filename specified as the template does not end with ".epp" then the puppet `template` function will be used to interpret the template. This means that template names do not have to have an extension. If one does not it will be treated as an erb template.
+
+```yaml
+sudo::configs:
+    'elizabeth':
+        'template': "mymodule/webserver_administrator"
+    'mohammed':
+        'template': "mymodule/databaseadministrator.erb"
+    'jose':
+        'template': "mymodule/appserver_administrator.epp"
+```
+
+The `template_epp` meta-parameter expects a hash with two elements; `filename` and `params`. `filename` is a string containing a path to a puppet epp template. `params` is a hash containing data elements to be passed to the corresponding epp template parameters.
+
+```yaml
+sudo::configs:
+    'george':
+        'template_epp':
+            'filename': 'sudo/single_line_allocation.epp'
+            'params':
+                'user_spec':
+                    - '%dbas'
+                'run_as':
+                    - 'root'
+                'commands':
+                    - '/usr/bin/startdb'
+    'srini':
+        'template_epp':
+            'filename': 'sudo/single_line_allocation.epp'
+            'params':
+                'user_spec':
+                    - 'srini'
+                'run_as':
+                    - 'ALL'
+                'commands':
+                    - 'ALL'
+```
+
 ##### Set a custom name for the sudoers file
 
 In some edge cases, the automatically generated sudoers file name is insufficient. For example, when an application generates a sudoers file with a fixed file name, using this class with the purge option enabled will always delete the custom file and adding it manually will generate a file with the right content, but the wrong name. To solve this, you can use the ```sudo_file_name``` option to manually set the desired file name.
@@ -238,5 +277,6 @@ sudo::conf { "foreman-proxy":
 | content         | string | undef       | content of configuration snippet |
 | source          | string | undef       | source of configuration snippet |
 | template        | string | undef       | template of configuration snippet |
+| template_epp    | hash   | undef       | template and parameters for an epp configuration snippet |
 | sudo_config_dir | string | OS Specific | configuration snippet directory _(for unsupported platforms)_ |
-| sudo_file_name  | string | undef		 | custom file name for sudo file in sudoers directory |
+| sudo_file_name  | string | undef		   | custom file name for sudo file in sudoers directory |
