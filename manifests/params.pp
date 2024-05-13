@@ -75,8 +75,13 @@ class sudo::params {
           $secure_path      = '/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
           $wheel_config     = 'password'
         }
+        /^9/: {
+          $content_template = "${content_base}sudoers.rhel9.erb"
+          $secure_path      = '/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
+          $wheel_config     = 'password'
+        }
         default: {
-          $content_template = "${content_base}sudoers.rhel8.erb"
+          $content_template = "${content_base}sudoers.rhel9.erb"
           $secure_path      = '/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
           $wheel_config     = 'password'
         }
