@@ -23,6 +23,15 @@ rpm. so we add a dependencies to the ldap module.
 
 * [`sudo::conf`](#sudo--conf): Manages sudo configuration snippets
 
+### Functions
+
+* [`sudo::defaults`](#sudo--defaults): Formats sudoers defaults config see https://linux.die.net/man/5/sudoers      Default_Type ::= 'Defaults' |                      'Defaults' '@
+
+### Data types
+
+* [`Sudo::Defaults`](#Sudo--Defaults): sudo defaults
+* [`Sudo::Defaults_operator`](#Sudo--Defaults_operator): custom datatype that validates sudo defaults operators
+
 ## Classes
 
 ### <a name="sudo"></a>`sudo`
@@ -71,6 +80,7 @@ The following parameters are available in the `sudo` class:
 * [`wheel_config`](#-sudo--wheel_config)
 * [`sudoreplay_discard`](#-sudo--sudoreplay_discard)
 * [`configs`](#-sudo--configs)
+* [`defaults`](#-sudo--defaults)
 
 ##### <a name="-sudo--enable"></a>`enable`
 
@@ -335,6 +345,14 @@ A hash of sudo::conf's
 
 Default value: `{}`
 
+##### <a name="-sudo--defaults"></a>`defaults`
+
+Data type: `Sudo::Defaults`
+
+
+
+Default value: `$sudo::params::defaults`
+
 ### <a name="sudo--allow"></a>`sudo::allow`
 
 This class allows you to take complete advantage of automatic parameter
@@ -505,4 +523,86 @@ Data type: `Any`
 Path to use for executing the sudo syntax check
 
 Default value: `'/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'`
+
+## Functions
+
+### <a name="sudo--defaults"></a>`sudo::defaults`
+
+Type: Ruby 4.x API
+
+Formats sudoers defaults config see https://linux.die.net/man/5/sudoers
+
+    Default_Type ::= 'Defaults' |
+                     'Defaults' '@' Host_List |
+                     'Defaults' ':' User_List |
+                     'Defaults' '!' Cmnd_List |
+                     'Defaults' '>' Runas_List
+
+    Default_Entry ::= Default_Type Parameter_List
+
+    Parameter_List ::= Parameter |
+                       Parameter ',' Parameter_List
+
+    Parameter ::= Parameter '=' Value |
+                  Parameter '+=' Value |
+                  Parameter '-=' Value |
+                  '!'* Parameter
+
+The function is passed an Array of Tuples
+e.g. [["env_reset", nil]]
+     [["mailto", {"value" => root}]]
+
+#### `sudo::defaults(Any *$args)`
+
+Formats sudoers defaults config see https://linux.die.net/man/5/sudoers
+
+    Default_Type ::= 'Defaults' |
+                     'Defaults' '@' Host_List |
+                     'Defaults' ':' User_List |
+                     'Defaults' '!' Cmnd_List |
+                     'Defaults' '>' Runas_List
+
+    Default_Entry ::= Default_Type Parameter_List
+
+    Parameter_List ::= Parameter |
+                       Parameter ',' Parameter_List
+
+    Parameter ::= Parameter '=' Value |
+                  Parameter '+=' Value |
+                  Parameter '-=' Value |
+                  '!'* Parameter
+
+The function is passed an Array of Tuples
+e.g. [["env_reset", nil]]
+     [["mailto", {"value" => root}]]
+
+Returns: `String`
+
+##### `*args`
+
+Data type: `Any`
+
+
+
+## Data types
+
+### <a name="Sudo--Defaults"></a>`Sudo::Defaults`
+
+sudo defaults
+
+Alias of
+
+```puppet
+Hash[String, Variant[Struct[{
+                                      Optional[list] => String,
+                                      Optional[operator] => Sudo::Defaults_operator,
+                                      Optional[value] => Variant[String,Numeric],
+                                  }], Undef]]
+```
+
+### <a name="Sudo--Defaults_operator"></a>`Sudo::Defaults_operator`
+
+custom datatype that validates sudo defaults operators
+
+Alias of `Enum['=', '+=', '-=', '!']`
 

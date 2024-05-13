@@ -39,14 +39,16 @@ describe 'sudo' do
         it { is_expected.to compile.and_raise_error(%r{'content' \(deprecated\) and 'content_string' are mutually exclusive}) }
       end
 
-      context 'with deprecated content set' do
-        let :params do
-          {
-            content: 'sudo/sudoers.ubuntu.erb'
-          }
-        end
+      unless os =~ %r{^(gentoo|archlinux-rolling)}
+        context 'with deprecated content set' do
+          let :params do
+            {
+              content: 'sudo/sudoers.ubuntu.erb'
+            }
+          end
 
-        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{.*Defaults\s+env_reset.*}) }
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{.*Defaults\s+env_reset.*}) }
+        end
       end
 
       context 'with content_string set' do
