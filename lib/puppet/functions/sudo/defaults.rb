@@ -22,6 +22,11 @@
 # e.g. [["env_reset", nil]]
 #      [["mailto", {"value" => root}]]
 Puppet::Functions.create_function(:'sudo::defaults') do
+  dispatch :defaults do
+    repeated_param 'Any', :args
+    return_type 'String'
+  end
+
   def defaults(*args)
     res = ''
     raise "Unsupported number of arguments #{args.size}: #{args.inspect}" if args.nil?
