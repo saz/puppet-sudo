@@ -37,6 +37,10 @@ class sudo::params {
       $config_dir_keepme  = false
       $package_provider   = undef
       $wheel_config       = 'absent'
+      $defaults           = {
+        'env_reset'    => undef,
+        'mail_badpass' => undef,
+      }
     }
     'RedHat': {
       $package = 'sudo'
@@ -89,6 +93,9 @@ class sudo::params {
       $config_file_group  = 'root'
       $config_dir_keepme  = false
       $package_provider   = undef
+      $defaults           = {
+        'env_reset' => undef,
+      }
     }
     'Suse': {
       $package            = 'sudo'
@@ -104,6 +111,7 @@ class sudo::params {
       $config_dir_keepme  = false
       $package_provider   = undef
       $wheel_config       = 'absent'
+      $defaults           = {}
     }
     'Solaris': {
       case $facts['os']['name'] {
@@ -175,6 +183,9 @@ class sudo::params {
           }
         }
       }
+      $defaults           = {
+        'env_reset' => undef,
+      }
     }
     'FreeBSD': {
       $package            = 'security/sudo'
@@ -190,6 +201,7 @@ class sudo::params {
       $config_dir_keepme  = true
       $package_provider   = undef
       $wheel_config       = 'absent'
+      $defaults           = {}
     }
     'OpenBSD': {
       if (versioncmp($facts['kernelversion'], '5.8') < 0) {
@@ -208,6 +220,7 @@ class sudo::params {
       $config_dir_keepme  = false
       $package_provider   = undef
       $wheel_config       = 'absent'
+      $defaults           = {}
     }
     'AIX': {
       $package            = 'sudo'
@@ -223,6 +236,7 @@ class sudo::params {
       $config_dir_keepme  = false
       $package_provider   = 'rpm'
       $wheel_config       = 'absent'
+      $defaults           = {}
     }
     'Darwin': {
       $package            = undef
@@ -238,6 +252,9 @@ class sudo::params {
       $config_dir_keepme  = false
       $package_provider   = undef
       $wheel_config       = 'absent'
+      $defaults           = {
+        'env_reset' => undef,
+      }
     }
     default: {
       case $facts['os']['name'] {
@@ -255,6 +272,7 @@ class sudo::params {
           $config_dir_keepme  = false
           $package_provider   = undef
           $wheel_config       = 'absent'
+          $defaults           = {}
         }
         /^(Arch|Manjaro)(.{0}|linux)$/: {
           $package            = 'sudo'
@@ -270,6 +288,7 @@ class sudo::params {
           $config_dir_keepme  = false
           $package_provider   = undef
           $wheel_config       = 'absent'
+          $defaults           = {}
         }
         'Amazon': {
           $package            = 'sudo'
@@ -297,6 +316,7 @@ class sudo::params {
           $config_dir_keepme  = false
           $package_provider   = undef
           $wheel_config       = 'absent'
+          $defaults           = {}
         }
         default: {
           fail("Unsupported platform: ${facts['os']['family']}/${facts['os']['name']}")
