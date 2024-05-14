@@ -39,14 +39,16 @@ describe 'sudo' do
         it { is_expected.to compile.and_raise_error(%r{'content' \(deprecated\) and 'content_string' are mutually exclusive}) }
       end
 
-      context 'with deprecated content set' do
-        let :params do
-          {
-            content: 'sudo/sudoers.ubuntu.erb'
-          }
-        end
+      unless os =~ %r{^(gentoo|archlinux-rolling)}
+        context 'with deprecated content set' do
+          let :params do
+            {
+              content: 'sudo/sudoers.ubuntu.erb'
+            }
+          end
 
-        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{.*Defaults\s+env_reset.*}) }
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{.*Defaults\s+env_reset.*}) }
+        end
       end
 
       context 'with content_string set' do
@@ -66,7 +68,7 @@ describe 'sudo' do
           }
         end
 
-        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{.*Defaults\s+env_reset.*}) }
+        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{.*#\s+Host\s+alias\s+specification.*}) }
       end
 
       unless os =~ %r{^(debian|ubuntu)}
@@ -102,6 +104,67 @@ describe 'sudo' do
           it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^# %wheel\s+ALL=\(ALL\)\s+ALL$}) }
           it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^%wheel\s+ALL=\(ALL\)\s+NOPASSWD:\s+ALL$}) }
         end
+      end
+
+      unless os =~ %r{^(gentoo|archlinux-rolling)}
+        context 'env_reset default is set' do
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+env_reset$}) }
+        end
+      end
+
+      if os =~ %r{^(debian|ubuntu)}
+        context 'mail_badpass default is set' do
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+mail_badpass$}) }
+        end
+      end
+
+      if os =~ %r{^(redhat)}
+        context '!visiblepw default is set' do
+          it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+!visiblepw$}) }
+        end
+      end
+
+      context 'Modify passwd_tries default' do
+        let :params do
+          {
+            defaults: {
+              passwd_tries: {
+                value: 5,
+              }
+            }
+          }
+        end
+
+        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+passwd_tries=5$}) }
+      end
+
+      context 'Modify env_keep default' do
+        let :params do
+          {
+            defaults: {
+              env_keep: {
+                operator: '+=',
+                value: 'SOME_VAR',
+              }
+            }
+          }
+        end
+
+        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+env_keep\+="SOME_VAR"$}) }
+      end
+
+      context 'Escape strings' do
+        let :params do
+          {
+            defaults: {
+              badpass_message: {
+                value: 'Password is wrong, please try again',
+              }
+            }
+          }
+        end
+
+        it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+badpass_message="Password is wrong, please try again"$}) }
       end
     end
   end

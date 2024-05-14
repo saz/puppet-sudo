@@ -39,31 +39,6 @@ If this is not what you're expecting, set `purge` and/or `config_file_replace` t
     }
 ```
 
-#### Selective Purge of sudoers.d Directory
-A combination of `prefix`, `suffix` and `purge_ignore` can be used to purge only files that puppet previously created.
-If `suffix` is specified all puppet created sudoers.d entries will have this suffix apprended to
-the thier file name. If `prefix` is specified all puppet created sudoers.d entries will have this prefix
-prepended. A ruby glob can be used as `ignore` to ignore all files that do not have
-this suffix.
-
-```puppet
-    class{'sudo':
-      suffix => '_puppet',
-      purge_ignore => '*[!_puppet]',
-    }
-```
-
-or
-
-```puppet
-    class{'sudo':
-      prefix => 'puppet_',
-      purge_ignore => '[!puppet_]*',
-    }
-```
-
-Due to limitations in ruby glob the prefix and ignore is recommended.
-
 #### Leave current sudo config as it is
 ```puppet
     class { 'sudo':
@@ -231,6 +206,22 @@ sudo::configs:
                     - 'ALL'
                 'commands':
                     - 'ALL'
+
+##### Override sudoers defaults
+
+You can modify `Default_Entry` lines by passing a `Hash` to `sudo::defaults`, where the key is `Defaults` parameter name (see `man 5 sudoers` for more details):
+
+```yaml
+sudo::defaults:
+    lecture:
+      value: always
+    badpass_message:
+      value: "Password is wrong, please try again"
+    passwd_tries:
+      value: 5
+    insults:
+    mailto:
+      value: root@example.com
 ```
 
 ##### Set a custom name for the sudoers file
@@ -252,31 +243,8 @@ sudo::conf { "foreman-proxy":
 
 ## sudo class parameters
 
-| Parameter           | Type    | Default     | Description |
-| :--------------     | :------ |:----------- | :---------- |
-| enable              | boolean | true        | Set this to remove or purge all sudoers configs |
-| package             | string  | OS specific | Set package name _(for unsupported platforms)_ |
-| package_ensure      | string  | present     | latest, absent, or a specific package version |
-| package_source      | string  | OS specific | Set package source _(for unsupported platforms)_ |
-| purge               | boolean | true        | Purge unmanaged files from config_dir |
-| purge_ignore        | string  | undef       | Files excluded from purging in config_dir |
-| config_file         | string  | OS specific | Set config_file _(for unsupported platforms)_ |
-| config_file_replace | boolean | true        | Replace config file with module config file |
-| includedirsudoers   | boolean | OS specific | Add #includedir /etc/sudoers.d with augeas |
-| config_dir          | string  | OS specific | Set config_dir _(for unsupported platforms)_ |
-| content             | string  | OS specific | Alternate content file location |
-| ldap_enable         | boolean | false       | Add support to LDAP |
-| configs             | hash    | {}          | A hash of sudo::conf's |
+See REFERENCE.md
 
 ## sudo::conf class / sudo::configs hash parameters
 
-| Parameter       | Type   | Default     | Description |
-| :-------------- | :----- |:----------- | :---------- |
-| ensure          | string | present     | present or absent |
-| priority        | number | 10          | file name prefix |
-| content         | string | undef       | content of configuration snippet |
-| source          | string | undef       | source of configuration snippet |
-| template        | string | undef       | template of configuration snippet |
-| template_epp    | hash   | undef       | template and parameters for an epp configuration snippet |
-| sudo_config_dir | string | OS Specific | configuration snippet directory _(for unsupported platforms)_ |
-| sudo_file_name  | string | undef		   | custom file name for sudo file in sudoers directory |
+See REFERENCE.md
