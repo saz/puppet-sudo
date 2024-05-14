@@ -460,7 +460,7 @@ The following parameters are available in the `sudo::conf` defined type:
 
 ##### <a name="-sudo--conf--ensure"></a>`ensure`
 
-Data type: `Any`
+Data type: `Enum['present', 'absent']`
 
 Ensure if present or absent
 
@@ -468,7 +468,7 @@ Default value: `present`
 
 ##### <a name="-sudo--conf--priority"></a>`priority`
 
-Data type: `Any`
+Data type: `Integer[0]`
 
 Prefix file name with $priority
 
@@ -476,7 +476,7 @@ Default value: `10`
 
 ##### <a name="-sudo--conf--content"></a>`content`
 
-Data type: `Any`
+Data type: `Optional[Variant[Array[String[1]], String[1]]]`
 
 Content of configuration snippet
 
@@ -484,7 +484,7 @@ Default value: `undef`
 
 ##### <a name="-sudo--conf--source"></a>`source`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Source of configuration snippet
 
@@ -492,7 +492,7 @@ Default value: `undef`
 
 ##### <a name="-sudo--conf--template"></a>`template`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Path of a template file
 
@@ -500,7 +500,7 @@ Default value: `undef`
 
 ##### <a name="-sudo--conf--sudo_config_dir"></a>`sudo_config_dir`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Where to place configuration snippets.
 Only set this, if your platform is not supported or
@@ -510,7 +510,7 @@ Default value: `undef`
 
 ##### <a name="-sudo--conf--sudo_file_name"></a>`sudo_file_name`
 
-Data type: `Any`
+Data type: `Optional[String[1]]`
 
 Set a custom file name for the snippet
 
@@ -518,7 +518,7 @@ Default value: `undef`
 
 ##### <a name="-sudo--conf--sudo_syntax_path"></a>`sudo_syntax_path`
 
-Data type: `Any`
+Data type: `String[1]`
 
 Path to use for executing the sudo syntax check
 
