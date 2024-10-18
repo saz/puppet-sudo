@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [9.0.0]
+### Breaking changes
+- Drop EoL RedHat, CentOS, Debian releases (#307, #311)
+- Drop Scientific from supported OS (#311)
+### Added
+- add package_manage param (#299)
+- Add support for RedHat 9 (#301)
+- add types in sudo::conf (#306)
+### Fixed
+- remove purge_ignore example from README, as it is not working as documented (#303)
+- use sudo::defaults in rhel9 template, fix tests (#304)
+- Remove parameters from README.md, mention REFERENCE.md, fixes #197 (#305)
+
 ## [8.0.0]
 ### Breaking changes
 - drop support for puppet6 (#295)
