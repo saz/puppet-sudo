@@ -39,7 +39,7 @@ describe 'sudo' do
         it { is_expected.to compile.and_raise_error(%r{'content' \(deprecated\) and 'content_string' are mutually exclusive}) }
       end
 
-      unless os =~ %r{^(gentoo|archlinux-rolling)}
+      unless os =~ %r{^(gentoo|archlinux)}
         context 'with deprecated content set' do
           let :params do
             {
@@ -106,7 +106,7 @@ describe 'sudo' do
         end
       end
 
-      unless os =~ %r{^(gentoo|archlinux-rolling)}
+      unless os =~ %r{^(gentoo|archlinux)}
         context 'env_reset default is set' do
           it { is_expected.to contain_file('/etc/sudoers').with_content(%r{^Defaults\s+env_reset$}) }
         end
