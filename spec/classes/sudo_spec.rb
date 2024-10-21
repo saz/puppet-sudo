@@ -247,36 +247,6 @@ describe 'sudo' do
           end
         end
 
-        describe 'on RedHat 5.4' do
-          let :facts do
-            {
-              os: {
-                'family'  => 'RedHat',
-                'name'    => 'RedHat',
-                'release' => {
-                  'full'  => '5.4',
-                  'major' => '5',
-                },
-              },
-              puppetversion: '3.7.0'
-            }
-          end
-
-          it do
-            if params == {}
-              is_expected.to contain_class('sudo::package').with(
-                'package'        => 'sudo',
-                'package_ensure' => 'latest'
-              )
-            else
-              is_expected.to contain_class('sudo::package').with(
-                'package'        => 'sudo',
-                'package_ensure' => param_hash[:package_ensure]
-              )
-            end
-          end
-        end
-
         describe 'on supported osfamily: AIX' do
           let :facts do
             {

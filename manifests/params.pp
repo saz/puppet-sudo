@@ -15,15 +15,8 @@ class sudo::params {
           $secure_path      = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin:/snap/bin'
         }
         default: {
-          if (versioncmp($facts['os']['release']['major'], '7') >= 0) or
-          ($facts['os']['release']['major'] =~ /\/sid/) or
-          ($facts['os']['release']['major'] =~ /Kali/) {
-            $content_template = "${content_base}sudoers.debian.erb"
-            $secure_path      = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin'
-          } else {
-            $content_template = "${content_base}sudoers.olddebian.erb"
-            $secure_path      = undef
-          }
+          $content_template = "${content_base}sudoers.debian.erb"
+          $secure_path      = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin'
         }
       }
       $package            = 'sudo'
@@ -47,49 +40,23 @@ class sudo::params {
       # in redhat sudo package is already compiled for ldap support
       $package_ldap = $package
 
-      # rhel 5.0 to 5.4 use sudo 1.6.9 which does not support
-      # includedir, so we have to make sure sudo 1.7 (comes with rhel
-      # 5.5) is installed.
-      $package_ensure     = $facts['os']['release']['full'] ? {
-        /^5.[01234]$/ => 'latest',
-        default       => 'present',
-      }
+      $package_ensure     = 'present'
       $package_source     = undef
       $package_admin_file = undef
       $config_file        = '/etc/sudoers'
       $config_dir         = '/etc/sudoers.d'
-      case $facts['os']['release']['full'] {
-        /^5/: {
-          $content_template = "${content_base}sudoers.rhel5.erb"
-          $secure_path      = undef
-          $wheel_config     = 'absent'
-        }
-        /^6/: {
-          $content_template = "${content_base}sudoers.rhel6.erb"
-          $secure_path      = '/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin'
-          $wheel_config     = 'absent'
-        }
-        /^7/: {
-          $content_template = "${content_base}sudoers.rhel7.erb"
-          $secure_path      = '/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
-          $wheel_config     = 'password'
-        }
-        /^8/: {
-          $content_template = "${content_base}sudoers.rhel8.erb"
-          $secure_path      = '/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
-          $wheel_config     = 'password'
-        }
-        /^9/: {
-          $content_template = "${content_base}sudoers.rhel9.erb"
-          $secure_path      = '/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
-          $wheel_config     = 'password'
+      $content_template   = "${content_base}sudoers.rhel.erb"
+
+      case [$facts['os']['name'], $facts['os']['release']['major']] {
+        ['Amazon', '2023']: {
+          $secure_path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin:/var/lib/snapd/snap/bin'
         }
         default: {
-          $content_template = "${content_base}sudoers.rhel9.erb"
-          $secure_path      = '/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
-          $wheel_config     = 'password'
+          $secure_path = '/sbin:/bin:/usr/sbin:/usr/bin:/opt/puppetlabs/bin'
         }
       }
+
+      $wheel_config       = 'password'
       $config_file_group  = 'root'
       $config_dir_keepme  = false
       $package_provider   = undef
@@ -204,11 +171,7 @@ class sudo::params {
       $defaults           = {}
     }
     'OpenBSD': {
-      if (versioncmp($facts['kernelversion'], '5.8') < 0) {
-        $package = undef
-      } else {
-        $package = 'sudo'
-      }
+      $package = 'sudo'
       $package_ldap       = undef
       $package_ensure     = 'present'
       $package_source     = undef
@@ -284,34 +247,6 @@ class sudo::params {
           $config_dir         = '/etc/sudoers.d'
           $content_template   = "${content_base}sudoers.archlinux.erb"
           $secure_path        = undef
-          $config_file_group  = 'root'
-          $config_dir_keepme  = false
-          $package_provider   = undef
-          $wheel_config       = 'absent'
-          $defaults           = {}
-        }
-        'Amazon': {
-          $package            = 'sudo'
-          $package_ldap       = $package
-          $package_ensure     = 'present'
-          $package_source     = undef
-          $package_admin_file = undef
-          $config_file        = '/etc/sudoers'
-          $config_dir         = '/etc/sudoers.d'
-          case $facts['os']['release']['full'] {
-            /^5/: {
-              $content_template = "${content_base}sudoers.rhel5.erb"
-              $secure_path      = undef
-            }
-            /^6/: {
-              $content_template = "${content_base}sudoers.rhel6.erb"
-              $secure_path      = '/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin'
-            }
-            default: {
-              $content_template = "${content_base}sudoers.rhel6.erb"
-              $secure_path      = '/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin'
-            }
-          }
           $config_file_group  = 'root'
           $config_dir_keepme  = false
           $package_provider   = undef
