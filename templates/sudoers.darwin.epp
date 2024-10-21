@@ -1,0 +1,72 @@
+<%- |
+  $config_dir,
+  $defaults,
+  $extra_include_dirs,
+  $sudoreplay_discard,
+  $use_sudoreplay,
+  $wheel_config,
+| -%>
+# file managed by puppet (unless config_file_replace=false)
+#
+# sudoers file.
+#
+# This file MUST be edited with the 'visudo' command as root.
+# Failure to use 'visudo' may result in syntax or file permission errors
+# that prevent sudo from running.
+#
+# See the sudoers man page for the details on how to write a sudoers file.
+#
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+
+# Defaults specification
+Defaults	env_keep += "BLOCKSIZE"
+Defaults	env_keep += "COLORFGBG COLORTERM"
+Defaults	env_keep += "__CF_USER_TEXT_ENCODING"
+Defaults	env_keep += "CHARSET LANG LANGUAGE LC_ALL LC_COLLATE LC_CTYPE"
+Defaults	env_keep += "LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME"
+Defaults	env_keep += "LINES COLUMNS"
+Defaults	env_keep += "LSCOLORS"
+Defaults	env_keep += "SSH_AUTH_SOCK"
+Defaults	env_keep += "TZ"
+Defaults	env_keep += "DISPLAY XAUTHORIZATION XAUTHORITY"
+Defaults	env_keep += "EDITOR VISUAL"
+Defaults	env_keep += "HOME MAIL"
+
+
+<% if $use_sudoreplay { %>
+Defaults log_output
+Defaults!/usr/bin/sudoreplay !log_output
+<% if $sudoreplay_discard { %>
+<% $sudoreplay_discard.each |$command| { -%>
+Defaults!<%= $command %> !log_output
+<% } -%>
+<% } -%>
+<% } -%>
+
+# Runas alias specification
+
+# User privilege specification
+root	ALL=(ALL) ALL
+%admin	ALL=(ALL) ALL
+
+# Uncomment to allow people in group wheel to run all commands
+<%- if $wheel_config != 'password' { %># <% } -%>
+%wheel	ALL=(ALL) ALL
+
+# Same thing without a password
+<%- if $wheel_config != 'nopassword' { %># <% } -%>
+%wheel	ALL=(ALL) NOPASSWD: ALL
+
+# Samples
+# %users  ALL=/sbin/mount /cdrom,/sbin/umount /cdrom
+# %users  localhost=/sbin/shutdown -h now
+#includedir <%= $config_dir %>
+<% $extra_include_dirs.each |$include_dir| { -%>
+#includedir <%= $include_dir %>
+<% } -%>
+<%= sudo::defaults($defaults) -%>
