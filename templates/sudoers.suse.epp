@@ -106,5 +106,5 @@ root ALL=(ALL) ALL
 #includedir <%= $config_dir %>
 <% $extra_include_dirs.each |$include_dir| { -%>
 #includedir <%= $include_dir %>
-<% } if $extra_include_dirs -%>
-<%= scope.call_function('sudo::defaults', $defaults) -%>
+<% } -%>
+<%= sudo::defaults($defaults) -%>
