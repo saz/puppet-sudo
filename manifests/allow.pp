@@ -42,10 +42,10 @@
 #   }
 #
 class sudo::allow (
-  Array           $add_users      = [],
-  Array           $add_groups     = [],
-  Optional[Array] $replace_users  = undef,
-  Optional[Array] $replace_groups = undef
+  Array[String[1]]           $add_users      = [],
+  Array[String[1]]           $add_groups     = [],
+  Optional[Array[String[1]]] $replace_users  = undef,
+  Optional[Array[String[1]]] $replace_groups = undef
 ) {
   if $replace_users != undef {
     $users = $replace_users
@@ -59,6 +59,6 @@ class sudo::allow (
   }
 
   sudo::conf { 'sudo_users_groups':
-    content  => template("${module_name}/users_groups.erb"),
+    content  => epp("${module_name}/users_groups.epp", { users => $users, groups => $groups }),
   }
 }

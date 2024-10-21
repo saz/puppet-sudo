@@ -11,11 +11,11 @@ class sudo::params {
     'Debian': {
       case $facts['os']['name'] {
         'Ubuntu': {
-          $content_template = "${content_base}sudoers.ubuntu.erb"
+          $content_template = "${content_base}sudoers.ubuntu.epp"
           $secure_path      = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin:/snap/bin'
         }
         default: {
-          $content_template = "${content_base}sudoers.debian.erb"
+          $content_template = "${content_base}sudoers.debian.epp"
           $secure_path      = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin'
         }
       }
@@ -45,7 +45,7 @@ class sudo::params {
       $package_admin_file = undef
       $config_file        = '/etc/sudoers'
       $config_dir         = '/etc/sudoers.d'
-      $content_template   = "${content_base}sudoers.rhel.erb"
+      $content_template   = "${content_base}sudoers.rhel.epp"
 
       case [$facts['os']['name'], $facts['os']['release']['major']] {
         ['Amazon', '2023']: {
@@ -72,7 +72,7 @@ class sudo::params {
       $package_admin_file = undef
       $config_file        = '/etc/sudoers'
       $config_dir         = '/etc/sudoers.d'
-      $content_template   = "${content_base}sudoers.suse.erb"
+      $content_template   = "${content_base}sudoers.suse.epp"
       $secure_path        = '/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin'
       $config_file_group  = 'root'
       $config_dir_keepme  = false
@@ -90,7 +90,7 @@ class sudo::params {
           $package_admin_file = undef
           $config_file        = '/etc/sudoers'
           $config_dir         = '/etc/sudoers.d'
-          $content_template   = "${content_base}sudoers.omnios.erb"
+          $content_template   = "${content_base}sudoers.omnios.epp"
           $secure_path        = undef
           $config_file_group  = 'root'
           $config_dir_keepme  = false
@@ -105,7 +105,7 @@ class sudo::params {
           $package_admin_file = undef
           $config_file        = '/opt/local/etc/sudoers'
           $config_dir         = '/opt/local/etc/sudoers.d'
-          $content_template   = "${content_base}sudoers.smartos.erb"
+          $content_template   = "${content_base}sudoers.smartos.epp"
           $secure_path        = undef
           $config_file_group  = 'root'
           $config_dir_keepme  = false
@@ -122,7 +122,7 @@ class sudo::params {
               $package_admin_file = undef
               $config_file        = '/etc/sudoers'
               $config_dir         = '/etc/sudoers.d'
-              $content_template   = "${content_base}sudoers.solaris.erb"
+              $content_template   = "${content_base}sudoers.solaris.epp"
               $secure_path        = undef
               $config_file_group  = 'root'
               $config_dir_keepme  = false
@@ -137,7 +137,7 @@ class sudo::params {
               $package_admin_file = '/var/sadm/install/admin/puppet'
               $config_file        = '/etc/sudoers'
               $config_dir         = '/etc/sudoers.d'
-              $content_template   = "${content_base}sudoers.solaris.erb"
+              $content_template   = "${content_base}sudoers.solaris.epp"
               $secure_path        = undef
               $config_file_group  = 'root'
               $config_dir_keepme  = false
@@ -162,7 +162,7 @@ class sudo::params {
       $package_admin_file = undef
       $config_file        = '/usr/local/etc/sudoers'
       $config_dir         = '/usr/local/etc/sudoers.d'
-      $content_template   = "${content_base}sudoers.freebsd.erb"
+      $content_template   = "${content_base}sudoers.freebsd.epp"
       $secure_path        = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin'
       $config_file_group  = 'wheel'
       $config_dir_keepme  = true
@@ -178,7 +178,7 @@ class sudo::params {
       $package_admin_file = undef
       $config_file        = '/etc/sudoers'
       $config_dir         = '/etc/sudoers.d'
-      $content_template   = "${content_base}sudoers.openbsd.erb"
+      $content_template   = "${content_base}sudoers.openbsd.epp"
       $config_file_group  = 'wheel'
       $config_dir_keepme  = false
       $package_provider   = undef
@@ -193,7 +193,7 @@ class sudo::params {
       $package_admin_file = undef
       $config_file        = '/etc/sudoers'
       $config_dir         = '/etc/sudoers.d'
-      $content_template   = "${content_base}sudoers.aix.erb"
+      $content_template   = "${content_base}sudoers.aix.epp"
       $secure_path        = undef
       $config_file_group  = 'system'
       $config_dir_keepme  = false
@@ -209,7 +209,7 @@ class sudo::params {
       $package_admin_file = undef
       $config_file        = '/etc/sudoers'
       $config_dir         = '/etc/sudoers.d'
-      $content_template   = "${content_base}sudoers.darwin.erb"
+      $content_template   = "${content_base}sudoers.darwin.epp"
       $secure_path        = undef
       $config_file_group  = 'wheel'
       $config_dir_keepme  = false
@@ -229,7 +229,7 @@ class sudo::params {
           $package_admin_file = undef
           $config_file        = '/etc/sudoers'
           $config_dir         = '/etc/sudoers.d'
-          $content_template   = "${content_base}sudoers.gentoo.erb"
+          $content_template   = "${content_base}sudoers.gentoo.epp"
           $secure_path        = undef
           $config_file_group  = 'root'
           $config_dir_keepme  = false
@@ -245,7 +245,7 @@ class sudo::params {
           $package_admin_file = undef
           $config_file        = '/etc/sudoers'
           $config_dir         = '/etc/sudoers.d'
-          $content_template   = "${content_base}sudoers.archlinux.erb"
+          $content_template   = "${content_base}sudoers.archlinux.epp"
           $secure_path        = undef
           $config_file_group  = 'root'
           $config_dir_keepme  = false

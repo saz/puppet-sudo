@@ -135,7 +135,7 @@ class sudo (
   String[1]                                      $config_file_mode    = $sudo::params::config_file_mode,
   String[1]                                      $config_dir          = $sudo::params::config_dir,
   String[1]                                      $config_dir_mode     = $sudo::params::config_dir_mode,
-  Optional[Array[String[1]]]                     $extra_include_dirs  = undef,
+  Array[String[1]]                               $extra_include_dirs  = [],
   Optional[String[1]]                            $content             = undef,
   Optional[String[1]]                            $content_template    = undef,
   Optional[String[1]]                            $content_string      = undef,
@@ -206,7 +206,15 @@ class sudo (
     } elsif $content_template {
       $content_real = template($content_template)
     } else {
-      $content_real = template($sudo::params::content_template)
+      $content_real = epp($sudo::params::content_template, {
+          config_dir         => $config_dir,
+          defaults           => $defaults,
+          extra_include_dirs => $extra_include_dirs,
+          sudoreplay_discard => $sudoreplay_discard,
+          use_sudoreplay     => $use_sudoreplay,
+          wheel_config       => $wheel_config,
+          secure_path        => $secure_path,
+      })
     }
   }
 
