@@ -1,0 +1,23 @@
+<%- |          Array[String]  $user_spec,
+      Optional[Array[String]] $run_as     = ['root'],
+      Optional[Boolean]       $req_passwd = true,
+      Optional[Array[String]] $commands   = ['ALL']
+| -%>
+<%
+  if $req_passwd == true {
+    $req_passwd_final = 'PASSWD'
+  }
+  else {
+    $req_passwd_final = 'NOPASSWD'
+  }
+
+  $user_spec.each |String $one_user_spec| {
+    $run_as.each |String $one_run_as| {
+      $commands.each |String $one_command| {
+-%>
+<%= $one_user_spec %> <%= $facts['hostname'] %> = (<%= $one_run_as %>) <%= $req_passwd_final %>: <%= $one_command %>
+<%
+      }
+    }
+  }
+-%>

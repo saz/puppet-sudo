@@ -169,6 +169,44 @@ sudo::configs:
         'template'  : "mymodule/bill.erb"
 ```
 
+##### Using templates for sudo allocations
+The `template` meta-parameter supports both erb and epp templates. If the filename specified as the template ends with ".epp" then the puppet `epp` function will be used to interpret the template. If the filename specified as the template does not end with ".epp" then the puppet `template` function will be used to interpret the template. This means that template names do not have to have an extension. If one does not it will be treated as an erb template.
+
+```yaml
+sudo::configs:
+    'elizabeth':
+        'template': "mymodule/webserver_administrator"
+    'mohammed':
+        'template': "mymodule/databaseadministrator.erb"
+    'jose':
+        'template': "mymodule/appserver_administrator.epp"
+```
+
+The `template_epp` meta-parameter expects a hash with two elements; `filename` and `params`. `filename` is a string containing a path to a puppet epp template. `params` is a hash containing data elements to be passed to the corresponding epp template parameters.
+
+```yaml
+sudo::configs:
+    'george':
+        'template_epp':
+            'filename': 'sudo/single_line_allocation.epp'
+            'params':
+                'user_spec':
+                    - '%dbas'
+                'run_as':
+                    - 'root'
+                'commands':
+                    - '/usr/bin/startdb'
+    'srini':
+        'template_epp':
+            'filename': 'sudo/single_line_allocation.epp'
+            'params':
+                'user_spec':
+                    - 'srini'
+                'run_as':
+                    - 'ALL'
+                'commands':
+                    - 'ALL'
+
 ##### Override sudoers defaults
 
 You can modify `Default_Entry` lines by passing a `Hash` to `sudo::defaults`, where the key is `Defaults` parameter name (see `man 5 sudoers` for more details):

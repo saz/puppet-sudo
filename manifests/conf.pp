@@ -16,7 +16,10 @@
 #     Source of configuration snippet
 #
 # @param template
-#     Path of a template file
+#     Path of a erb template file or epp template file without parameters
+#
+# @param template_epp
+#     Path of an epp template and associated template parameters
 #
 # @param sudo_config_dir
 #     Where to place configuration snippets.
@@ -35,14 +38,15 @@
 #   }
 #
 define sudo::conf (
-  Enum['present', 'absent']                      $ensure           = present,
-  Integer[0]                                     $priority         = 10,
-  Optional[Variant[Array[String[1]], String[1]]] $content          = undef,
-  Optional[String[1]]                            $source           = undef,
-  Optional[String[1]]                            $template         = undef,
-  Optional[String[1]]                            $sudo_config_dir  = undef,
-  Optional[String[1]]                            $sudo_file_name   = undef,
-  String[1]                                      $sudo_syntax_path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  Enum['present', 'absent']                                $ensure           = present,
+  Integer[0]                                               $priority         = 10,
+  Optional[Variant[Array[String[1]], String[1]]]           $content          = undef,
+  Optional[String[1]]                                      $source           = undef,
+  Optional[String[1]]                                      $template         = undef,
+  Optional[Struct[{ filename => String, params => Hash }]] $template_epp     = undef,
+  Optional[String[1]]                                      $sudo_config_dir  = undef,
+  Optional[String[1]]                                      $sudo_file_name   = undef,
+  String[1]                                                $sudo_syntax_path = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
 ) {
   include sudo
 
@@ -94,6 +98,10 @@ define sudo::conf (
     }
   }
 
+  if $template and $template_epp {
+    fail("'template' and 'template_epp' are mutually exclusive")
+  }
+
   if $content != undef {
     if $content =~ Array {
       $lines = join($content, "\n")
@@ -102,7 +110,22 @@ define sudo::conf (
       $content_real = "# This file is managed by Puppet; changes may be overwritten\n${content}\n"
     }
   } elsif $template != undef {
-    $content_real = template($template)
+    if $template =~ /\.epp$/ {
+      $lines = epp($template)
+    } else {
+      $lines = template($template)
+    }
+    $content_real = "# This file is managed by Puppet; changes may be overwritten\n${lines}\n"
+  } elsif $template_epp != undef {
+    $missing_data_error = "'template_epp' must be a hash containing two elements; filename(string) and params(hash)"
+    if $template_epp[filename] == undef {
+      fail("template_epp hash missing filename element: ${missing_data_error}")
+    }
+    if $template_epp[params] == undef {
+      fail("template_epp hash missing params element: ${missing_data_error}")
+    }
+    $lines = epp($template_epp[filename], $template_epp[params])
+    $content_real = "# This file is managed by Puppet; changes may be overwritten\n${lines}\n"
   } else {
     $content_real = undef
   }
