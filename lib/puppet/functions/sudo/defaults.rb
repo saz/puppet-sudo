@@ -43,7 +43,7 @@ Puppet::Functions.create_function(:'sudo::defaults') do
   def defaults_entry(key, config)
     entry = "Defaults\t#{key}"
 
-    unless config.nil?
+    unless config.nil? || config.equal?(:undef)
       entry.concat((config['list']).to_s) if config.key? 'list'
 
       operator = '='
