@@ -63,6 +63,7 @@ Defaults   !visiblepw
 # this option is only effective for configurations where either
 # env_reset is disabled or HOME is present in the env_keep list.
 #
+<%= scope.call_function('sudo::defaults', @defaults) -%>
 Defaults    always_set_home
 Defaults    match_group_by_gid
 
@@ -134,4 +135,3 @@ root	ALL=(ALL) 	ALL
 <% @extra_include_dirs.each do |include_dir| -%>
 #includedir <%= include_dir %>
 <% end if @extra_include_dirs -%>
-<%= scope.call_function('sudo::defaults', @defaults) -%>
