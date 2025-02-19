@@ -16,6 +16,7 @@
 # Cmnd alias specification
 
 # Defaults specification
+<%= scope.call_function('sudo::defaults', @defaults) -%>
 Defaults	env_keep += "BLOCKSIZE"
 Defaults	env_keep += "COLORFGBG COLORTERM"
 Defaults	env_keep += "__CF_USER_TEXT_ENCODING"
@@ -61,4 +62,3 @@ root	ALL=(ALL) ALL
 <% @extra_include_dirs.each do |include_dir| -%>
 #includedir <%= include_dir %>
 <% end if @extra_include_dirs -%>
-<%= scope.call_function('sudo::defaults', @defaults) -%>
