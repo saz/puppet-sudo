@@ -1,6 +1,6 @@
 {
   "name": "saz-sudo",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "author": "saz",
   "license": "Apache-2.0",
   "summary": "Manage sudo configuration via Puppet",
@@ -78,7 +78,7 @@
       "operatingsystem": "Solaris",
       "operatingsystemrelease": [
         "10",
-	"11"
+        "11"
       ]
     }
   ],
