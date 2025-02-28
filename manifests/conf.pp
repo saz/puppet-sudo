@@ -36,7 +36,7 @@
 #
 define sudo::conf (
   Enum['present', 'absent']                      $ensure           = present,
-  Integer[0]                                     $priority         = 10,
+  Variant[String[1], Integer[0]]                 $priority         = 10,
   Optional[Variant[Array[String[1]], String[1]]] $content          = undef,
   Optional[String[1]]                            $source           = undef,
   Optional[String[1]]                            $template         = undef,

@@ -468,7 +468,7 @@ Default value: `present`
 
 ##### <a name="-sudo--conf--priority"></a>`priority`
 
-Data type: `Integer[0]`
+Data type: `Variant[String[1], Integer[0]]`
 
 Prefix file name with $priority
 
