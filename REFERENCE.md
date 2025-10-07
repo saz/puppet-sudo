@@ -594,10 +594,10 @@ Alias of
 
 ```puppet
 Hash[String, Variant[Struct[{
-                                      Optional[list] => String,
-                                      Optional[operator] => Sudo::Defaults_operator,
-                                      Optional[value] => Variant[String,Numeric],
-                                  }], Undef]]
+    Optional[list] => String,
+    Optional[operator] => Sudo::Defaults_operator,
+    Optional[value] => Variant[String,Numeric],
+  }], Undef]]
 ```
 
 ### <a name="Sudo--Defaults_operator"></a>`Sudo::Defaults_operator`
