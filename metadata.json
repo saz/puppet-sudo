@@ -7,7 +7,9 @@
   "source": "https://github.com/saz/puppet-sudo",
   "project_page": "https://github.com/saz/puppet-sudo",
   "issues_url": "https://github.com/saz/puppet-sudo/issues",
-  "tags": ["sudo"],
+  "tags": [
+    "sudo"
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "RedHat",
@@ -32,16 +34,16 @@
     {
       "operatingsystem": "Debian",
       "operatingsystemrelease": [
-	"11",
-	"12"
+        "11",
+        "12"
       ]
     },
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-	"20.04",
-	"22.04",
-	"24.04"
+        "20.04",
+        "22.04",
+        "24.04"
       ]
     },
     {
@@ -85,8 +87,8 @@
   "dependencies": [],
   "requirements": [
     {
-      "name": "puppet",
-      "version_requirement": ">= 7.0.0 < 9.0.0"
+      "name": "openvox",
+      "version_requirement": ">= 8.19.0 < 9.0.0"
     }
   ]
 }
