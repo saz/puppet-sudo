@@ -59,6 +59,6 @@ class sudo::allow (
   }
 
   sudo::conf { 'sudo_users_groups':
-    content  => template("${module_name}/users_groups.erb"),
+    content => template("${module_name}/users_groups.erb"),
   }
 }
