@@ -86,12 +86,6 @@
 # @param ldap_enable
 #   Enable ldap support on the package
 #
-# @param delete_on_error
-#   True if you want that the configuration is deleted on an error
-#   during a complete visudo -c run. If false it will just return
-#   an error and will add a comment to the sudoers configuration so
-#   that the resource will be checked at the following run.
-#
 # @param validate_single
 #   Do a validate on the "single" file in the sudoers.d directory.
 #   If the validate fail the file will not be saved or changed
@@ -141,7 +135,6 @@ class sudo (
   Optional[String[1]]                            $content_string      = undef,
   Optional[String[1]]                            $secure_path         = $sudo::params::secure_path,
   Boolean                                        $ldap_enable         = false,
-  Boolean                                        $delete_on_error     = true,
   Boolean                                        $validate_single     = false,
   Boolean                                        $config_dir_keepme   = $sudo::params::config_dir_keepme,
   Boolean                                        $use_sudoreplay      = false,
