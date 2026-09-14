@@ -6,14 +6,14 @@ Facter.add(:sudoversion) do
     os['family'] != 'windows'
   end
   setcode do
-    if Facter::Util::Resolution.which('sudo')
-      sudoversion = Facter::Util::Resolution.exec('sudo -V 2>&1')
+    if Facter::Core::Execution.which('sudo')
+      sudoversion = Facter::Core::Execution.execute('sudo -V 2>&1')
       match = %r{^(?:Sudo version|sudo-rs)\s+([\w.]+)}i.match(sudoversion)
       match[1] if match
-    elsif Facter::Util::Resolution.which('rpm')
-      Facter::Util::Resolution.exec('rpm -q sudo --qf \'%{VERSION}\'')
-    elsif Facter::Util::Resolution.which('dpkg-query')
-      Facter::Util::Resolution.exec('dpkg-query -W -f=\'${Version}\n\' sudo')
+    elsif Facter::Core::Execution.which('rpm')
+      Facter::Core::Execution.execute('rpm -q sudo --qf \'%{VERSION}\'')
+    elsif Facter::Core::Execution.which('dpkg-query')
+      Facter::Core::Execution.execute('dpkg-query -W -f=\'${Version}\n\' sudo')
     end
   end
 end
