@@ -6,7 +6,6 @@ Facter.add(:sudoversion) do
     os['family'] != 'windows'
   end
   setcode do
-    Facter.warn('sudoversion is deprecated; use the structured sudo fact instead.')
     if Facter::Core::Execution.which('sudo')
       sudoversion = Facter::Core::Execution.execute('sudo -V 2>&1')
       match = %r{^(?:Sudo version|sudo-rs)\s+([\w.]+)}i.match(sudoversion)

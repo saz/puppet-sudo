@@ -18,6 +18,10 @@ Some family and some specific os are supported by this module
 * archlinux operating system
 * amazon operating system
 
+### Facts
+* `sudo` - structured fact, returns `kind` and `version`
+* `sudoversion` - deprecated, use the `sudo` fact instead
+
 ## Usage
 
 ### WARNING
