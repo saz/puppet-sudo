@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v10.0.1](https://github.com/saz/puppet-sudo/tree/v10.0.1) (2026-10-02)
+
+[Full Changelog](https://github.com/saz/puppet-sudo/compare/v10.0.0...v10.0.1)
+
+**Fixed bugs:**
+
+- Do not warn on every run when the sudoversion fact resolves [\#347](https://github.com/saz/puppet-sudo/pull/347) ([houssemexo26](https://github.com/houssemexo26))
+
+**Closed issues:**
+
+- sudoversion deprecation warning printed on every run [\#346](https://github.com/saz/puppet-sudo/issues/346)
+- Cut a release on Puppet Forge to incorporate changes on main branch [\#339](https://github.com/saz/puppet-sudo/issues/339)
+
 ## [v10.0.0](https://github.com/saz/puppet-sudo/tree/v10.0.0) (2026-09-29)
 
 [Full Changelog](https://github.com/saz/puppet-sudo/compare/v9.0.2...v10.0.0)
