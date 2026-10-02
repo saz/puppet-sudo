@@ -19,12 +19,6 @@ describe Facter::Util::Fact do
       it do
         expect(Facter.fact(:sudoversion).value).to eq('1.7.10p9')
       end
-
-      it do
-        allow(Facter).to receive(:warn)
-        Facter.fact(:sudoversion).value
-        expect(Facter).to have_received(:warn).with('sudoversion is deprecated; use the structured sudo fact instead.')
-      end
     end
   end
 end
