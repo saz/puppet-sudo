@@ -82,6 +82,12 @@
         "10",
         "11"
       ]
+    },
+    {
+      "operatingsystem": "TurrisOS"
+    },
+    {
+      "operatingsystem": "OpenWrt"
     }
   ],
   "dependencies": [],
