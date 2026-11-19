@@ -40,7 +40,7 @@ This module manages sudo
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'sudo': }
@@ -367,7 +367,7 @@ while still allowing for exceptions if required.
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 class { 'sudo::allow':
@@ -437,7 +437,7 @@ Define: sudo::conf
 
 #### Examples
 
-##### 
+#####
 
 ```puppet
 sudo::conf { 'admins':
@@ -605,4 +605,3 @@ Hash[String, Variant[Struct[{
 custom datatype that validates sudo defaults operators
 
 Alias of `Enum['=', '+=', '-=', '!']`
-

@@ -5,7 +5,7 @@
 class sudo::params {
   $content_base     = "${module_name}/"
   $config_file_mode = '0440'
-  $config_dir_mode  = '0550'
+  $config_dir_mode  = '0750'
 
   case $facts['os']['family'] {
     'Debian': {

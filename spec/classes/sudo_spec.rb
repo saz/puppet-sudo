@@ -232,7 +232,7 @@ describe 'sudo' do
                 'ensure'  => 'directory',
                 'owner'   => 'root',
                 'group'   => 'root',
-                'mode'    => '0550',
+                'mode'    => '0750',
                 'recurse' => param_hash[:purge],
                 'purge'   => param_hash[:purge]
               )
@@ -274,7 +274,7 @@ describe 'sudo' do
               'ensure'  => 'directory',
               'owner'   => 'root',
               'group'   => 'system',
-              'mode'    => '0550',
+              'mode'    => '0750',
               'recurse' => param_hash[:purge],
               'purge'   => param_hash[:purge]
             )
@@ -320,7 +320,7 @@ describe 'sudo' do
               'ensure'  => 'directory',
               'owner'   => 'root',
               'group'   => 'root',
-              'mode'    => '0550',
+              'mode'    => '0750',
               'recurse' => param_hash[:purge],
               'purge'   => param_hash[:purge]
             )
@@ -382,7 +382,7 @@ describe 'sudo' do
               'ensure'  => 'directory',
               'owner'   => 'root',
               'group'   => 'root',
-              'mode'    => '0550',
+              'mode'    => '0750',
               'recurse' => param_hash[:purge],
               'purge'   => param_hash[:purge]
             )
